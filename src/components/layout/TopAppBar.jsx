@@ -73,7 +73,9 @@ const TopAppBar = ({
     }
   };
 
-  const formattedTableNumber = `Table ${String(tableNumber || 5).padStart(2, '0')}`;
+  const formattedTableNumber = tableNumber
+    ? `Table ${String(tableNumber).padStart(2, '0')}`
+    : 'Table';
 
   /* ── Non-Menu Pages (Narrowed header: Back button + Table chip only, no logo/wordmark, no marquee) ── */
   if (!isMenuPage) {
@@ -85,21 +87,21 @@ const TopAppBar = ({
           } ${
             transparent
               ? 'bg-transparent'
-              : 'bg-surface border-b border-outline-variant/60 shadow-2xs'
+              : 'bg-background border-b border-outline-variant/70'
           }`}
           style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
         >
           {/* Narrowed Navigation Row — 50px height */}
-          <div className="max-w-[640px] mx-auto w-full h-[50px] flex items-center justify-between px-3.5 sm:px-4 gap-3">
+          <div className="mx-auto flex h-16 w-full max-w-[640px] items-center justify-between gap-3 px-4">
             {/* Back button */}
             <button
               type="button"
               onClick={onBack || (() => navigate('/'))}
-              className="w-8.5 h-8.5 rounded-full bg-surface-container-low hover:bg-surface-container active:scale-95 text-on-surface-variant flex items-center justify-center transition-all border border-outline-variant/60 shrink-0 cursor-pointer"
-              aria-label="Go Back"
-              title="Go Back"
+              className="flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-full bg-surface-container-low text-on-surface-variant transition-[background-color,transform] duration-150 hover:bg-surface-container active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+              aria-label="Go back"
+              title="Go back"
             >
-              <ArrowLeft className="w-4 h-4 text-on-surface-variant" />
+              <ArrowLeft className="h-5 w-5 text-on-surface-variant" />
             </button>
 
             {/* Optional page title in center if passed */}
@@ -123,8 +125,8 @@ const TopAppBar = ({
                 </button>
               )}
               <div
-                className="h-7.5 px-2.5 rounded-full bg-surface-container-low/90 text-on-surface-variant text-[12px] font-semibold border border-outline-variant/60 flex items-center gap-1.5 shrink-0 select-none"
-                aria-label={`Your table: ${tableNumber}`}
+                className="flex h-8 shrink-0 select-none items-center gap-1.5 rounded-full border border-outline-variant/70 bg-surface-container-low px-3 text-[12px] font-medium text-on-surface-variant"
+                aria-label={tableNumber ? `Your table: ${tableNumber}` : 'Table number unavailable'}
               >
                 <span className="w-1.5 h-1.5 rounded-full bg-secondary shrink-0" aria-hidden="true" />
                 <span>{formattedTableNumber}</span>

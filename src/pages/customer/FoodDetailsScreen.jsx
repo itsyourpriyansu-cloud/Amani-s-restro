@@ -20,7 +20,6 @@ import {
   Plus,
   BookOpen,
   ShieldAlert,
-  AlertTriangle,
   ArrowLeft,
   Heart,
   Clock,
@@ -28,7 +27,17 @@ import {
   CheckCircle2,
   Utensils,
   Leaf,
-  PackageCheck
+  PackageCheck,
+  CookingPot,
+  Drumstick,
+  Soup,
+  Salad,
+  GlassWater,
+  Wheat,
+  Dessert,
+  Milk,
+  Citrus,
+  Sprout
 } from 'lucide-react';
 
 /**
@@ -36,76 +45,251 @@ import {
  */
 const getDishInclusions = (dish) => {
   if (!dish) return [];
+  const providedInclusions = dish.includedItems || dish.inclusions || dish.mealComponents;
+  if (Array.isArray(providedInclusions)) return providedInclusions;
+
   const cat = dish.subCategory || dish.category || '';
   const name = (dish.name || '').toLowerCase();
 
   if (cat === 'biryanis' || name.includes('biryani')) {
     return [
-      { name: 'Basmati Dum Rice', detail: 'Fragrant dum-cooked rice', icon: '🍚' },
-      { name: name.includes('veg') ? 'Paneer & Vegetables' : name.includes('egg') ? 'Spiced Boiled Eggs' : 'Spiced Chicken Pieces', detail: 'Signature marinade & rich gravy', icon: '🍗' },
-      { name: 'Mirchi Ka Salan', detail: 'Authentic house peanut-sesame gravy', icon: '🥣' },
-      { name: 'Onion Raita', detail: 'Cooling spiced yoghurt & fresh onion', icon: '🥛' },
-      { name: 'Herbal Garnish', detail: 'Fresh mint, coriander & lemon wedge', icon: '🍋' },
+      { name: 'Basmati Dum Rice', detail: 'Fragrant dum-cooked rice', icon: 'rice' },
+      { name: name.includes('veg') ? 'Paneer & Vegetables' : name.includes('egg') ? 'Spiced Boiled Eggs' : 'Spiced Chicken Pieces', detail: 'Signature marinade & rich gravy', icon: name.includes('veg') ? 'vegetable' : 'protein' },
+      { name: 'Mirchi Ka Salan', detail: 'Authentic house peanut-sesame gravy', icon: 'sauce' },
+      { name: 'Onion Raita', detail: 'Cooling spiced yoghurt & fresh onion', icon: 'dairy' },
+      { name: 'Herbal Garnish', detail: 'Fresh mint, coriander & lemon wedge', icon: 'garnish' },
     ];
   }
 
   if (cat === 'meals' || name.includes('bojanam') || name.includes('meal')) {
     return [
-      { name: 'Steamed Rice', detail: 'Unlimited traditional aromatic rice', icon: '🍚' },
-      { name: 'Dal, Sambar & Rasam', detail: 'Home-style lentil & tangy soups', icon: '🍲' },
-      { name: 'Special Curries & Vepudu', detail: name.includes('non-veg') ? 'Mutton curry & Chicken fry' : 'Seasonal regional vegetable curries', icon: '🥘' },
-      { name: 'Condiments', detail: 'Homemade pickle, podi & pure ghee', icon: '🌶️' },
-      { name: 'Dessert & Curd', detail: 'Traditional sweet & fresh thick curd', icon: '🍨' },
+      { name: 'Steamed Rice', detail: 'Unlimited traditional aromatic rice', icon: 'rice' },
+      { name: 'Dal, Sambar & Rasam', detail: 'Home-style lentil & tangy soups', icon: 'soup' },
+      { name: 'Special Curries & Vepudu', detail: name.includes('non-veg') ? 'Mutton curry & Chicken fry' : 'Seasonal regional vegetable curries', icon: name.includes('non-veg') ? 'protein' : 'vegetable' },
+      { name: 'Condiments', detail: 'Homemade pickle, podi & pure ghee', icon: 'spice' },
+      { name: 'Dessert & Curd', detail: 'Traditional sweet & fresh thick curd', icon: 'dessert' },
     ];
   }
 
   if (cat.includes('starters')) {
     return [
-      { name: 'Full Starter Portion', detail: 'Prepared fresh to order with house spices', icon: '🔥' },
-      { name: 'Mint Chutney', detail: 'Signature spiced coriander-mint dip', icon: '🥣' },
-      { name: 'Fresh Salad Garnish', detail: 'Sliced ring onions & lemon wedge', icon: '🧅' },
+      { name: 'Full Starter Portion', detail: 'Prepared fresh to order with house spices', icon: 'spice' },
+      { name: 'Mint Chutney', detail: 'Signature spiced coriander-mint dip', icon: 'sauce' },
+      { name: 'Fresh Salad Garnish', detail: 'Sliced ring onions & lemon wedge', icon: 'salad' },
     ];
   }
 
   if (cat.includes('soups')) {
     return [
-      { name: 'Hot Soup Bowl', detail: 'Freshly brewed aromatic soup', icon: '🥣' },
-      { name: 'Crispy Noodles', detail: 'Crunchy fried noodle topping', icon: '🥢' },
+      { name: 'Hot Soup Bowl', detail: 'Freshly brewed aromatic soup', icon: 'soup' },
+      { name: 'Crispy Noodles', detail: 'Crunchy fried noodle topping', icon: 'garnish' },
     ];
   }
 
   if (cat.includes('curries') || cat.includes('main_course')) {
     return [
-      { name: 'Curry / Gravy Portion', detail: 'Slow-cooked rich gravy portion', icon: '🥘' },
-      { name: 'Herb Garnish', detail: 'Fresh cilantro, ginger juliennes & ghee', icon: '🌿' },
+      { name: 'Curry / Gravy Portion', detail: 'Slow-cooked rich gravy portion', icon: 'curry' },
+      { name: 'Herb Garnish', detail: 'Fresh cilantro, ginger juliennes & ghee', icon: 'garnish' },
     ];
   }
 
   if (cat.includes('rotis') || cat.includes('breads')) {
     return [
-      { name: 'Clay-Oven Indian Bread', detail: 'Baked fresh in tandoor oven', icon: '🫓' },
-      { name: 'Desi Ghee Glaze', detail: 'Brushed with pure ghee/butter', icon: '🧈' },
+      { name: 'Clay-Oven Indian Bread', detail: 'Baked fresh in tandoor oven', icon: 'bread' },
+      { name: 'Desi Ghee Glaze', detail: 'Brushed with pure ghee/butter', icon: 'dairy' },
     ];
   }
 
   if (cat === 'desserts') {
     return [
-      { name: 'Dessert Portion', detail: dish.portionLabel || 'Freshly prepared dessert', icon: '🍨' },
-      { name: 'Nut Garnish', detail: 'Pistachio & cardamom dusting', icon: '🌰' },
+      { name: 'Dessert Portion', detail: dish.portionLabel || 'Freshly prepared dessert', icon: 'dessert' },
+      { name: 'Nut Garnish', detail: 'Pistachio & cardamom dusting', icon: 'garnish' },
     ];
   }
 
   if (cat === 'drinks') {
     return [
-      { name: 'Chilled Drink Portion', detail: 'Served ice-cold with fresh mint/lime', icon: '🍹' },
+      { name: 'Chilled Drink Portion', detail: 'Served ice-cold with fresh mint/lime', icon: 'drink' },
     ];
   }
 
   return [
-    { name: 'Full Dish Portion', detail: 'Prepared fresh with signature spices', icon: '🍽️' },
-    { name: 'House Dips & Salad', detail: 'Complimentary condiments', icon: '🥗' },
+    { name: 'Full Dish Portion', detail: 'Prepared fresh with signature spices', icon: 'dish' },
+    { name: 'House Dips & Salad', detail: 'Complimentary condiments', icon: 'salad' },
   ];
 };
+
+const inclusionIcons = {
+  rice: CookingPot,
+  protein: Drumstick,
+  soup: Soup,
+  sauce: Soup,
+  curry: CookingPot,
+  salad: Salad,
+  vegetable: Leaf,
+  spice: Flame,
+  bread: Wheat,
+  dessert: Dessert,
+  dairy: Milk,
+  drink: GlassWater,
+  garnish: Sprout,
+  citrus: Citrus,
+  dish: Utensils,
+};
+
+const MealMetadataChip = ({ icon: Icon, label, tone = 'neutral' }) => {
+  const toneClasses = {
+    vegetarian: 'border-meal-vegetarian-border bg-meal-vegetarian-bg text-meal-vegetarian-fg',
+    nonVegetarian: 'border-meal-primary-border bg-meal-primary-bg text-meal-primary-fg',
+    spice: 'border-meal-spice-border bg-meal-spice-bg text-meal-spice-fg',
+    preparation: 'border-meal-preparation-border bg-meal-preparation-bg text-meal-preparation-fg',
+    neutral: 'border-meal-neutral-border bg-meal-neutral-bg text-meal-neutral-fg',
+  };
+
+  return (
+    <span
+      className={`inline-flex min-h-8 items-center gap-1.5 rounded-full border px-2.5 py-1.5 text-xs font-medium leading-4 ${toneClasses[tone]}`}
+    >
+      <Icon className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+      <span>{label}</span>
+    </span>
+  );
+};
+
+const MealMetadataGroup = ({ dish, prepTimeMin }) => {
+  const isVegetarian = dish.foodType === 'VEGETARIAN';
+  const spiceLabel = dish.spiceLevel === 'MEDIUM'
+    ? 'Medium Spice'
+    : dish.spiceLevel === 'SPICY'
+      ? 'Spicy'
+      : 'Mild';
+
+  return (
+    <div className="flex flex-wrap items-center gap-2" aria-label="Meal details">
+      <MealMetadataChip
+        icon={isVegetarian ? Leaf : Drumstick}
+        label={isVegetarian ? 'Vegetarian' : 'Non-Vegetarian'}
+        tone={isVegetarian ? 'vegetarian' : 'nonVegetarian'}
+      />
+      {dish.spiceLevel && (
+        <MealMetadataChip icon={Flame} label={spiceLabel} tone="spice" />
+      )}
+      <MealMetadataChip icon={Clock} label={`${prepTimeMin}–${prepTimeMin + 5} min prep`} tone="preparation" />
+      <MealMetadataChip icon={Utensils} label={`Serves ${dish.serves || '1 person'}`} />
+    </div>
+  );
+};
+
+const FoodIconContainer = ({ item }) => {
+  const imageSource = item.image || item.iconImage || (
+    typeof item.icon === 'string' && /^(https?:|\/|data:)/.test(item.icon) ? item.icon : null
+  );
+  const Icon = inclusionIcons[item.icon] || Utensils;
+
+  return (
+    <span className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-meal-icon-bg text-meal-icon-fg" aria-hidden="true">
+      {imageSource ? (
+        <img src={imageSource} alt="" className="h-full w-full object-cover" />
+      ) : (
+        <Icon className="h-[18px] w-[18px]" strokeWidth={1.8} />
+      )}
+    </span>
+  );
+};
+
+const IncludedDishRow = ({ item }) => {
+  const isUnavailable = item.available === false || item.availabilityStatus === 'UNAVAILABLE';
+  const isSubstituted = item.isSubstituted || item.substituted;
+  const statusLabel = isUnavailable ? 'Unavailable' : isSubstituted ? 'Substituted' : null;
+  const detail = item.detail || item.description;
+
+  return (
+    <li className="flex min-h-[68px] items-start gap-3 py-3">
+      <FoodIconContainer item={item} />
+      <div className="min-w-0 flex-1 pt-0.5">
+        <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
+          <h3 className="text-[15px] font-semibold leading-5 text-on-surface">{item.name}</h3>
+          {statusLabel && (
+            <span className={`text-xs font-medium ${isUnavailable ? 'text-error' : 'text-tertiary'}`}>
+              {statusLabel}
+            </span>
+          )}
+        </div>
+        {detail && (
+          <p className="mt-0.5 text-[13px] font-normal leading-[1.4] text-on-surface-variant">
+            {detail}
+          </p>
+        )}
+      </div>
+    </li>
+  );
+};
+
+const MealStatusBadge = ({ label }) => (
+  <span
+    className="inline-flex min-h-8 shrink-0 items-center gap-1.5 rounded-full bg-meal-verified-bg px-2.5 py-1.5 text-xs font-medium leading-4 text-meal-verified-fg"
+    aria-label="This order includes a complete meal."
+  >
+    <CheckCircle2 className="h-3.5 w-3.5" aria-hidden="true" />
+    {label}
+  </span>
+);
+
+const MealContentsSection = ({ dish }) => {
+  const inclusions = getDishInclusions(dish);
+  if (!inclusions?.length) return null;
+
+  const completeMealLabel = dish.mealCompletenessLabel || dish.mealCompleteness?.label || 'Complete meal';
+  const completeMealState = dish.isCompleteMeal ?? dish.mealComplete ?? dish.mealCompleteness?.isComplete;
+  const isCompleteMeal = completeMealState !== false;
+
+  return (
+    <section className="rounded-2xl border border-meal-section-border bg-meal-section-bg px-4 py-5 sm:p-5" aria-labelledby="meal-contents-title">
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div className="flex min-w-[12rem] flex-1 items-start gap-3">
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-meal-primary-bg text-meal-primary-fg" aria-hidden="true">
+            <PackageCheck className="h-5 w-5" strokeWidth={1.8} />
+          </span>
+          <div className="min-w-0 pt-0.5">
+            <h2 id="meal-contents-title" className="text-lg font-semibold leading-6 tracking-[-0.01em] text-on-surface">
+              What’s included
+            </h2>
+            <p className="mt-1 text-[13px] leading-[1.45] text-on-surface-variant">
+              Everything served as part of this meal
+            </p>
+          </div>
+        </div>
+        {isCompleteMeal && <MealStatusBadge label={completeMealLabel} />}
+      </div>
+
+      <ul className="mt-4 divide-y divide-meal-row-divider border-t border-meal-row-divider">
+        {inclusions.map((item, idx) => (
+          <IncludedDishRow key={item.id || `${item.name}-${idx}`} item={item} />
+        ))}
+      </ul>
+    </section>
+  );
+};
+
+const PreparationNotice = ({ prepTimeMin, message }) => (
+  <aside className="rounded-[14px] border border-meal-notice-border bg-meal-notice-bg p-4 text-meal-notice-fg" aria-labelledby="preparation-notice-title">
+    <div className="flex items-start gap-3">
+      <Clock className="mt-0.5 h-[18px] w-[18px] shrink-0" aria-hidden="true" />
+      <div>
+        <h2 id="preparation-notice-title" className="text-sm font-semibold leading-5">
+          Longer preparation time
+        </h2>
+        <p className="mt-1 text-[13px] leading-[1.5] text-on-surface-variant">
+          {message || (
+            <>
+              This item currently takes approximately <strong className="font-semibold text-meal-notice-fg">{prepTimeMin}–{prepTimeMin + 5} minutes</strong> due to kitchen volume. Other items in your order may be ready earlier.
+            </>
+          )}
+        </p>
+      </div>
+    </div>
+  </aside>
+);
 
 const FoodDetailsScreen = () => {
   const { id } = useParams();
@@ -146,7 +330,10 @@ const FoodDetailsScreen = () => {
   const isAvailable = dish.availabilityStatus === 'AVAILABLE' || dish.availabilityStatus === 'LIMITED_AVAILABILITY';
   const isOrderable = dish.orderableInApp !== false;
   const prepTimeMin = dish.preparationTimeMinutes || 15;
-  const isDelayedDish = prepTimeMin >= 30 || kitchenLoad?.status === 'BUSY' || kitchenLoad?.status === 'VERY_BUSY';
+  const preparationNoticeMessage = typeof dish.preparationNotice === 'string'
+    ? dish.preparationNotice
+    : dish.preparationNotice?.message;
+  const isDelayedDish = Boolean(dish.preparationNotice) || prepTimeMin >= 30 || kitchenLoad?.status === 'BUSY' || kitchenLoad?.status === 'VERY_BUSY';
 
   const handleAddToCartFromModal = (payload) => {
     const { dish: d, quantity, formattedModifiers, allergyAlert, specialInstruction, selectedOptions, makeVegan, jainPreparation } = payload;
@@ -259,45 +446,8 @@ const FoodDetailsScreen = () => {
             </div>
           </div>
 
-          {/* Fast Decision Attribute Bar */}
-          <div className="flex flex-wrap items-center gap-2 pt-1 pb-1">
-            {/* Dietary Badge */}
-            {dish.foodType === 'VEGETARIAN' ? (
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-success/10 border border-success/30 text-success text-xs font-bold">
-                <span className="w-2.5 h-2.5 border-2 border-success p-0.5 flex items-center justify-center rounded-sm">
-                  <span className="w-1.5 h-1.5 bg-success rounded-full" />
-                </span>
-                Vegetarian
-              </span>
-            ) : (
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary-container border border-primary/30 text-primary text-xs font-bold">
-                <span className="w-2.5 h-2.5 border-2 border-primary p-0.5 flex items-center justify-center rounded-sm">
-                  <span className="w-1.5 h-1.5 bg-primary rounded-full" />
-                </span>
-                Non-Vegetarian
-              </span>
-            )}
-
-            {/* Spice Level */}
-            {dish.spiceLevel && (
-              <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-error-container border border-error/30 text-error text-xs font-bold">
-                <Flame className="w-3.5 h-3.5 text-error" />
-                {dish.spiceLevel === 'MEDIUM' ? 'Medium Spice' : dish.spiceLevel === 'SPICY' ? 'Spicy' : 'Mild'}
-              </span>
-            )}
-
-            {/* Prep Time Estimate */}
-            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-highlight/10 border border-highlight/30 text-highlight text-xs font-bold">
-              <Clock className="w-3.5 h-3.5 text-highlight" />
-              {prepTimeMin}–{prepTimeMin + 5} min prep
-            </span>
-
-            {/* Portion / Serves */}
-            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-surface-container-low border border-outline-variant text-on-surface-variant text-xs font-medium">
-              <Utensils className="w-3.5 h-3.5 text-on-surface-variant" />
-              Serves {dish.serves || '1 person'}
-            </span>
-          </div>
+          {/* Compact, responsive decision metadata */}
+          <MealMetadataGroup dish={dish} prepTimeMin={prepTimeMin} />
 
           {/* Mangamma Favourite Highlight Card */}
           {dish.bestseller && (
@@ -316,64 +466,12 @@ const FoodDetailsScreen = () => {
             </div>
           )}
 
-          {/* What's Included With This Order Section */}
-          {(() => {
-            const inclusions = getDishInclusions(dish);
-            if (!inclusions || inclusions.length === 0) return null;
-            return (
-              <div className="rounded-2xl border border-outline-variant bg-surface-container-low p-4 space-y-3 shadow-xs">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2.5">
-                    <div className="p-2 rounded-xl bg-primary text-on-primary">
-                      <PackageCheck className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <h3 className="font-bold text-on-surface text-xs uppercase tracking-wider">
-                        What's Included With This Order
-                      </h3>
-                      <p className="text-[11px] text-on-surface-variant mt-0.5">
-                        Everything served in your portion
-                      </p>
-                    </div>
-                  </div>
-                  <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-success/10 text-success border border-success/30">
-                    Complete Meal
-                  </span>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
-                  {inclusions.map((item, idx) => (
-                    <div
-                      key={idx}
-                      className="flex items-start gap-2.5 p-2.5 rounded-xl bg-surface border border-outline-variant shadow-2xs hover:border-error/30 transition-colors"
-                    >
-                      <span className="text-lg leading-none mt-0.5 flex-shrink-0">{item.icon}</span>
-                      <div className="min-w-0 flex-1">
-                        <span className="font-bold text-xs text-on-surface block truncate">
-                          {item.name}
-                        </span>
-                        <span className="text-[11px] text-on-surface-variant leading-tight block">
-                          {item.detail}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            );
-          })()}
+          {/* Primary meal composition */}
+          <MealContentsSection dish={dish} />
 
           {/* Kitchen Volume / Long Preparation Alert */}
           {isDelayedDish && (
-            <div className="p-4 rounded-2xl bg-highlight/10 border border-highlight/30 text-on-surface space-y-1">
-              <div className="flex items-center gap-2 font-bold text-xs uppercase tracking-wider text-highlight">
-                <AlertTriangle className="w-4 h-4 text-highlight" />
-                <span>Longer preparation time</span>
-              </div>
-              <p className="text-xs leading-relaxed text-on-surface-variant">
-                This item currently takes approximately <strong>{prepTimeMin}–{prepTimeMin + 5} minutes</strong> due to kitchen volume. Other items in your order may be ready earlier.
-              </p>
-            </div>
+            <PreparationNotice prepTimeMin={prepTimeMin} message={preparationNoticeMessage} />
           )}
 
           {/* Appetizing Dish Description */}
@@ -579,4 +677,3 @@ const FoodDetailsScreen = () => {
 };
 
 export default FoodDetailsScreen;
-

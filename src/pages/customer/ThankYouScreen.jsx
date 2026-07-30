@@ -13,6 +13,33 @@ import ContentRemovalModal from '../../components/retention/ContentRemovalModal'
 import MilestoneCouponCard from '../../components/retention/MilestoneCouponCard';
 import { CheckCircle2, MessageSquare, Camera, ShieldCheck, Download, UtensilsCrossed } from 'lucide-react';
 
+const PaymentSuccessSummary = ({ amount, tableNumber, invoiceNumber }) => (
+  <section
+    aria-labelledby="payment-success-title"
+    className="flex w-full items-center gap-3.5 rounded-2xl border border-outline-variant bg-surface p-4 text-left"
+    role="status"
+  >
+    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-secondary-container text-success">
+      <CheckCircle2 className="h-[22px] w-[22px]" aria-hidden="true" />
+    </div>
+    <div className="min-w-0 flex-1">
+      <h1 id="payment-success-title" className="text-[14px] font-semibold leading-5 text-on-surface">
+        Payment successful
+      </h1>
+      <p className="mt-0.5 break-words text-[23px] font-semibold leading-7 tracking-[-0.015em] text-primary">
+        {amount !== null ? `${formatInvoiceAmount(amount)} paid` : 'Payment amount unavailable'}
+      </p>
+      {(tableNumber || invoiceNumber) && (
+        <p className="mt-0.5 break-words text-[12px] leading-[18px] text-on-surface-variant">
+          {tableNumber && `Table ${tableNumber}`}
+          {tableNumber && invoiceNumber && ' · '}
+          {invoiceNumber && `Invoice ${invoiceNumber}`}
+        </p>
+      )}
+    </div>
+  </section>
+);
+
 const ThankYouScreen = () => {
   const navigate = useNavigate();
   const { activeOrder, clearOrder, customerMemory, saveCustomerMemory, forgetCustomerMemory } = useOrder();
@@ -27,9 +54,14 @@ const ThankYouScreen = () => {
   const [isRemovalModalOpen, setIsRemovalModalOpen] = useState(false);
 
   const handleDownloadReceipt = async () => {
+    if (!activeOrder?.orderId) {
+      showToast('Receipt details are unavailable for this payment.', 'error');
+      return;
+    }
+
     setIsDownloading(true);
     try {
-      const res = await paymentService.downloadReceipt(activeOrder?.orderId || 'INV-5983', activeOrder?.transaction);
+      const res = await paymentService.downloadReceipt(activeOrder.orderId, activeOrder.transaction);
       const blob = new Blob([res.data.receiptText], { type: 'text/plain;charset=utf-8' });
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
@@ -39,7 +71,7 @@ const ThankYouScreen = () => {
       link.click();
       document.body.removeChild(link);
       showToast('Receipt downloaded to your device!', 'success');
-    } catch (err) {
+    } catch {
       showToast('Could not download receipt', 'error');
     } finally {
       setIsDownloading(false);
@@ -51,8 +83,13 @@ const ThankYouScreen = () => {
     navigate('/');
   };
 
-  const totalPaid = activeOrder?.totals?.totalPayable || activeOrder?.totals?.grandTotal || activeOrder?.grandTotal || 262.5;
-  const invoiceNumber = deriveInvoiceNumber(activeOrder);
+  const totalPaid =
+    activeOrder?.transaction?.amount ??
+    activeOrder?.totals?.totalPayable ??
+    activeOrder?.totals?.grandTotal ??
+    activeOrder?.grandTotal ??
+    null;
+  const invoiceNumber = activeOrder ? deriveInvoiceNumber(activeOrder) : null;
 
   return (
     <div className="w-full min-h-screen bg-background text-on-surface flex flex-col antialiased">
@@ -60,36 +97,27 @@ const ThankYouScreen = () => {
       <TopAppBar variant="brand" />
 
       <main
-        className="w-full max-w-[640px] mx-auto flex-1 flex flex-col px-4 pt-18 pb-6 space-y-4"
-        style={{ paddingBottom: 'calc(24px + env(safe-area-inset-bottom))' }}
+        className="mx-auto flex w-full max-w-[640px] flex-1 flex-col px-4 pb-6 sm:px-5"
+        style={{
+          paddingTop: 'calc(80px + env(safe-area-inset-top, 0px))',
+          paddingBottom: 'calc(24px + env(safe-area-inset-bottom))',
+        }}
       >
-        {/* 2. Compact Payment-Success Confirmation Card */}
-        <section
-          aria-label="Payment Confirmation"
-          className="w-full p-4 bg-surface rounded-2xl border border-outline-variant shadow-sm flex items-center gap-3.5 text-left"
-        >
-          <div className="w-11 h-11 rounded-full bg-success/10 flex items-center justify-center text-success shrink-0">
-            <CheckCircle2 className="w-6 h-6" />
-          </div>
-          <div className="min-w-0 flex-1">
-            <h1 className="text-[15px] font-semibold text-on-surface leading-tight">Payment Successful</h1>
-            <p className="text-[23px] font-bold text-primary leading-tight mt-0.5">
-              {formatInvoiceAmount(totalPaid)} paid
-            </p>
-            <p className="text-[12px] text-on-surface-variant mt-0.5">
-              Table {tableNumber || '05'} · Invoice {invoiceNumber}
-            </p>
-          </div>
-        </section>
-
-        {/* 3–5. Coupon Request Progress Card */}
-        <MilestoneCouponCard
-          activeOrder={activeOrder}
-          onOpenPrivacyControls={() => setIsRemovalModalOpen(true)}
+        <PaymentSuccessSummary
+          amount={totalPaid}
+          tableNumber={tableNumber}
+          invoiceNumber={invoiceNumber}
         />
 
+        <div className="mt-6">
+          <MilestoneCouponCard
+            activeOrder={activeOrder}
+            onOpenPrivacyControls={() => setIsRemovalModalOpen(true)}
+          />
+        </div>
+
         {/* 6. Connected Guest Experience Section */}
-        <section aria-label="Connected Guest Experience" className="w-full space-y-3 pt-2 text-left">
+        <section aria-label="Connected Guest Experience" className="mt-8 w-full space-y-3 pt-2 text-left">
           <div className="flex items-center justify-between px-0.5">
             <h2 className="font-bold text-xs text-primary uppercase tracking-wider">
               Connected Guest Experience
@@ -115,7 +143,7 @@ const ThankYouScreen = () => {
               </div>
               <button
                 onClick={() => setIsDiagnosticFeedbackOpen(true)}
-                className="px-3.5 py-1.5 bg-surface border border-primary text-primary hover:bg-primary-container font-bold text-xs rounded-xl shadow-2xs transition-colors shrink-0 cursor-pointer"
+                className="min-h-11 px-3.5 py-1.5 bg-surface border border-primary text-primary hover:bg-primary-container font-bold text-xs rounded-xl shadow-2xs transition-colors shrink-0 cursor-pointer"
               >
                 Feedback
               </button>
@@ -136,7 +164,7 @@ const ThankYouScreen = () => {
               </div>
               <button
                 onClick={() => setIsSignatureDishOpen(true)}
-                className="px-3.5 py-1.5 bg-surface border border-error text-error hover:bg-error-container font-bold text-xs rounded-xl shadow-2xs transition-colors shrink-0 cursor-pointer"
+                className="min-h-11 px-3.5 py-1.5 bg-surface border border-error text-error hover:bg-error-container font-bold text-xs rounded-xl shadow-2xs transition-colors shrink-0 cursor-pointer"
               >
                 Dish Story
               </button>
@@ -162,7 +190,7 @@ const ThankYouScreen = () => {
                   e.stopPropagation();
                   setIsRemovalModalOpen(true);
                 }}
-                className="text-primary font-bold text-xs hover:underline shrink-0 px-2 py-1"
+                className="min-h-11 text-primary font-bold text-xs hover:underline shrink-0 px-2 py-1"
               >
                 Manage
               </button>
@@ -171,7 +199,7 @@ const ThankYouScreen = () => {
         </section>
 
         {/* 8. Receipt Actions */}
-        <div className="w-full pt-2">
+        <div className="w-full pt-6">
           <button
             onClick={handleDownloadReceipt}
             disabled={isDownloading}
@@ -224,4 +252,3 @@ const ThankYouScreen = () => {
 };
 
 export default ThankYouScreen;
-

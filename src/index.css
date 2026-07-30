@@ -29,6 +29,8 @@
   --color-warning: #B76A0B;
   --color-danger: #B3263D;
   --color-information: #315C9E;
+  --color-whatsapp-action: #128C7E;
+  --color-whatsapp-accent: #25D366;
 
   /* Material semantic tokens, remapped onto the brand palette above.
      Existing components already consume these names (bg-primary, text-on-surface-variant,
@@ -78,6 +80,33 @@
   --color-on-warning: #201714;
   --color-on-info: #ffffff;
   --color-highlight: #C9953D;
+
+  /* Meal-composition UI semantic tokens */
+  --color-meal-section-bg: #FFFDF9;
+  --color-meal-section-border: #E9DED3;
+  --color-meal-row-divider: #E9DED3;
+  --color-meal-icon-bg: #FFF0DE;
+  --color-meal-icon-fg: #8D1230;
+  --color-meal-primary-bg: #FFF0DE;
+  --color-meal-primary-fg: #6E0D25;
+  --color-meal-primary-border: #EBDAC6;
+  --color-meal-vegetarian-bg: #E7EED8;
+  --color-meal-vegetarian-fg: #31551C;
+  --color-meal-vegetarian-border: #C8D8AA;
+  --color-meal-spice-bg: #FBE0E4;
+  --color-meal-spice-fg: #7A2434;
+  --color-meal-spice-border: #E8B8C1;
+  --color-meal-preparation-bg: #FFF3D9;
+  --color-meal-preparation-fg: #70440B;
+  --color-meal-preparation-border: #E8CB8F;
+  --color-meal-neutral-bg: #FFF9F2;
+  --color-meal-neutral-fg: #5D5147;
+  --color-meal-neutral-border: #E9DED3;
+  --color-meal-verified-bg: #E7EED8;
+  --color-meal-verified-fg: #31551C;
+  --color-meal-notice-bg: #FFF8E8;
+  --color-meal-notice-fg: #70440B;
+  --color-meal-notice-border: #E8CB8F;
 
   --color-inverse-surface: #201714;
   --color-inverse-on-surface: #FFFDF9;
@@ -230,6 +259,35 @@
   --color-information: #365F73;
   --color-on-info: #FFFDF8;
   --color-highlight: #C9953D;
+  --color-whatsapp-action: #128C7E;
+  --color-whatsapp-accent: #25D366;
+
+  /* meal composition */
+  --color-meal-section-bg: #FFFDF8;
+  --color-meal-section-border: #D5C4AE;
+  --color-meal-row-divider: #E6DACB;
+  --color-meal-icon-bg: #F2D8D8;
+  --color-meal-icon-fg: #7A1F24;
+  --color-meal-primary-bg: #F2D8D8;
+  --color-meal-primary-fg: #7A1F24;
+  --color-meal-primary-border: #E7A4A5;
+  --color-meal-vegetarian-bg: #DDE6CB;
+  --color-meal-vegetarian-fg: #253817;
+  --color-meal-vegetarian-border: #B6CC88;
+  --color-meal-spice-bg: #F6D7CF;
+  --color-meal-spice-fg: #5B1A0C;
+  --color-meal-spice-border: #E3A878;
+  --color-meal-preparation-bg: #FBF1DD;
+  --color-meal-preparation-fg: #65420F;
+  --color-meal-preparation-border: #E6C990;
+  --color-meal-neutral-bg: #F0E6D5;
+  --color-meal-neutral-fg: #5D5147;
+  --color-meal-neutral-border: #D5C4AE;
+  --color-meal-verified-bg: #DDE6CB;
+  --color-meal-verified-fg: #253817;
+  --color-meal-notice-bg: #FBF1DD;
+  --color-meal-notice-fg: #65420F;
+  --color-meal-notice-border: #D9B76B;
 
   /* raw brand scale — consumed by common/PrimaryButton, SecondaryButton,
      DishBadges (spice badge), and several customer screens directly */
