@@ -21,8 +21,8 @@ const ReportSubmittedScreen = () => {
       <main className="flex-1 flex flex-col items-center justify-center px-4 w-full max-w-md mx-auto text-center py-16 mt-14">
         {/* Animated Success Illustration */}
         <div className="relative w-32 h-32 mb-8">
-          <div className="absolute inset-0 bg-green-600/10 rounded-full scale-125 animate-pulse" />
-          <div className="relative flex items-center justify-center w-full h-full bg-green-700 rounded-full shadow-lg">
+          <div className="absolute inset-0 bg-success/10 rounded-full scale-125 animate-pulse" />
+          <div className="relative flex items-center justify-center w-full h-full bg-success rounded-full shadow-lg">
             <svg className="w-16 h-16 text-white stroke-current fill-none" strokeWidth="4" viewBox="0 0 52 52">
               <path
                 d="M14.1 27.2l7.1 7.2 16.7-16.8"

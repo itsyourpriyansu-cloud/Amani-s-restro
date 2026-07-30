@@ -22,7 +22,7 @@ const CustomerLayout = ({ children }) => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-background text-on-surface overflow-x-hidden">
+    <div data-app="customer" className="min-h-screen flex flex-col bg-background text-on-surface overflow-x-hidden">
       <Toast />
 
       {/* Render Animated Splash Screen on customer link open */}

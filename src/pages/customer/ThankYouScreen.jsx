@@ -55,7 +55,7 @@ const ThankYouScreen = () => {
   const invoiceNumber = deriveInvoiceNumber(activeOrder);
 
   return (
-    <div className="w-full min-h-screen bg-[#FFFDF9] text-[#211917] flex flex-col antialiased">
+    <div className="w-full min-h-screen bg-background text-on-surface flex flex-col antialiased">
       {/* 1. Compact Customer Header */}
       <TopAppBar variant="brand" />
 
@@ -66,17 +66,17 @@ const ThankYouScreen = () => {
         {/* 2. Compact Payment-Success Confirmation Card */}
         <section
           aria-label="Payment Confirmation"
-          className="w-full p-4 bg-white rounded-2xl border border-[#EADFD6] shadow-sm flex items-center gap-3.5 text-left"
+          className="w-full p-4 bg-surface rounded-2xl border border-outline-variant shadow-sm flex items-center gap-3.5 text-left"
         >
-          <div className="w-11 h-11 rounded-full bg-[#E8F8F1] flex items-center justify-center text-[#138A5B] shrink-0">
+          <div className="w-11 h-11 rounded-full bg-success/10 flex items-center justify-center text-success shrink-0">
             <CheckCircle2 className="w-6 h-6" />
           </div>
           <div className="min-w-0 flex-1">
-            <h1 className="text-[15px] font-semibold text-[#211917] leading-tight">Payment Successful</h1>
-            <p className="text-[23px] font-bold text-[#A30F3B] leading-tight mt-0.5">
+            <h1 className="text-[15px] font-semibold text-on-surface leading-tight">Payment Successful</h1>
+            <p className="text-[23px] font-bold text-primary leading-tight mt-0.5">
               {formatInvoiceAmount(totalPaid)} paid
             </p>
-            <p className="text-[12px] text-[#6E5F58] mt-0.5">
+            <p className="text-[12px] text-on-surface-variant mt-0.5">
               Table {tableNumber || '05'} · Invoice {invoiceNumber}
             </p>
           </div>
@@ -91,52 +91,52 @@ const ThankYouScreen = () => {
         {/* 6. Connected Guest Experience Section */}
         <section aria-label="Connected Guest Experience" className="w-full space-y-3 pt-2 text-left">
           <div className="flex items-center justify-between px-0.5">
-            <h2 className="font-bold text-xs text-[#A30F3B] uppercase tracking-wider">
+            <h2 className="font-bold text-xs text-primary uppercase tracking-wider">
               Connected Guest Experience
             </h2>
-            <span className="text-[11px] font-semibold text-[#6E5F58] bg-[#F0E7E0] px-2 py-0.5 rounded-md">
+            <span className="text-[11px] font-semibold text-on-surface-variant bg-surface-container px-2 py-0.5 rounded-md">
               Optional
             </span>
           </div>
 
           <div className="space-y-2.5">
             {/* Feedback Card */}
-            <div className="p-3.5 bg-white rounded-2xl border border-[#EADFD6] shadow-sm flex items-center justify-between gap-3 min-h-[78px]">
+            <div className="p-3.5 bg-surface rounded-2xl border border-outline-variant shadow-sm flex items-center justify-between gap-3 min-h-[78px]">
               <div className="flex items-center gap-3 min-w-0">
-                <div className="w-10 h-10 rounded-xl bg-[#FBECEF] text-[#A30F3B] flex items-center justify-center shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-primary-container text-on-primary-container flex items-center justify-center shrink-0">
                   <MessageSquare className="w-5 h-5" />
                 </div>
                 <div className="min-w-0">
-                  <h3 className="font-bold text-xs text-[#211917] truncate">Share Useful Feedback</h3>
-                  <p className="text-[12px] text-[#6E5F58] leading-tight mt-0.5">
+                  <h3 className="font-bold text-xs text-on-surface truncate">Share Useful Feedback</h3>
+                  <p className="text-[12px] text-on-surface-variant leading-tight mt-0.5">
                     Help us improve food, service, speed, cleanliness & value.
                   </p>
                 </div>
               </div>
               <button
                 onClick={() => setIsDiagnosticFeedbackOpen(true)}
-                className="px-3.5 py-1.5 bg-white border border-[#A30F3B] text-[#A30F3B] hover:bg-[#FBECEF] font-bold text-xs rounded-xl shadow-2xs transition-colors shrink-0 cursor-pointer"
+                className="px-3.5 py-1.5 bg-surface border border-primary text-primary hover:bg-primary-container font-bold text-xs rounded-xl shadow-2xs transition-colors shrink-0 cursor-pointer"
               >
                 Feedback
               </button>
             </div>
 
             {/* Dish Story Card */}
-            <div className="p-3.5 bg-white rounded-2xl border border-[#EADFD6] shadow-sm flex items-center justify-between gap-3 min-h-[78px]">
+            <div className="p-3.5 bg-surface rounded-2xl border border-outline-variant shadow-sm flex items-center justify-between gap-3 min-h-[78px]">
               <div className="flex items-center gap-3 min-w-0">
-                <div className="w-10 h-10 rounded-xl bg-[#FFF0E3] text-[#F47712] flex items-center justify-center shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-error-container text-on-error-container flex items-center justify-center shrink-0">
                   <Camera className="w-5 h-5" />
                 </div>
                 <div className="min-w-0">
-                  <h3 className="font-bold text-xs text-[#211917] truncate">Share a Dish Moment</h3>
-                  <p className="text-[12px] text-[#6E5F58] leading-tight mt-0.5">
+                  <h3 className="font-bold text-xs text-on-surface truncate">Share a Dish Moment</h3>
+                  <p className="text-[12px] text-on-surface-variant leading-tight mt-0.5">
                     Watch a dish story or share authentic content.
                   </p>
                 </div>
               </div>
               <button
                 onClick={() => setIsSignatureDishOpen(true)}
-                className="px-3.5 py-1.5 bg-white border border-[#F47712] text-[#F47712] hover:bg-[#FFF0E3] font-bold text-xs rounded-xl shadow-2xs transition-colors shrink-0 cursor-pointer"
+                className="px-3.5 py-1.5 bg-surface border border-error text-error hover:bg-error-container font-bold text-xs rounded-xl shadow-2xs transition-colors shrink-0 cursor-pointer"
               >
                 Dish Story
               </button>
@@ -145,13 +145,13 @@ const ThankYouScreen = () => {
             {/* 7. Privacy & Communication Controls */}
             <div
               onClick={() => setIsRemovalModalOpen(true)}
-              className="p-3.5 bg-[#FFF8F1] rounded-xl border border-[#EADFD6] flex items-center justify-between gap-2.5 text-xs min-h-[48px] cursor-pointer hover:bg-[#FFF0E3]/50 transition-colors"
+              className="p-3.5 bg-surface-container-low rounded-xl border border-outline-variant flex items-center justify-between gap-2.5 text-xs min-h-[48px] cursor-pointer hover:bg-surface-container/50 transition-colors"
             >
               <div className="flex items-start gap-2 min-w-0">
-                <ShieldCheck className="w-4 h-4 text-[#A30F3B] shrink-0 mt-0.5" />
+                <ShieldCheck className="w-4 h-4 text-primary shrink-0 mt-0.5" />
                 <div className="min-w-0">
-                  <span className="font-bold text-[#211917] text-xs block">Privacy & Communication</span>
-                  <span className="text-[#6E5F58] text-[11px] leading-tight block">
+                  <span className="font-bold text-on-surface text-xs block">Privacy & Communication</span>
+                  <span className="text-on-surface-variant text-[11px] leading-tight block">
                     Review coupon consent, WhatsApp preferences and content permissions.
                   </span>
                 </div>
@@ -162,7 +162,7 @@ const ThankYouScreen = () => {
                   e.stopPropagation();
                   setIsRemovalModalOpen(true);
                 }}
-                className="text-[#A30F3B] font-bold text-xs hover:underline shrink-0 px-2 py-1"
+                className="text-primary font-bold text-xs hover:underline shrink-0 px-2 py-1"
               >
                 Manage
               </button>
@@ -175,9 +175,9 @@ const ThankYouScreen = () => {
           <button
             onClick={handleDownloadReceipt}
             disabled={isDownloading}
-            className="w-full h-12 bg-white border border-[#EADFD6] text-[#211917] rounded-xl font-semibold flex items-center justify-center gap-2 hover:bg-[#FFF8F1] text-xs disabled:opacity-60 transition-colors cursor-pointer shadow-2xs"
+            className="w-full h-12 bg-surface border border-outline-variant text-on-surface rounded-xl font-semibold flex items-center justify-center gap-2 hover:bg-surface-container-low text-xs disabled:opacity-60 transition-colors cursor-pointer shadow-2xs"
           >
-            <Download className="w-4 h-4 text-[#A30F3B]" />
+            <Download className="w-4 h-4 text-primary" />
             {isDownloading ? 'Downloading...' : 'Download Receipt'}
           </button>
         </div>
@@ -186,7 +186,7 @@ const ThankYouScreen = () => {
         <div className="w-full flex justify-center pb-2">
           <button
             onClick={handleVisitAgain}
-            className="h-11 px-6 text-[#A30F3B] font-bold flex items-center justify-center gap-2 hover:underline text-xs min-h-[44px] cursor-pointer"
+            className="h-11 px-6 text-primary font-bold flex items-center justify-center gap-2 hover:underline text-xs min-h-[44px] cursor-pointer"
           >
             <UtensilsCrossed className="w-4 h-4" />
             Visit Again

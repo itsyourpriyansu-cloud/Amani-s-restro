@@ -62,7 +62,7 @@ const AnimatedSplashScreen = ({ onComplete, autoDismiss = true }) => {
       alpha: Math.random() * 0.7 + 0.2,
       vx: (Math.random() - 0.5) * 0.35,
       vy: -Math.random() * 0.5 - 0.2,
-      color: Math.random() > 0.4 ? '#E59E2B' : '#F4A261',
+      color: Math.random() > 0.4 ? '#C9953D' : '#E3C583',
     }));
 
     const render = () => {
@@ -164,7 +164,7 @@ const AnimatedSplashScreen = ({ onComplete, autoDismiss = true }) => {
             transition={{ duration: 4.8, ease: 'easeOut' }}
             className="absolute z-20 pointer-events-none"
           >
-            <BrassMotifIcon className="w-[340px] h-[340px] text-[#E59E2B]" />
+            <BrassMotifIcon className="w-[340px] h-[340px] text-highlight" />
           </motion.div>
 
           {/* Layer 4: Rising Aroma & Steam Swirls */}
@@ -218,16 +218,16 @@ const AnimatedSplashScreen = ({ onComplete, autoDismiss = true }) => {
               initial={{ scale: 0, opacity: 0, rotate: -20 }}
               animate={{ scale: 1, opacity: 1, rotate: 0 }}
               transition={{ duration: 0.9, delay: 1.5, ease: [0.34, 1.56, 0.64, 1] }}
-              className="relative w-16 h-16 rounded-full bg-gradient-to-br from-[#A30F3B] to-[#5C0A20] border-2 border-[#E59E2B] flex items-center justify-center shadow-[0_0_35px_rgba(229,158,43,0.5)] mb-4"
+              className="relative w-16 h-16 rounded-full bg-gradient-to-br from-primary to-maroon-950 border-2 border-highlight flex items-center justify-center shadow-[0_0_35px_rgba(201,149,61,0.5)] mb-4"
             >
-              <span className="text-2xl font-bold text-[#E59E2B] font-telugu drop-shadow">
+              <span className="text-2xl font-bold text-highlight font-telugu drop-shadow">
                 మ
               </span>
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: [0, 1, 0], scale: [0.8, 1.4, 1.85] }}
                 transition={{ duration: 1.4, delay: 2.4, repeat: Infinity, repeatDelay: 1.5 }}
-                className="absolute inset-0 rounded-full border border-[#E59E2B]"
+                className="absolute inset-0 rounded-full border border-highlight"
               />
             </motion.div>
 
@@ -236,7 +236,7 @@ const AnimatedSplashScreen = ({ onComplete, autoDismiss = true }) => {
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 2.2, ease: 'easeOut' }}
-              className="font-telugu text-[23px] font-bold text-[#E59E2B] tracking-wide mb-1 drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)]"
+              className="font-telugu text-[23px] font-bold text-highlight tracking-wide mb-1 drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)]"
               lang="te"
             >
               {restaurantConfig.nativeName}
@@ -247,7 +247,7 @@ const AnimatedSplashScreen = ({ onComplete, autoDismiss = true }) => {
               initial={{ opacity: 0, y: 16, letterSpacing: '0.06em' }}
               animate={{ opacity: 1, y: 0, letterSpacing: '0.02em' }}
               transition={{ duration: 0.8, delay: 2.6, ease: 'easeOut' }}
-              className="relative font-bold text-[32px] leading-tight text-[#FFFDF9] tracking-tight drop-shadow-[0_4px_20px_rgba(0,0,0,0.95)]"
+              className="relative font-bold text-[32px] leading-tight text-surface tracking-tight drop-shadow-[0_4px_20px_rgba(0,0,0,0.95)]"
             >
               {restaurantConfig.name}
 
@@ -256,7 +256,7 @@ const AnimatedSplashScreen = ({ onComplete, autoDismiss = true }) => {
                 initial={{ x: '-120%', opacity: 0 }}
                 animate={{ x: '140%', opacity: [0, 1, 0] }}
                 transition={{ duration: 0.9, delay: 3.4, ease: 'easeInOut' }}
-                className="absolute inset-0 w-1/3 bg-gradient-to-r from-transparent via-[#E59E2B]/50 to-transparent skew-x-12 pointer-events-none"
+                className="absolute inset-0 w-1/3 bg-gradient-to-r from-transparent via-highlight/50 to-transparent skew-x-12 pointer-events-none"
               />
             </motion.h1>
 
@@ -265,7 +265,7 @@ const AnimatedSplashScreen = ({ onComplete, autoDismiss = true }) => {
               initial={{ scaleX: 0, opacity: 0 }}
               animate={{ scaleX: 1, opacity: 0.85 }}
               transition={{ duration: 0.7, delay: 3.0 }}
-              className="w-28 h-[1.5px] my-3.5 bg-gradient-to-r from-transparent via-[#E59E2B] to-transparent"
+              className="w-28 h-[1.5px] my-3.5 bg-gradient-to-r from-transparent via-highlight to-transparent"
             />
 
             {/* Tagline: "A Journey of Tradition. A Legacy of Flavour." */}
@@ -273,7 +273,7 @@ const AnimatedSplashScreen = ({ onComplete, autoDismiss = true }) => {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 3.2, ease: 'easeOut' }}
-              className="text-[13.5px] font-medium text-[#F8F0E5]/95 tracking-wide leading-relaxed max-w-[290px]"
+              className="text-[13.5px] font-medium text-surface/95 tracking-wide leading-relaxed max-w-[290px]"
             >
               {restaurantConfig.tagline}
             </motion.p>
@@ -289,11 +289,11 @@ const AnimatedSplashScreen = ({ onComplete, autoDismiss = true }) => {
             <button
               type="button"
               onClick={handleDismiss}
-              className="px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-[#FFFDF9] text-[12px] font-semibold tracking-wide backdrop-blur-md transition-all active:scale-95 cursor-pointer flex items-center gap-1.5 shadow-lg"
+              className="px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-surface text-[12px] font-semibold tracking-wide backdrop-blur-md transition-all active:scale-95 cursor-pointer flex items-center gap-1.5 shadow-lg"
               aria-label="Skip splash screen animation"
             >
               <span>Skip</span>
-              <span className="text-[#E59E2B]" aria-hidden="true">
+              <span className="text-highlight" aria-hidden="true">
                 ➔
               </span>
             </button>
@@ -304,7 +304,7 @@ const AnimatedSplashScreen = ({ onComplete, autoDismiss = true }) => {
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
             transition={{ duration: 4.8, ease: 'linear' }}
-            className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-[#A30F3B] via-[#E59E2B] to-[#3B6032] origin-left z-50"
+            className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-primary via-highlight to-secondary origin-left z-50"
           />
         </motion.div>
       )}

@@ -37,7 +37,7 @@ const DietaryFilterRail = ({ activeFilters = [], onToggleFilter, onResetFilters 
           type="button"
           onClick={scrollLeft}
           aria-label="Scroll filters left"
-          className="absolute left-2 top-1/2 -translate-y-1/2 z-20 w-7 h-7 rounded-full bg-white/95 shadow-md border border-[#EADFD6] text-[#A30F3B] hidden sm:flex items-center justify-center hover:bg-[#FFF7EE] transition-all cursor-pointer"
+          className="absolute left-2 top-1/2 -translate-y-1/2 z-20 w-7 h-7 rounded-full bg-surface/95 shadow-md border border-outline-variant text-primary hidden sm:flex items-center justify-center hover:bg-surface-container transition-all cursor-pointer"
         >
           <ChevronLeft className="w-4 h-4" />
         </button>
@@ -49,7 +49,7 @@ const DietaryFilterRail = ({ activeFilters = [], onToggleFilter, onResetFilters 
           type="button"
           onClick={scrollRight}
           aria-label="Scroll filters right"
-          className="absolute right-2 top-1/2 -translate-y-1/2 z-20 w-7 h-7 rounded-full bg-white/95 shadow-md border border-[#EADFD6] text-[#A30F3B] hidden sm:flex items-center justify-center hover:bg-[#FFF7EE] transition-all cursor-pointer"
+          className="absolute right-2 top-1/2 -translate-y-1/2 z-20 w-7 h-7 rounded-full bg-surface/95 shadow-md border border-outline-variant text-primary hidden sm:flex items-center justify-center hover:bg-surface-container transition-all cursor-pointer"
         >
           <ChevronRight className="w-4 h-4" />
         </button>
@@ -67,6 +67,26 @@ const DietaryFilterRail = ({ activeFilters = [], onToggleFilter, onResetFilters 
           WebkitOverflowScrolling: 'touch',
         }}
       >
+        {/* More filters trigger — placed at the beginning */}
+        <button
+          type="button"
+          onClick={() => setIsFilterModalOpen(true)}
+          aria-label="Open more dietary and spice filters"
+          className={`shrink-0 min-h-[36px] px-3.5 py-1.5 rounded-full text-[12.5px] font-bold border flex items-center gap-1.5 transition-all duration-150 active:scale-95 cursor-pointer ${
+            secondaryActiveCount > 0
+              ? 'bg-primary text-on-primary border-primary'
+              : 'bg-surface text-on-surface border-outline-variant hover:bg-surface-container'
+          }`}
+        >
+          <SlidersHorizontal className="w-3.5 h-3.5" aria-hidden="true" />
+          <span>More filters</span>
+          {secondaryActiveCount > 0 && (
+            <span className="w-4 h-4 rounded-full bg-on-primary text-primary text-[10px] font-extrabold flex items-center justify-center">
+              {secondaryActiveCount}
+            </span>
+          )}
+        </button>
+
         {/* Primary chips */}
         {primaryFilters.map((f) => {
           const isActive = activeFilters.includes(f.id);
@@ -78,8 +98,8 @@ const DietaryFilterRail = ({ activeFilters = [], onToggleFilter, onResetFilters 
               aria-pressed={isActive}
               className={`shrink-0 min-h-[36px] px-3.5 py-1.5 rounded-full text-[12.5px] font-bold border transition-all duration-150 active:scale-95 cursor-pointer ${
                 isActive
-                  ? 'bg-[#FBECEF] text-[#A30F3B] border-[#A30F3B]/30 shadow-2xs'
-                  : 'bg-white text-[#6F5F58] border-[#EADFD6] hover:bg-[#FFF7EE] hover:text-[#211917]'
+                  ? 'bg-primary-container text-primary border-primary/30 shadow-2xs'
+                  : 'bg-surface text-on-surface-variant border-outline-variant hover:bg-surface-container hover:text-on-surface'
               }`}
             >
               {f.label}
@@ -87,31 +107,11 @@ const DietaryFilterRail = ({ activeFilters = [], onToggleFilter, onResetFilters 
           );
         })}
 
-        {/* More filters trigger — opens the bottom sheet with the rest */}
-        <button
-          type="button"
-          onClick={() => setIsFilterModalOpen(true)}
-          aria-label="Open more dietary and spice filters"
-          className={`shrink-0 min-h-[36px] px-3.5 py-1.5 rounded-full text-[12.5px] font-bold border flex items-center gap-1.5 transition-all duration-150 active:scale-95 cursor-pointer ${
-            secondaryActiveCount > 0
-              ? 'bg-[#A30F3B] text-white border-[#A30F3B]'
-              : 'bg-white text-[#211917] border-[#EADFD6] hover:bg-[#FFF7EE]'
-          }`}
-        >
-          <SlidersHorizontal className="w-3.5 h-3.5" aria-hidden="true" />
-          <span>More filters</span>
-          {secondaryActiveCount > 0 && (
-            <span className="w-4 h-4 rounded-full bg-white text-[#A30F3B] text-[10px] font-extrabold flex items-center justify-center">
-              {secondaryActiveCount}
-            </span>
-          )}
-        </button>
-
         {activeFilters.length > 0 && (
           <button
             type="button"
             onClick={onResetFilters}
-            className="shrink-0 text-xs font-semibold text-[#95867E] hover:text-[#A30F3B] underline px-1 transition-colors cursor-pointer"
+            className="shrink-0 text-xs font-semibold text-on-surface-variant hover:text-primary underline px-1 transition-colors cursor-pointer"
           >
             Clear
           </button>
@@ -120,17 +120,17 @@ const DietaryFilterRail = ({ activeFilters = [], onToggleFilter, onResetFilters 
 
       {/* Secondary Filters Drawer / Modal */}
       {isFilterModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/50 backdrop-blur-xs p-0 sm:p-4">
-          <div className="w-full max-w-md bg-white rounded-t-[24px] sm:rounded-[24px] p-5 shadow-2xl animate-in slide-in-from-bottom duration-200">
-            <div className="flex items-center justify-between pb-3 border-b border-[#EADFD6]">
+        <div className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center bg-black/60 backdrop-blur-xs p-0 sm:p-4">
+          <div className="w-full max-w-md bg-surface rounded-t-[24px] sm:rounded-[24px] p-5 shadow-2xl animate-in slide-in-from-bottom duration-200">
+            <div className="flex items-center justify-between pb-3 border-b border-outline-variant">
               <div className="flex items-center gap-2">
-                <SlidersHorizontal className="w-5 h-5 text-[#A30F3B]" />
-                <h3 className="text-lg font-bold text-[#211917]">More Filters</h3>
+                <SlidersHorizontal className="w-5 h-5 text-primary" />
+                <h3 className="text-lg font-bold text-on-surface">More Filters</h3>
               </div>
               <button
                 type="button"
                 onClick={() => setIsFilterModalOpen(false)}
-                className="w-8 h-8 rounded-full bg-[#FFF7EE] text-[#6F5F58] hover:text-[#211917] flex items-center justify-center cursor-pointer"
+                className="w-8 h-8 rounded-full bg-surface-container text-on-surface-variant hover:text-on-surface flex items-center justify-center cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -138,7 +138,7 @@ const DietaryFilterRail = ({ activeFilters = [], onToggleFilter, onResetFilters 
 
             <div className="py-4 space-y-4 max-h-[60vh] overflow-y-auto">
               <div>
-                <h4 className="text-xs font-bold uppercase tracking-wider text-[#95867E] mb-2.5">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-on-surface-variant mb-2.5">
                   Dietary Preferences
                 </h4>
                 <div className="flex flex-wrap gap-2">
@@ -151,8 +151,8 @@ const DietaryFilterRail = ({ activeFilters = [], onToggleFilter, onResetFilters 
                         onClick={() => onToggleFilter(f.id)}
                         className={`min-h-[40px] px-4 rounded-xl text-xs font-bold border flex items-center gap-2 transition-colors ${
                           isActive
-                            ? 'bg-[#FBECEF] text-[#A30F3B] border-[#A30F3B]'
-                            : 'bg-white text-[#6F5F58] border-[#EADFD6]'
+                            ? 'bg-primary-container text-primary border-primary'
+                            : 'bg-surface text-on-surface-variant border-outline-variant'
                         }`}
                       >
                         {isActive && <Check className="w-3.5 h-3.5" />}
@@ -164,7 +164,7 @@ const DietaryFilterRail = ({ activeFilters = [], onToggleFilter, onResetFilters 
               </div>
 
               <div>
-                <h4 className="text-xs font-bold uppercase tracking-wider text-[#95867E] mb-2.5">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-on-surface-variant mb-2.5">
                   Spice Level
                 </h4>
                 <div className="flex flex-wrap gap-2">
@@ -177,8 +177,8 @@ const DietaryFilterRail = ({ activeFilters = [], onToggleFilter, onResetFilters 
                         onClick={() => onToggleFilter(f.id)}
                         className={`min-h-[40px] px-4 rounded-xl text-xs font-bold border flex items-center gap-2 transition-colors ${
                           isActive
-                            ? 'bg-[#FBECEF] text-[#A30F3B] border-[#A30F3B]'
-                            : 'bg-white text-[#6F5F58] border-[#EADFD6]'
+                            ? 'bg-primary-container text-primary border-primary'
+                            : 'bg-surface text-on-surface-variant border-outline-variant'
                         }`}
                       >
                         {isActive && <Check className="w-3.5 h-3.5" />}
@@ -190,21 +190,21 @@ const DietaryFilterRail = ({ activeFilters = [], onToggleFilter, onResetFilters 
               </div>
             </div>
 
-            <div className="pt-3 border-t border-[#EADFD6] flex items-center gap-3">
+            <div className="pt-3 border-t border-outline-variant flex items-center gap-3">
               <button
                 type="button"
                 onClick={() => {
                   onResetFilters();
                   setIsFilterModalOpen(false);
                 }}
-                className="flex-1 h-11 rounded-xl border border-[#EADFD6] text-xs font-bold text-[#6F5F58] hover:bg-[#FFF7EE] transition-colors"
+                className="flex-1 h-11 rounded-xl border border-outline-variant text-xs font-bold text-on-surface-variant hover:bg-surface-container transition-colors"
               >
                 Reset All
               </button>
               <button
                 type="button"
                 onClick={() => setIsFilterModalOpen(false)}
-                className="flex-1 h-11 rounded-xl bg-[#A30F3B] text-white text-xs font-bold shadow-md hover:bg-[#7E0D2F] transition-colors"
+                className="flex-1 h-11 rounded-xl bg-primary text-on-primary text-xs font-bold shadow-md hover:brightness-90 transition-colors"
               >
                 Apply Filters ({activeFilters.length})
               </button>

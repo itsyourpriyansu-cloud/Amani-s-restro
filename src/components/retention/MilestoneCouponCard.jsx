@@ -175,20 +175,20 @@ const MilestoneCouponCard = ({ activeOrder, onOpenPrivacyControls }) => {
     <>
       <section
         aria-label="Coupon Request Progress"
-        className="w-full p-4 bg-white rounded-2xl border border-[#EADFD6] shadow-sm space-y-4 text-left"
+        className="w-full p-4 bg-surface rounded-2xl border border-outline-variant shadow-sm space-y-4 text-left"
       >
         {/* Card Header & Milestone Context */}
         <div className="flex items-start gap-3">
-          <div className="w-10 h-10 rounded-xl bg-[#FBECEF] flex items-center justify-center text-[#A30F3B] shrink-0 mt-0.5">
+          <div className="w-10 h-10 rounded-xl bg-primary-container flex items-center justify-center text-primary shrink-0 mt-0.5">
             <Award className="w-5 h-5" />
           </div>
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2 flex-wrap mb-1">
-              <span className="px-2.5 py-0.5 rounded-full bg-[#FBECEF] text-[#A30F3B] text-[11px] font-bold tracking-tight">
+              <span className="px-2.5 py-0.5 rounded-full bg-primary-container text-primary text-[11px] font-bold tracking-tight">
                 Regular Guest · {discountValue}% OFF Coupon
               </span>
               {request?.requestId && (
-                <span className="px-2 py-0.5 rounded-md bg-[#FFF8F1] border border-[#EADFD6] text-[#6E5F58] font-mono text-[11px] font-semibold">
+                <span className="px-2 py-0.5 rounded-md bg-surface-container border border-outline-variant text-on-surface-variant font-mono text-[11px] font-semibold">
                   Request {request.requestId}
                 </span>
               )}
@@ -196,12 +196,12 @@ const MilestoneCouponCard = ({ activeOrder, onOpenPrivacyControls }) => {
 
             {isConfirmedOrLater ? (
               <>
-                <h2 className="text-[19px] font-bold text-[#211917] leading-tight">
+                <h2 className="text-[19px] font-bold text-on-surface leading-tight">
                   {status === 'COUPON_ISSUED'
                     ? `Your ${request.coupon.discountValue}% OFF Coupon Is Ready`
                     : 'Request Sent for Review'}
                 </h2>
-                <p className="text-[13px] text-[#6E5F58] mt-1 leading-snug">
+                <p className="text-[13px] text-on-surface-variant mt-1 leading-snug">
                   {status === 'COUPON_ISSUED'
                     ? 'Show this code on your next visit to redeem.'
                     : 'Your WhatsApp coupon request is now awaiting restaurant review.'}
@@ -209,10 +209,10 @@ const MilestoneCouponCard = ({ activeOrder, onOpenPrivacyControls }) => {
               </>
             ) : (
               <>
-                <h2 className="text-[19px] font-bold text-[#211917] leading-tight">
+                <h2 className="text-[19px] font-bold text-on-surface leading-tight">
                   Complete Your Coupon Request
                 </h2>
-                <p className="text-[13px] text-[#6E5F58] mt-1 leading-snug">
+                <p className="text-[13px] text-on-surface-variant mt-1 leading-snug">
                   Send the prepared WhatsApp message, then confirm below.
                 </p>
               </>
@@ -222,16 +222,16 @@ const MilestoneCouponCard = ({ activeOrder, onOpenPrivacyControls }) => {
 
         {/* 3-Step Progress Indicator */}
         <div className="w-full pt-1 pb-1">
-          <div className="flex items-center justify-between text-[10px] font-semibold text-[#A30F3B] uppercase tracking-wider mb-2">
+          <div className="flex items-center justify-between text-[10px] font-semibold text-primary uppercase tracking-wider mb-2">
             <span>Progress Status</span>
             <span>Step {activeStep} of 3</span>
           </div>
 
           <ol className="relative flex items-center justify-between w-full">
             {/* Connecting line */}
-            <div className="absolute top-3 left-6 right-6 h-0.5 bg-[#EADFD6] z-0" />
+            <div className="absolute top-3 left-6 right-6 h-0.5 bg-outline-variant z-0" />
             <div
-              className="absolute top-3 left-6 h-0.5 bg-[#138A5B] z-0 transition-all duration-300"
+              className="absolute top-3 left-6 h-0.5 bg-success z-0 transition-all duration-300"
               style={{
                 width: isConfirmedOrLater ? 'calc(100% - 48px)' : 'calc(50% - 24px)',
               }}
@@ -245,15 +245,15 @@ const MilestoneCouponCard = ({ activeOrder, onOpenPrivacyControls }) => {
               <div
                 className={`w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-bold transition-colors ${
                   isMessagePrepared
-                    ? 'bg-[#138A5B] text-white shadow-xs'
-                    : 'bg-[#A30F3B] text-white ring-4 ring-[#FBECEF]'
+                    ? 'bg-success text-white shadow-xs'
+                    : 'bg-primary text-white ring-4 ring-primary-container'
                 }`}
               >
                 ✓
               </div>
               <span
                 className={`text-[11px] font-semibold tracking-tight ${
-                  isMessagePrepared ? 'text-[#138A5B]' : 'text-[#A30F3B]'
+                  isMessagePrepared ? 'text-success' : 'text-primary'
                 }`}
               >
                 Prepared
@@ -268,10 +268,10 @@ const MilestoneCouponCard = ({ activeOrder, onOpenPrivacyControls }) => {
               <div
                 className={`w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-bold transition-colors ${
                   isSent
-                    ? 'bg-[#138A5B] text-white shadow-xs'
+                    ? 'bg-success text-white shadow-xs'
                     : activeStep === 2
-                    ? 'bg-[#A30F3B] text-white ring-4 ring-[#FBECEF]'
-                    : 'bg-white border-2 border-[#93847D] text-[#93847D]'
+                    ? 'bg-primary text-white ring-4 ring-primary-container'
+                    : 'bg-white border-2 border-outline text-on-surface-variant'
                 }`}
               >
                 {isSent ? '✓' : '●'}
@@ -279,10 +279,10 @@ const MilestoneCouponCard = ({ activeOrder, onOpenPrivacyControls }) => {
               <span
                 className={`text-[11px] font-semibold tracking-tight ${
                   isSent
-                    ? 'text-[#138A5B]'
+                    ? 'text-success'
                     : activeStep === 2
-                    ? 'text-[#A30F3B] font-bold'
-                    : 'text-[#93847D]'
+                    ? 'text-primary font-bold'
+                    : 'text-on-surface-variant'
                 }`}
               >
                 WhatsApp
@@ -297,10 +297,10 @@ const MilestoneCouponCard = ({ activeOrder, onOpenPrivacyControls }) => {
               <div
                 className={`w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-bold transition-colors ${
                   isReviewed
-                    ? 'bg-[#138A5B] text-white shadow-xs'
+                    ? 'bg-success text-white shadow-xs'
                     : activeStep === 3
-                    ? 'bg-[#A30F3B] text-white ring-4 ring-[#FBECEF]'
-                    : 'bg-white border-2 border-[#93847D] text-[#93847D]'
+                    ? 'bg-primary text-white ring-4 ring-primary-container'
+                    : 'bg-white border-2 border-outline text-on-surface-variant'
                 }`}
               >
                 {isReviewed ? '✓' : '○'}
@@ -308,10 +308,10 @@ const MilestoneCouponCard = ({ activeOrder, onOpenPrivacyControls }) => {
               <span
                 className={`text-[11px] font-semibold tracking-tight ${
                   isReviewed
-                    ? 'text-[#138A5B]'
+                    ? 'text-success'
                     : activeStep === 3
-                    ? 'text-[#A30F3B] font-bold'
-                    : 'text-[#93847D]'
+                    ? 'text-primary font-bold'
+                    : 'text-on-surface-variant'
                 }`}
               >
                 Review
@@ -322,13 +322,13 @@ const MilestoneCouponCard = ({ activeOrder, onOpenPrivacyControls }) => {
 
         {/* Current-Step Message Surface */}
         {!isConfirmedOrLater && (
-          <div className="p-3 rounded-xl bg-[#EAFBF0] border border-[#25D366]/30 flex items-start gap-2.5 text-xs text-[#211917]">
+          <div className="p-3 rounded-xl bg-success/10 border border-[#25D366]/30 flex items-start gap-2.5 text-xs text-on-surface">
             <MessageCircle className="w-4 h-4 text-[#25D366] shrink-0 mt-0.5" />
             <div className="space-y-0.5">
               <p className="font-bold text-[#128C7E] text-[13px]">
                 {status === 'WHATSAPP_OPENED' ? 'WhatsApp opened' : 'WhatsApp is ready'}
               </p>
-              <p className="text-[#6E5F58] text-[12px] leading-relaxed">
+              <p className="text-on-surface-variant text-[12px] leading-relaxed">
                 {status === 'WHATSAPP_OPENED'
                   ? 'Complete the message in WhatsApp, then return here.'
                   : 'Send the prepared message to Mangamma Ruchulu, then return here and confirm that it was sent.'}
@@ -344,7 +344,7 @@ const MilestoneCouponCard = ({ activeOrder, onOpenPrivacyControls }) => {
             <button
               onClick={handleConfirmSent}
               aria-label="Confirm that you sent the WhatsApp message"
-              className="w-full h-[52px] min-h-[44px] rounded-xl bg-[#A30F3B] hover:bg-[#7E0D2F] text-white font-bold text-[15px] flex items-center justify-center gap-2 shadow-sm transition-all active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A30F3B] focus-visible:ring-offset-2 cursor-pointer"
+              className="w-full h-[52px] min-h-[44px] rounded-xl bg-primary hover:brightness-90 text-white font-bold text-[15px] flex items-center justify-center gap-2 shadow-sm transition-all active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 cursor-pointer"
             >
               <CheckCircle2 className="w-5 h-5" />
               I’ve Sent the Message
@@ -354,7 +354,7 @@ const MilestoneCouponCard = ({ activeOrder, onOpenPrivacyControls }) => {
             <button
               onClick={handleOpenWhatsApp}
               aria-label="Open WhatsApp again to send the message"
-              className="w-full h-[48px] min-h-[44px] rounded-xl bg-white border-2 border-[#25D366] text-[#128C7E] hover:bg-[#EAFBF0] font-bold text-[14px] flex items-center justify-center gap-2 transition-all active:scale-[0.99] cursor-pointer"
+              className="w-full h-[48px] min-h-[44px] rounded-xl bg-surface border-2 border-[#25D366] text-[#128C7E] hover:bg-success/10 font-bold text-[14px] flex items-center justify-center gap-2 transition-all active:scale-[0.99] cursor-pointer"
             >
               <MessageCircle className="w-4.5 h-4.5 text-[#25D366]" />
               Open WhatsApp Again
@@ -362,7 +362,7 @@ const MilestoneCouponCard = ({ activeOrder, onOpenPrivacyControls }) => {
 
             <button
               onClick={() => setIsClaimOpen(true)}
-              className="w-full text-center py-1 text-xs font-semibold text-[#A30F3B] hover:underline"
+              className="w-full text-center py-1 text-xs font-semibold text-primary hover:underline"
             >
               Edit request details or preferences
             </button>
@@ -372,14 +372,14 @@ const MilestoneCouponCard = ({ activeOrder, onOpenPrivacyControls }) => {
         {/* Confirmed / Awaiting Review State Card & Actions */}
         {isConfirmedOrLater && status !== 'COUPON_ISSUED' && status !== 'DECLINED' && (
           <div className="space-y-3 pt-1">
-            <div className="p-3.5 rounded-xl bg-[#FFF8F1] border border-[#EADFD6] space-y-1 text-xs text-[#211917]">
+            <div className="p-3.5 rounded-xl bg-surface-container border border-outline-variant space-y-1 text-xs text-on-surface">
               <div className="flex items-center justify-between">
-                <span className="font-bold text-[#A30F3B] text-[13px] flex items-center gap-1.5">
+                <span className="font-bold text-primary text-[13px] flex items-center gap-1.5">
                   <Clock className="w-3.5 h-3.5" />
                   Status: Awaiting Restaurant Review
                 </span>
               </div>
-              <p className="text-[#6E5F58] text-[12px] leading-relaxed pt-0.5">
+              <p className="text-on-surface-variant text-[12px] leading-relaxed pt-0.5">
                 Your WhatsApp request has been recorded. Mangamma Ruchulu staff will verify your visit and issue your coupon code.
               </p>
             </div>
@@ -387,7 +387,7 @@ const MilestoneCouponCard = ({ activeOrder, onOpenPrivacyControls }) => {
             <div className="flex flex-col gap-2">
               <button
                 onClick={() => setIsStatusModalOpen(true)}
-                className="w-full h-11 rounded-xl bg-[#A30F3B] text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-xs hover:bg-[#7E0D2F] transition-colors cursor-pointer"
+                className="w-full h-11 rounded-xl bg-primary text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-xs hover:brightness-90 transition-colors cursor-pointer"
               >
                 View Request Status
               </button>
@@ -405,29 +405,29 @@ const MilestoneCouponCard = ({ activeOrder, onOpenPrivacyControls }) => {
 
         {/* Coupon Issued Display */}
         {status === 'COUPON_ISSUED' && (
-          <div className="p-3.5 bg-[#FBECEF] rounded-xl border border-[#A30F3B]/20 space-y-2">
+          <div className="p-3.5 bg-primary-container rounded-xl border border-primary/20 space-y-2">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-[10px] text-[#A30F3B] uppercase font-bold tracking-wide">Issued Coupon Code</p>
-                <p className="font-mono font-bold text-[#A30F3B] text-lg">{request.coupon.code}</p>
+                <p className="text-[10px] text-primary uppercase font-bold tracking-wide">Issued Coupon Code</p>
+                <p className="font-mono font-bold text-primary text-lg">{request.coupon.code}</p>
               </div>
               <button
                 onClick={() => handleCopyCode(request.coupon.code)}
-                className="px-3 py-1.5 bg-[#A30F3B] text-white rounded-lg text-xs font-bold flex items-center gap-1 shadow-xs hover:bg-[#7E0D2F] transition-colors cursor-pointer"
+                className="px-3 py-1.5 bg-primary text-white rounded-lg text-xs font-bold flex items-center gap-1 shadow-xs hover:brightness-90 transition-colors cursor-pointer"
               >
                 <Copy className="w-3.5 h-3.5" /> Copy Code
               </button>
             </div>
-            <p className="text-[11px] text-[#6E5F58]">Valid until: {request.coupon.validUntil || '30 days'}</p>
+            <p className="text-[11px] text-on-surface-variant">Valid until: {request.coupon.validUntil || '30 days'}</p>
           </div>
         )}
 
         {/* Declined Display */}
         {status === 'DECLINED' && (
           <div className="space-y-2">
-            <div className="p-3 bg-red-50 rounded-xl border border-red-200 text-xs text-red-900">
+            <div className="p-3 bg-error-container/50 rounded-xl border border-error/20 text-xs text-on-error-container">
               <p className="font-bold">Request Declined</p>
-              <p className="mt-0.5 text-red-700">{request.declineReason || 'Please speak with restaurant staff.'}</p>
+              <p className="mt-0.5 text-error">{request.declineReason || 'Please speak with restaurant staff.'}</p>
             </div>
             <a
               href={`tel:${restaurantConfig.contact.phone}`}
@@ -440,29 +440,29 @@ const MilestoneCouponCard = ({ activeOrder, onOpenPrivacyControls }) => {
         )}
 
         {/* "What Happens Next?" Expandable Accordion */}
-        <div className="border-t border-[#F0E7E0] pt-3">
+        <div className="border-t border-outline-variant pt-3">
           <button
             type="button"
             onClick={() => setIsExpanded(!isExpanded)}
             aria-expanded={isExpanded}
-            className="w-full flex items-center justify-between text-xs font-semibold text-[#A30F3B] hover:underline cursor-pointer"
+            className="w-full flex items-center justify-between text-xs font-semibold text-primary hover:underline cursor-pointer"
           >
             <span className="flex items-center gap-1.5">
-              <HelpCircle className="w-3.5 h-3.5 text-[#A30F3B]" />
+              <HelpCircle className="w-3.5 h-3.5 text-primary" />
               What happens next?
             </span>
             {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
           </button>
           {isExpanded && (
-            <div className="mt-2.5 p-3 rounded-xl bg-[#FFFDF9] border border-[#EADFD6] space-y-1.5 text-xs text-[#6E5F58]">
+            <div className="mt-2.5 p-3 rounded-xl bg-surface-container border border-outline-variant space-y-1.5 text-xs text-on-surface-variant">
               <p className="leading-relaxed">
                 Mangamma Ruchulu will review your completed-visit milestone and WhatsApp request.
               </p>
               <p className="leading-relaxed">
                 After verification, your coupon status will be updated here. You do not need to submit the request again.
               </p>
-              <div className="pt-1 text-[11px] font-semibold text-[#93847D] flex items-center gap-1">
-                <Clock className="w-3.5 h-3.5 text-[#93847D]" />
+              <div className="pt-1 text-[11px] font-semibold text-on-surface-variant flex items-center gap-1">
+                <Clock className="w-3.5 h-3.5 text-on-surface-variant" />
                 Typical review: During restaurant operating hours
               </div>
             </div>
@@ -473,7 +473,7 @@ const MilestoneCouponCard = ({ activeOrder, onOpenPrivacyControls }) => {
         <div className="flex items-center justify-between text-xs pt-0.5">
           <button
             onClick={() => setIsConditionsOpen(true)}
-            className="text-[#A30F3B] font-semibold text-xs hover:underline flex items-center gap-1"
+            className="text-primary font-semibold text-xs hover:underline flex items-center gap-1"
           >
             <Info className="w-3.5 h-3.5" />
             View coupon conditions
@@ -482,7 +482,7 @@ const MilestoneCouponCard = ({ activeOrder, onOpenPrivacyControls }) => {
           {onOpenPrivacyControls && (
             <button
               onClick={onOpenPrivacyControls}
-              className="text-[#6E5F58] hover:text-[#A30F3B] font-semibold text-xs flex items-center gap-1"
+              className="text-on-surface-variant hover:text-primary font-semibold text-xs flex items-center gap-1"
             >
               <ShieldCheck className="w-3.5 h-3.5" />
               Privacy Controls
@@ -516,29 +516,29 @@ const MilestoneCouponCard = ({ activeOrder, onOpenPrivacyControls }) => {
         position="bottom"
       >
         <div className="space-y-4 text-left text-xs">
-          <div className="p-3.5 bg-[#FFF8F1] rounded-xl border border-[#EADFD6] space-y-2">
-            <div className="flex items-center justify-between font-bold text-sm text-[#A30F3B]">
+          <div className="p-3.5 bg-surface-container rounded-xl border border-outline-variant space-y-2">
+            <div className="flex items-center justify-between font-bold text-sm text-primary">
               <span>Request Reference</span>
               <span className="font-mono text-xs">{request?.requestId || 'CPN-REQ-2048'}</span>
             </div>
-            <p className="text-[#6E5F58]">
+            <p className="text-on-surface-variant">
               Submitted on: {request?.createdAt || new Date().toLocaleString('en-IN')}
             </p>
-            <p className="text-[#6E5F58]">
-              Current state: <span className="font-bold text-[#A30F3B]">Awaiting Restaurant Review</span>
+            <p className="text-on-surface-variant">
+              Current state: <span className="font-bold text-primary">Awaiting Restaurant Review</span>
             </p>
           </div>
 
           <div className="space-y-2">
-            <p className="font-bold text-[#211917]">Audit Activity</p>
+            <p className="font-bold text-on-surface">Audit Activity</p>
             <div className="space-y-1.5 max-h-40 overflow-y-auto pr-1">
               {(request?.auditHistory || [
                 { time: 'Just now', text: 'Customer confirmed message sent on WhatsApp' },
                 { time: '2 mins ago', text: 'Customer opened WhatsApp with prepared message' },
               ]).map((item, idx) => (
                 <div key={idx} className="p-2 bg-surface-container-low rounded-lg text-[11px]">
-                  <span className="font-bold text-[#A30F3B]">{item.time}:</span>{' '}
-                  <span className="text-[#6E5F58]">{item.text}</span>
+                  <span className="font-bold text-primary">{item.time}:</span>{' '}
+                  <span className="text-on-surface-variant">{item.text}</span>
                 </div>
               ))}
             </div>
@@ -546,7 +546,7 @@ const MilestoneCouponCard = ({ activeOrder, onOpenPrivacyControls }) => {
 
           <button
             onClick={() => setIsStatusModalOpen(false)}
-            className="w-full h-11 rounded-xl bg-[#A30F3B] text-white font-bold text-xs"
+            className="w-full h-11 rounded-xl bg-primary text-white font-bold text-xs"
           >
             Close
           </button>

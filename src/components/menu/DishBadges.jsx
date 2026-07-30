@@ -3,33 +3,65 @@ import { Clock, Flame, AlertTriangle } from 'lucide-react';
 import { formatMenuPrice } from '../../utils/formatters';
 
 /**
- * Small, reusable dish-metadata badges shared by FoodCard and FoodDetailsScreen.
- * Dietary/spice/availability status is always paired with a text label — never color alone.
+ * Modernized dish-metadata badges shared by FoodCard and FoodDetailsScreen.
+ * FoodTypeBadge uses standard FSSAI Indian food icons (Green dot/square for Veg, Red dot/square for Non-Veg)
+ * to save horizontal space and eliminate clipping on mobile cards.
  */
 
-const FOOD_TYPE_META = {
-  VEGETARIAN: { label: 'Vegetarian', dotClass: 'bg-success', textClass: 'text-success', bgClass: 'bg-success/10 border-success/30' },
-  NON_VEGETARIAN: { label: 'Non-Vegetarian', dotClass: 'bg-danger', textClass: 'text-danger', bgClass: 'bg-danger/10 border-danger/30' },
-  CONTAINS_EGG: { label: 'Contains Egg', dotClass: 'bg-warning', textClass: 'text-warning', bgClass: 'bg-warning/10 border-warning/30' },
-};
+export const FoodTypeBadge = ({ foodType, showLabel = false, className = '' }) => {
+  const isVeg = foodType === 'VEGETARIAN';
+  const isEgg = foodType === 'CONTAINS_EGG';
 
-export const FoodTypeBadge = ({ foodType, className = '' }) => {
-  const meta = FOOD_TYPE_META[foodType] || FOOD_TYPE_META.VEGETARIAN;
+  if (showLabel) {
+    return (
+      <span
+        className={`inline-flex items-center gap-1.5 h-[22px] px-2 rounded-full border text-[11px] leading-none font-semibold whitespace-nowrap flex-shrink-0 ${
+          isVeg
+            ? 'bg-success/10 text-success border-success/30'
+            : isEgg
+            ? 'bg-warning/10 text-warning border-warning/30'
+            : 'bg-error/10 text-error border-error/30'
+        } ${className}`}
+      >
+        <span className={`w-2.5 h-2.5 rounded-sm border flex items-center justify-center p-0.5 ${
+          isVeg ? 'border-success' : isEgg ? 'border-warning' : 'border-error'
+        }`}>
+          <span className={`w-1.5 h-1.5 rounded-full ${
+            isVeg ? 'bg-success' : isEgg ? 'bg-warning' : 'bg-error'
+          }`} />
+        </span>
+        {isVeg ? 'Vegetarian' : isEgg ? 'Egg' : 'Non-Veg'}
+      </span>
+    );
+  }
+
+  // Standard compact FSSAI 16x16 icon format for list cards
   return (
     <span
-      className={`inline-flex items-center gap-1.5 h-[22px] px-2 rounded-full border text-[11px] leading-none font-semibold whitespace-nowrap flex-shrink-0 ${meta.bgClass} ${meta.textClass} ${className}`}
+      className={`inline-flex items-center justify-center w-4 h-4 rounded-[3px] border-[1.5px] p-[2px] flex-shrink-0 bg-surface ${
+        isVeg
+          ? 'border-success'
+          : isEgg
+          ? 'border-warning'
+          : 'border-error'
+      } ${className}`}
+      title={isVeg ? 'Vegetarian' : isEgg ? 'Contains Egg' : 'Non-Vegetarian'}
+      aria-label={isVeg ? 'Vegetarian' : isEgg ? 'Contains Egg' : 'Non-Vegetarian'}
     >
-      <span className={`w-2 h-2 rounded-full border border-current ${meta.dotClass}`} aria-hidden="true" />
-      {meta.label}
+      <span
+        className={`w-2 h-2 ${isEgg ? 'rounded-xs' : 'rounded-full'} ${
+          isVeg ? 'bg-success' : isEgg ? 'bg-warning' : 'bg-error'
+        }`}
+      />
     </span>
   );
 };
 
 const SPICE_META = {
-  MILD: { label: 'Mild', flames: 1 },
-  MEDIUM: { label: 'Medium Spice', flames: 2 },
-  SPICY: { label: 'Spicy', flames: 3 },
-  EXTRA_SPICY: { label: 'Extra Spicy', flames: 3 },
+  MILD: { label: 'Mild', count: 1, color: 'text-warning' },
+  MEDIUM: { label: 'Medium', count: 2, color: 'text-warning' },
+  SPICY: { label: 'Spicy', count: 3, color: 'text-error' },
+  EXTRA_SPICY: { label: 'Extra Spicy', count: 3, color: 'text-error' },
 };
 
 export const SpiceLevelBadge = ({ spiceLevel, className = '' }) => {
@@ -37,26 +69,26 @@ export const SpiceLevelBadge = ({ spiceLevel, className = '' }) => {
   const meta = SPICE_META[spiceLevel] || SPICE_META.MEDIUM;
   return (
     <span
-      className={`inline-flex items-center gap-1 h-[22px] px-2 rounded-full border border-saffron-600/30 bg-saffron-100/60 text-maroon-900 text-[11px] leading-none font-semibold whitespace-nowrap flex-shrink-0 ${className}`}
-      title={meta.label}
+      className={`inline-flex items-center gap-1 h-5 px-1.5 rounded-md bg-error-container/50 border border-error/20 text-[11px] leading-none font-semibold text-on-error-container whitespace-nowrap flex-shrink-0 ${className}`}
+      title={`Spice Level: ${meta.label}`}
     >
-      <Flame className="w-3 h-3" aria-hidden="true" />
-      {meta.label}
+      <Flame className={`w-3 h-3 ${meta.color} fill-current`} aria-hidden="true" />
+      <span>{meta.label}</span>
     </span>
   );
 };
 
 export const PrepTimeBadge = ({ minutes, className = '' }) => (
-  <span className={`inline-flex items-center gap-1 text-[11px] font-medium text-muted ${className}`}>
+  <span className={`inline-flex items-center gap-1 text-[11px] font-medium text-on-surface-variant ${className}`}>
     <Clock className="w-3.5 h-3.5" aria-hidden="true" />
     {minutes ? `${minutes} min` : 'Prep time varies'}
   </span>
 );
 
 const AVAILABILITY_META = {
-  SOLD_OUT: { label: 'Sold out for today', className: 'text-danger' },
-  TEMPORARILY_UNAVAILABLE: { label: 'Temporarily unavailable', className: 'text-danger' },
-  LIMITED_AVAILABILITY: { label: 'Only a few portions left', className: 'text-warning' },
+  SOLD_OUT: { label: 'Sold out for today', className: 'text-error' },
+  TEMPORARILY_UNAVAILABLE: { label: 'Temporarily unavailable', className: 'text-error' },
+  LIMITED_AVAILABILITY: { label: 'Few portions left', className: 'text-warning' },
 };
 
 export const AvailabilityBadge = ({ status, className = '' }) => {
@@ -71,7 +103,8 @@ export const AvailabilityBadge = ({ status, className = '' }) => {
 };
 
 export const PriceTag = ({ price, priceDisplay, className = '' }) => (
-  <span className={`font-bold text-maroon-800 ${className}`}>
+  <span className={`font-extrabold text-primary ${className}`}>
     {priceDisplay || formatMenuPrice(price)}
   </span>
 );
+

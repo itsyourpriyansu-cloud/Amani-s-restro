@@ -32,7 +32,7 @@ const VisualCategoryRail = ({ categories = [], selectedCategory, onSelectCategor
           type="button"
           onClick={scrollLeft}
           aria-label="Scroll categories left"
-          className="absolute left-2 top-1/2 -translate-y-1/2 z-20 w-7 h-7 rounded-full bg-white/95 shadow-md border border-[#EADFD6] text-[#A30F3B] hidden sm:flex items-center justify-center hover:bg-[#FFF7EE] hover:scale-105 active:scale-95 transition-all cursor-pointer"
+          className="absolute left-2 top-1/2 -translate-y-1/2 z-20 w-7 h-7 rounded-full bg-surface/95 shadow-md border border-outline-variant text-primary hidden sm:flex items-center justify-center hover:bg-surface-container hover:scale-105 active:scale-95 transition-all cursor-pointer"
         >
           <ChevronLeft className="w-4 h-4" />
         </button>
@@ -44,7 +44,7 @@ const VisualCategoryRail = ({ categories = [], selectedCategory, onSelectCategor
           type="button"
           onClick={scrollRight}
           aria-label="Scroll categories right"
-          className="absolute right-2 top-1/2 -translate-y-1/2 z-20 w-7 h-7 rounded-full bg-white/95 shadow-md border border-[#EADFD6] text-[#A30F3B] hidden sm:flex items-center justify-center hover:bg-[#FFF7EE] hover:scale-105 active:scale-95 transition-all cursor-pointer"
+          className="absolute right-2 top-1/2 -translate-y-1/2 z-20 w-7 h-7 rounded-full bg-surface/95 shadow-md border border-outline-variant text-primary hidden sm:flex items-center justify-center hover:bg-surface-container hover:scale-105 active:scale-95 transition-all cursor-pointer"
         >
           <ChevronRight className="w-4 h-4" />
         </button>

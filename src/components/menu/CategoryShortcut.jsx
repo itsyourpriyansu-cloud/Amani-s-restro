@@ -37,10 +37,10 @@ const CategoryShortcut = ({ category, isActive, onClick }) => {
       onClick={onClick}
       aria-pressed={isActive}
       aria-label={`Show ${category.name} category`}
-      className={`flex items-center gap-1.5 shrink-0 h-9 pl-2.5 pr-3.5 rounded-full border text-[13px] font-bold whitespace-nowrap transition-all duration-150 active:scale-95 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#A30F3B] focus-visible:ring-offset-2 ${
+      className={`flex items-center gap-1.5 shrink-0 h-9 pl-2.5 pr-3.5 rounded-full border text-[13px] font-bold whitespace-nowrap transition-all duration-150 active:scale-95 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${
         isActive
-          ? 'bg-[#FBECEF] border-[#A30F3B] text-[#A30F3B] shadow-2xs'
-          : 'bg-white border-[#EADFD6] text-[#6F5F58] hover:bg-[#FFF7EE] hover:text-[#211917]'
+          ? 'bg-primary-container border-primary text-primary shadow-2xs'
+          : 'bg-surface border-outline-variant text-on-surface-variant hover:bg-surface-container hover:text-on-surface'
       }`}
       style={{ scrollSnapAlign: 'start' }}
     >

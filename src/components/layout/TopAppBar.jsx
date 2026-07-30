@@ -5,10 +5,13 @@ import { RESTAURANT_INFO } from '../../utils/mockData';
 import Icon from '../common/Icon';
 import { UtensilsCrossed, ArrowLeft, Info } from 'lucide-react';
 import RestaurantTrustProfileModal from '../trust/RestaurantTrustProfileModal';
+import CompactKitchenStatus from '../menu/CompactKitchenStatus';
 
 /**
- * Top app bar with Table indicator.
- * Features scroll-driven auto-hide/reveal, circling logo interaction, Hotel & Chef details, and easy back button navigation.
+ * Top app bar component.
+ * - On `/menu` page: Full header (64px height, brand icon + wordmark + Table chip) + Marquee Ticker.
+ * - On all other pages: Narrowed navbar (50px height) with only Back Button + Table chip. Logo, wordmark & marquee hidden.
+ * - Scroll-driven auto-hide/reveal animation preserved across all screens.
  */
 const TopAppBar = ({
   variant = 'brand',
@@ -21,6 +24,8 @@ const TopAppBar = ({
   onOpenTrustProfile,
   onOpenPreferences,
   logoSrc,
+  kitchenLoad,
+  showKitchenStatus = true,
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -32,7 +37,7 @@ const TopAppBar = ({
 
   const lastScrollY = useRef(0);
 
-  // Determine if back button should be visible (on any non-home screen or when requested)
+  const isMenuPage = location && location.pathname === '/menu';
   const canGoBack = showBackButton || onBack || (location && location.pathname !== '/');
 
   // Auto-hide navbar on scroll down, reveal on scroll up
@@ -44,10 +49,8 @@ const TopAppBar = ({
       if (currentScrollY < 30) {
         setIsVisible(true);
       } else if (diff > 6) {
-        // Scrolling down -> hide navbar
         setIsVisible(false);
       } else if (diff < -6) {
-        // Scrolling up -> show navbar
         setIsVisible(true);
       }
 
@@ -58,7 +61,6 @@ const TopAppBar = ({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Handle logo click with circling animation & open details modal
   const handleLogoClick = (e) => {
     e.stopPropagation();
     setIsCircling(true);
@@ -71,71 +73,88 @@ const TopAppBar = ({
     }
   };
 
-  /* ── Back variant (secondary screens) ── */
-  if (variant === 'back') {
+  const formattedTableNumber = `Table ${String(tableNumber || 5).padStart(2, '0')}`;
+
+  /* ── Non-Menu Pages (Narrowed header: Back button + Table chip only, no logo/wordmark, no marquee) ── */
+  if (!isMenuPage) {
     return (
-      <header
-        className={`fixed top-0 left-0 w-full z-40 h-14 flex items-center justify-between px-3.5 sm:px-4 transition-transform duration-300 ease-in-out ${
-          isVisible ? 'translate-y-0' : '-translate-y-full'
-        } ${
-          transparent
-            ? 'bg-transparent'
-            : 'bg-white/90 backdrop-blur-md border-b border-stone-200/60 shadow-[0_1px_8px_rgba(0,0,0,0.03)]'
-        }`}
-        style={{ paddingTop: 'env(safe-area-inset-top)' }}
-      >
-        <div className="max-w-[640px] mx-auto w-full flex items-center justify-between gap-3">
-          <button
-            onClick={onBack || (() => navigate(-1))}
-            className="w-9 h-9 flex items-center justify-center rounded-full bg-stone-100/80 hover:bg-stone-200/80 text-stone-700 active:scale-95 transition-all cursor-pointer border border-stone-200/40"
-            aria-label="Go back"
-          >
-            <ArrowLeft className="w-4.5 h-4.5" />
-          </button>
-          
-          <span className="font-bold text-base tracking-tight text-[#800A2E] truncate max-w-[55%] text-center">
-            {title || RESTAURANT_INFO.name}
-          </span>
-          
-          <div className="flex items-center gap-1.5">
+      <>
+        <header
+          className={`fixed top-0 left-0 w-full z-40 transition-transform duration-300 ease-in-out ${
+            isVisible ? 'translate-y-0' : '-translate-y-full'
+          } ${
+            transparent
+              ? 'bg-transparent'
+              : 'bg-surface border-b border-outline-variant/60 shadow-2xs'
+          }`}
+          style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
+        >
+          {/* Narrowed Navigation Row — 50px height */}
+          <div className="max-w-[640px] mx-auto w-full h-[50px] flex items-center justify-between px-3.5 sm:px-4 gap-3">
+            {/* Back button */}
             <button
-              onClick={handleLogoClick}
-              className="h-8 px-2.5 rounded-full bg-stone-100/80 hover:bg-stone-200/80 text-xs font-semibold text-stone-700 flex items-center gap-1 transition-all cursor-pointer border border-stone-200/40"
-              title="About Kitchen & Chef"
+              type="button"
+              onClick={onBack || (() => navigate('/'))}
+              className="w-8.5 h-8.5 rounded-full bg-surface-container-low hover:bg-surface-container active:scale-95 text-on-surface-variant flex items-center justify-center transition-all border border-outline-variant/60 shrink-0 cursor-pointer"
+              aria-label="Go Back"
+              title="Go Back"
             >
-              <Info className="w-3.5 h-3.5 text-[#A30F3B]" />
-              <span className="hidden sm:inline">About</span>
+              <ArrowLeft className="w-4 h-4 text-on-surface-variant" />
             </button>
-            {rightIcon ? (
-              <button
-                onClick={onRightAction}
-                className="w-9 h-9 flex items-center justify-center rounded-full bg-stone-100/80 hover:bg-stone-200/80 text-stone-700 active:scale-95 transition-all cursor-pointer border border-stone-200/40"
-              >
-                <Icon name={rightIcon} className="text-base" />
-              </button>
+
+            {/* Optional page title in center if passed */}
+            {title ? (
+              <span className="font-bold text-[14.5px] sm:text-[15px] tracking-tight text-on-surface truncate text-center max-w-[55%]">
+                {title}
+              </span>
             ) : (
-              <span className="w-9" />
+              <span className="flex-1" />
             )}
+
+            {/* Right action — Table indicator chip */}
+            <div className="flex items-center shrink-0 gap-2">
+              {rightIcon && (
+                <button
+                  type="button"
+                  onClick={onRightAction}
+                  className="w-8.5 h-8.5 flex items-center justify-center rounded-full bg-surface-container-low text-on-surface-variant active:scale-95 transition-all cursor-pointer border border-outline-variant/60"
+                >
+                  <Icon name={rightIcon} className="text-sm" />
+                </button>
+              )}
+              <div
+                className="h-7.5 px-2.5 rounded-full bg-surface-container-low/90 text-on-surface-variant text-[12px] font-semibold border border-outline-variant/60 flex items-center gap-1.5 shrink-0 select-none"
+                aria-label={`Your table: ${tableNumber}`}
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-secondary shrink-0" aria-hidden="true" />
+                <span>{formattedTableNumber}</span>
+              </div>
+            </div>
           </div>
-        </div>
-      </header>
+        </header>
+
+        <RestaurantTrustProfileModal
+          isOpen={showBuiltInModal}
+          onClose={() => setShowBuiltInModal(false)}
+        />
+      </>
     );
   }
 
-  /* ── Brand variant (welcome screen & primary screens) ── */
+  /* ── Menu Page (`/menu`) — Full brand header + Marquee Ticker ── */
   return (
     <>
       <header
-        className={`fixed top-0 left-0 w-full z-40 bg-white/90 backdrop-blur-md border-b border-stone-200/60 shadow-[0_2px_12px_-4px_rgba(0,0,0,0.04)] transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 left-0 w-full z-40 bg-surface border-b border-outline-variant/60 transition-transform duration-300 ease-in-out ${
           isVisible ? 'translate-y-0' : '-translate-y-full'
         }`}
         style={{
-          height: 'calc(56px + env(safe-area-inset-top))',
-          paddingTop: 'env(safe-area-inset-top)',
+          paddingTop: 'env(safe-area-inset-top, 0px)',
         }}
       >
-        <div className="max-w-[640px] mx-auto w-full h-full flex items-center justify-between px-3.5 sm:px-4 gap-2.5">
-          {/* Back button — visible when on any sub-page or when onBack is passed */}
+        {/* Main Navigation Row — 64px height */}
+        <div className="max-w-[640px] mx-auto w-full h-[64px] flex items-center justify-between px-4 gap-3">
+          {/* Back button */}
           {canGoBack && (
             <button
               type="button"
@@ -144,20 +163,19 @@ const TopAppBar = ({
                 if (onBack) {
                   onBack();
                 } else {
-                  navigate(-1);
+                  navigate('/');
                 }
               }}
-              className="w-8.5 h-8.5 rounded-full bg-stone-100/90 hover:bg-stone-200/90 active:scale-90 text-stone-700 flex items-center justify-center transition-all border border-stone-200/50 shrink-0 cursor-pointer shadow-2xs hover:shadow-xs"
-              aria-label="Go back"
-              title="Go back"
+              className="w-9 h-9 rounded-full bg-surface-container-low hover:bg-surface-container active:scale-95 text-on-surface-variant flex items-center justify-center transition-all border border-outline-variant/60 shrink-0 cursor-pointer"
+              aria-label="Go to Home Screen"
+              title="Go to Home Screen"
             >
-              <ArrowLeft className="w-4 h-4 text-stone-700" />
+              <ArrowLeft className="w-4.5 h-4.5 text-on-surface-variant" />
             </button>
           )}
 
-          {/* Brand identity container */}
-          <div className="flex items-center gap-2.5 min-w-0 flex-1">
-            {/* Animated Logo Icon Button — click for Hotel & Chef details with gold popping animation */}
+          {/* Brand identity container: logo icon + 10-12px gap + wordmark */}
+          <div className="flex items-center gap-3 min-w-0 flex-1">
             <button
               type="button"
               onClick={handleLogoClick}
@@ -165,28 +183,27 @@ const TopAppBar = ({
               aria-label="View restaurant and chef details"
               title="Click for Hotel & Chef details"
             >
-              {/* Rotating SVG gold aura ring on click */}
               <svg
-                className={`absolute -inset-1.5 w-11 h-11 pointer-events-none transition-opacity duration-300 ${
+                className={`absolute -inset-1.5 w-[52px] h-[52px] pointer-events-none transition-opacity duration-300 ${
                   isCircling ? 'opacity-100 animate-spin' : 'opacity-0'
                 }`}
-                viewBox="0 0 44 44"
+                viewBox="0 0 52 52"
                 fill="none"
               >
                 <circle
-                  cx="22"
-                  cy="22"
-                  r="19"
+                  cx="26"
+                  cy="26"
+                  r="23"
                   stroke="url(#logo-gold-gradient)"
                   strokeWidth="2.5"
-                  strokeDasharray="35 75"
+                  strokeDasharray="40 85"
                   strokeLinecap="round"
                 />
                 <defs>
                   <linearGradient id="logo-gold-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#F59E0B" />
-                    <stop offset="50%" stopColor="#FBBF24" />
-                    <stop offset="100%" stopColor="#D97706" />
+                    <stop offset="0%" stopColor="#E3C583" />
+                    <stop offset="50%" stopColor="#C9953D" />
+                    <stop offset="100%" stopColor="#985D2E" />
                   </linearGradient>
                 </defs>
               </svg>
@@ -194,30 +211,30 @@ const TopAppBar = ({
               {logoSrc && !logoFailed ? (
                 <img
                   src={logoSrc}
-                  alt=""
+                  alt="Mangamma Ruchulu Brand Logo"
                   aria-hidden="true"
                   onError={() => setLogoFailed(true)}
-                  className={`shrink-0 w-8 h-8 rounded-full object-cover transition-all duration-300 ${
+                  className={`shrink-0 w-10.5 h-10.5 rounded-full object-cover transition-all duration-300 ${
                     isCircling
-                      ? 'scale-125 ring-3 ring-amber-400 ring-offset-1 border border-amber-300 shadow-[0_0_14px_rgba(245,158,11,0.7)]'
-                      : 'hover:scale-110 ring-1 ring-black/5'
+                      ? 'scale-110 ring-2 ring-highlight border border-highlight/70 shadow-[0_0_12px_rgba(201,149,61,0.5)]'
+                      : 'hover:scale-105 ring-1 ring-outline-variant/40'
                   }`}
                 />
               ) : (
                 <div
-                  className={`shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-[#800A2E] to-[#A30F3B] text-white flex items-center justify-center transition-all duration-300 ${
+                  className={`shrink-0 w-10.5 h-10.5 rounded-full bg-primary text-on-primary flex items-center justify-center transition-all duration-300 ${
                     isCircling
-                      ? 'scale-125 ring-3 ring-amber-400 ring-offset-1 border border-amber-300 shadow-[0_0_14px_rgba(245,158,11,0.7)]'
-                      : 'hover:scale-110 shadow-xs'
+                      ? 'scale-110 ring-2 ring-highlight border border-highlight/70 shadow-[0_0_12px_rgba(201,149,61,0.5)]'
+                      : 'hover:scale-105 shadow-xs'
                   }`}
                   aria-hidden="true"
                 >
-                  <UtensilsCrossed className="w-4 h-4 text-amber-100" />
+                  <UtensilsCrossed className="w-5 h-5 text-on-primary" />
                 </div>
               )}
             </button>
 
-            {/* Restaurant Name — click to go to Home Screen */}
+            {/* Wordmark */}
             <div
               className="flex flex-col min-w-0 cursor-pointer group/title"
               onClick={(e) => {
@@ -228,7 +245,7 @@ const TopAppBar = ({
               tabIndex={0}
               title="Go to Home Screen"
             >
-              <span className="text-[15px] sm:text-[16px] leading-tight font-bold text-[#800A2E] tracking-tight truncate group-hover/title:text-[#A30F3B] group-hover/title:underline decoration-amber-500/40 underline-offset-2 transition-all">
+              <span className="text-[18px] sm:text-[20px] leading-tight font-bold text-primary tracking-tight truncate group-hover/title:opacity-90 transition-all">
                 {RESTAURANT_INFO.name}
               </span>
             </div>
@@ -237,17 +254,19 @@ const TopAppBar = ({
           {/* Right action control — Table chip */}
           <div className="flex items-center shrink-0">
             <div
-              className="h-8 px-3 rounded-full bg-[#A30F3B]/8 text-[#A30F3B] text-[12px] font-bold border border-[#A30F3B]/15 flex items-center gap-1.5 shrink-0 select-none"
+              className="h-8 px-3 rounded-full bg-surface-container-low/90 text-on-surface-variant text-[12.5px] font-semibold border border-outline-variant/60 flex items-center gap-2 shrink-0 select-none"
               aria-label={`Your table: ${tableNumber}`}
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-[#A30F3B] animate-pulse shrink-0" />
-              <span>Table {tableNumber}</span>
+              <span className="w-2 h-2 rounded-full bg-secondary shrink-0" aria-hidden="true" />
+              <span>{formattedTableNumber}</span>
             </div>
           </div>
         </div>
+
+        {/* Integrated Marquee Kitchen Status Strip (Only on /menu) */}
+        {showKitchenStatus && <CompactKitchenStatus kitchenLoad={kitchenLoad} />}
       </header>
 
-      {/* Built-in Restaurant & Chef details modal */}
       <RestaurantTrustProfileModal
         isOpen={showBuiltInModal}
         onClose={() => setShowBuiltInModal(false)}
@@ -257,5 +276,3 @@ const TopAppBar = ({
 };
 
 export default TopAppBar;
-
-

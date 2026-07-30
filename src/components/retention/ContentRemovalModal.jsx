@@ -41,12 +41,12 @@ const ContentRemovalModal = ({ isOpen, onClose }) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Request Content Removal">
       <div className="space-y-4 text-left max-h-[75vh] overflow-y-auto pr-1">
-        <div className="bg-amber-50/70 border border-amber-200 p-3.5 rounded-2xl text-xs text-amber-950 space-y-1">
-          <div className="flex items-center gap-2 font-bold text-amber-900">
-            <ShieldAlert className="w-4 h-4 text-amber-700" />
+        <div className="bg-warning/10 border border-warning/30 p-3.5 rounded-2xl text-xs text-on-background space-y-1">
+          <div className="flex items-center gap-2 font-bold text-warning">
+            <ShieldAlert className="w-4 h-4 text-warning" />
             Explicit Customer Privacy Rights
           </div>
-          <p className="text-[11px] text-amber-900/90 leading-relaxed">
+          <p className="text-[11px] text-on-background/90 leading-relaxed">
             You may withdraw repost permissions or request removal of uploaded content at any time. Content removal does not revoke previously earned genuine visit milestones.
           </p>
         </div>
@@ -112,12 +112,12 @@ const ContentRemovalModal = ({ isOpen, onClose }) => {
           </form>
         ) : (
           <div className="space-y-4 py-2">
-            <div className="p-4 bg-emerald-50 rounded-2xl border border-emerald-200 space-y-2 text-xs text-emerald-950">
-              <div className="flex items-center gap-2 font-bold text-emerald-900 text-sm">
-                <CheckCircle className="w-5 h-5 text-emerald-600" />
+            <div className="p-4 bg-success/10 rounded-2xl border border-success/30 space-y-2 text-xs text-on-background">
+              <div className="flex items-center gap-2 font-bold text-success text-sm">
+                <CheckCircle className="w-5 h-5 text-success" />
                 Removal Request Submitted
               </div>
-              <p className="text-[11px] text-emerald-900/90 leading-relaxed">
+              <p className="text-[11px] text-on-background/90 leading-relaxed">
                 Your request has been routed to the restaurant manager. The content display status will be updated shortly.
               </p>
             </div>
@@ -129,7 +129,7 @@ const ContentRemovalModal = ({ isOpen, onClose }) => {
                 <div key={req.requestId} className="p-3 rounded-xl bg-surface border border-outline-variant/30 text-xs space-y-1">
                   <div className="flex justify-between items-center font-semibold text-on-surface">
                     <span>{req.requestReasonLabel}</span>
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-800">
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-warning/15 text-warning">
                       {req.status}
                     </span>
                   </div>

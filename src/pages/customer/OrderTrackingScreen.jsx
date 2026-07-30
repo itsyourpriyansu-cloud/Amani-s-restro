@@ -108,19 +108,19 @@ const OrderTrackingScreen = () => {
 
         {/* Transparent ETA Change Notice */}
         {activeOrder.etaChangeReason && (
-          <section className="bg-amber-500/10 border border-amber-500/30 rounded-2xl p-4 space-y-2.5 text-xs text-amber-950 dark:text-amber-200">
+          <section className="bg-warning/10 border border-warning/30 rounded-2xl p-4 space-y-2.5 text-xs text-on-surface">
             <div className="flex items-center justify-between">
-              <span className="font-bold flex items-center gap-1.5 text-amber-900">
-                <Clock className="w-4 h-4 text-amber-600" />
+              <span className="font-bold flex items-center gap-1.5 text-warning">
+                <Clock className="w-4 h-4 text-warning" />
                 Your estimate was just updated
               </span>
-              <span className="text-[10px] font-semibold text-amber-800">
+              <span className="text-[10px] font-semibold text-warning">
                 {activeOrder.etaUpdatedAt || '7:31 PM'}
               </span>
             </div>
-            <div className="flex items-center justify-between bg-white/70 dark:bg-black/30 px-3 py-2.5 rounded-xl border border-amber-300/40">
+            <div className="flex items-center justify-between bg-surface/70 px-3 py-2.5 rounded-xl border border-warning/40">
               <span className="line-through text-muted text-xs tabular-nums">Was {activeOrder.previousEstimate || '7:38 PM'}</span>
-              <span className="font-bold text-amber-800 text-sm tabular-nums">Now {activeOrder.estimatedReadyAt || '7:46 PM'}</span>
+              <span className="font-bold text-warning text-sm tabular-nums">Now {activeOrder.estimatedReadyAt || '7:46 PM'}</span>
             </div>
             <p className="text-xs leading-relaxed">{activeOrder.etaChangeReason}</p>
           </section>
@@ -174,7 +174,7 @@ const OrderTrackingScreen = () => {
             </div>
             <span
               className={`text-[11px] font-bold px-2.5 py-1 rounded-full shrink-0 ${
-                allReady ? 'bg-emerald-500/15 text-emerald-800' : 'bg-secondary-container text-on-secondary-container'
+                allReady ? 'bg-success/15 text-success' : 'bg-secondary-container text-on-secondary-container'
               }`}
             >
               {readyItems.length} of {items.length} ready
@@ -186,11 +186,11 @@ const OrderTrackingScreen = () => {
               const isReady = item.readinessStatus === 'READY';
               return (
                 <div key={idx} className="flex items-center gap-3 px-4 py-3.5">
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${isReady ? 'bg-emerald-500/15' : 'bg-amber-500/15'}`}>
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${isReady ? 'bg-success/15' : 'bg-warning/15'}`}>
                     {isReady ? (
-                      <CheckCircle2 className="w-4 h-4 text-emerald-700" />
+                      <CheckCircle2 className="w-4 h-4 text-success" />
                     ) : (
-                      <Clock className="w-4 h-4 text-amber-700" />
+                      <Clock className="w-4 h-4 text-warning" />
                     )}
                   </div>
                   <div className="flex-1 min-w-0">
@@ -202,7 +202,7 @@ const OrderTrackingScreen = () => {
                   </div>
                   <span
                     className={`text-[11px] font-bold px-2.5 py-1 rounded-full shrink-0 ${
-                      isReady ? 'bg-emerald-500/15 text-emerald-800' : 'bg-amber-500/15 text-amber-800'
+                      isReady ? 'bg-success/15 text-success' : 'bg-warning/15 text-warning'
                     }`}
                   >
                     {isReady ? 'Ready to serve' : 'Preparing'}
@@ -250,12 +250,12 @@ const OrderTrackingScreen = () => {
           </div>
 
           {activeIssue && (
-            <div className="rounded-xl border border-amber-400/30 bg-amber-500/5 p-3.5 space-y-2.5">
+            <div className="rounded-xl border border-warning/30 bg-warning/5 p-3.5 space-y-2.5">
               <div className="flex items-center justify-between gap-2">
-                <span className="text-[11px] font-bold uppercase tracking-wide text-amber-900/80">
+                <span className="text-[11px] font-bold uppercase tracking-wide text-warning/80">
                   Support ticket #{activeIssue.issueId}
                 </span>
-                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-900 shrink-0">
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-warning/20 text-warning shrink-0">
                   {activeIssue.statusLabel || activeIssue.status}
                 </span>
               </div>
@@ -270,7 +270,7 @@ const OrderTrackingScreen = () => {
                 </div>
               </dl>
               {activeIssue.recoveryAction && (
-                <p className="text-[11px] text-on-surface bg-surface/80 p-2.5 rounded-lg border border-amber-300/30 leading-relaxed">
+                <p className="text-[11px] text-on-surface bg-surface/80 p-2.5 rounded-lg border border-warning/30 leading-relaxed">
                   <strong>Latest update:</strong> {activeIssue.recoveryAction}
                 </p>
               )}
@@ -305,7 +305,7 @@ const OrderTrackingScreen = () => {
           {!activeIssue && (
             <button
               onClick={() => navigate('/report-issue')}
-              className="w-full min-h-11 flex items-center justify-center gap-1.5 text-xs font-semibold text-rose-700 hover:text-rose-800 transition-colors"
+              className="w-full min-h-11 flex items-center justify-center gap-1.5 text-xs font-semibold text-error hover:brightness-90 transition-colors"
             >
               <AlertCircle className="w-3.5 h-3.5" />
               Something wrong with your order? Report it
@@ -327,7 +327,7 @@ const OrderTrackingScreen = () => {
       <Modal isOpen={isAssistanceModalOpen} onClose={() => setIsAssistanceModalOpen(false)} title="How can we help?" position="bottom">
         <div className="space-y-2">
           {activeAssistance && (
-            <div className="p-3 bg-amber-500/10 border border-amber-500/30 rounded-xl text-xs text-amber-900 font-medium mb-3">
+            <div className="p-3 bg-warning/10 border border-warning/30 rounded-xl text-xs text-warning font-medium mb-3">
               Rahul Sharma has accepted your request. Expected response in a few minutes.
             </div>
           )}
@@ -346,7 +346,7 @@ const OrderTrackingScreen = () => {
               onClick={() => handleRequestAssistanceOption(req)}
               className={`w-full text-left min-h-11 p-3.5 rounded-xl text-xs font-bold transition-colors flex items-center justify-between border ${
                 req === 'Report an Issue'
-                  ? 'bg-rose-500/5 hover:bg-rose-500/10 border-rose-300/40 text-rose-800'
+                  ? 'bg-error/5 hover:bg-error/10 border-error/40 text-error'
                   : 'bg-surface-container-low hover:bg-primary/5 border-outline-variant/10 text-on-surface'
               }`}
             >

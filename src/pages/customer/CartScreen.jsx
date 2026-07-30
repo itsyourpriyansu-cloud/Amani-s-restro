@@ -197,9 +197,9 @@ const CartScreen = () => {
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-between pt-3 border-t border-border gap-2">
+                  <div className="flex flex-wrap items-center justify-between pt-3 border-t border-border gap-x-2 gap-y-2.5">
                     {/* Secondary actions — deliberately low emphasis, plain text links */}
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-3 shrink-0">
                       {item.originalDish?.customizationAvailable !== false && (
                         <button
                           type="button"
@@ -221,12 +221,12 @@ const CartScreen = () => {
                     </div>
 
                     {/* Quantity + line total — the one place quantity and price appear together */}
-                    <div className="flex items-center gap-3">
-                      <div className="flex items-center bg-surface-container rounded-xl p-1">
+                    <div className="flex items-center gap-2 sm:gap-3 ml-auto shrink-0">
+                      <div className="flex items-center bg-surface-container rounded-xl p-1 shrink-0">
                         <button
                           onClick={() => updateQuantity(item.cartItemId || item.id, item.quantity - 1)}
                           aria-label={`Decrease quantity of ${item.name}`}
-                          className="w-10 h-10 flex items-center justify-center rounded-lg bg-surface-container-lowest shadow-sm text-text hover:bg-surface-container-low active:scale-90"
+                          className="w-10 h-10 flex items-center justify-center rounded-lg bg-surface-container-lowest shadow-sm text-text hover:bg-surface-container-low active:scale-90 shrink-0"
                         >
                           <Minus className="w-4 h-4" />
                         </button>
@@ -234,13 +234,13 @@ const CartScreen = () => {
                         <button
                           onClick={() => updateQuantity(item.cartItemId || item.id, item.quantity + 1)}
                           aria-label={`Increase quantity of ${item.name}`}
-                          className="w-10 h-10 flex items-center justify-center rounded-lg bg-surface-container-lowest shadow-sm text-text hover:bg-surface-container-low active:scale-90"
+                          className="w-10 h-10 flex items-center justify-center rounded-lg bg-surface-container-lowest shadow-sm text-text hover:bg-surface-container-low active:scale-90 shrink-0"
                         >
                           <Plus className="w-4 h-4" />
                         </button>
                       </div>
 
-                      <span className="font-bold text-maroon-800 text-base [font-variant-numeric:tabular-nums]">{formatInvoiceAmount(itemTotalPrice)}</span>
+                      <span className="font-bold text-maroon-800 text-base [font-variant-numeric:tabular-nums] shrink-0 whitespace-nowrap">{formatInvoiceAmount(itemTotalPrice)}</span>
                     </div>
                   </div>
                 </div>
@@ -271,7 +271,7 @@ const CartScreen = () => {
             <div className="bg-surface-container-lowest rounded-2xl p-4 border border-border shadow-card space-y-3">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <Icon name="sell" className="text-saffron-600" />
+                  <Icon name="sell" className="text-primary" />
                   <span className="text-xs font-bold text-ink">Promo Code or Voucher</span>
                 </div>
                 <span className="text-[10px] text-muted font-medium">Try: MANGAMMA10</span>
@@ -301,9 +301,9 @@ const CartScreen = () => {
                     <button
                       type="submit"
                       disabled={isApplyingPromo || !promoCodeInput.trim()}
-                      className="min-h-[44px] px-4 bg-saffron-600 text-white rounded-xl text-xs font-bold disabled:opacity-50 hover:bg-saffron-500 flex items-center gap-1.5"
+                      className="min-h-[44px] px-4 bg-primary text-on-primary rounded-xl text-xs font-bold disabled:opacity-50 hover:brightness-90 flex items-center gap-1.5"
                     >
-                      {isApplyingPromo && <span className="w-3.5 h-3.5 border-2 border-white/40 border-t-white rounded-full animate-spin" />}
+                      {isApplyingPromo && <span className="w-3.5 h-3.5 border-2 border-on-primary/40 border-t-on-primary rounded-full animate-spin" />}
                       <span>{isApplyingPromo ? 'Applying…' : 'Apply'}</span>
                     </button>
                   </form>
@@ -341,9 +341,9 @@ const CartScreen = () => {
               <button
                 onClick={handlePlaceOrder}
                 disabled={isPlacingOrder}
-                className="flex-1 max-w-md h-14 bg-saffron-600 text-white rounded-xl font-bold hover:bg-saffron-500 transition-opacity active:scale-95 shadow-floating disabled:opacity-60 text-sm flex items-center justify-center gap-2"
+                className="flex-1 max-w-md h-14 bg-primary text-on-primary rounded-xl font-bold hover:brightness-90 transition-opacity active:scale-95 shadow-floating disabled:opacity-60 text-sm flex items-center justify-center gap-2"
               >
-                {isPlacingOrder && <span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />}
+                {isPlacingOrder && <span className="w-4 h-4 border-2 border-on-primary/40 border-t-on-primary rounded-full animate-spin" />}
                 <span>{isPlacingOrder ? 'Sending to Kitchen…' : `Send to Kitchen • ${formatInvoiceAmount(totals.totalPayable || totals.grandTotal)}`}</span>
               </button>
             </div>
@@ -392,15 +392,15 @@ const CartScreen = () => {
           bar only recaps the payable total instead of duplicating it. "Continue
           ordering" isn't repeated here either — the Menu tab in BottomNavBar covers it. */}
       <div
-        className="md:hidden fixed left-0 w-full bg-surface-container-lowest p-4 z-40 border-t border-border shadow-xl"
-        style={{ bottom: 'calc(90px + env(safe-area-inset-bottom))' }}
+        className="md:hidden fixed left-0 w-full bg-transparent px-4 py-2 z-40 pointer-events-none flex justify-center"
+        style={{ bottom: 'calc(80px + env(safe-area-inset-bottom))' }}
       >
         <button
           onClick={handlePlaceOrder}
           disabled={isPlacingOrder}
-          className="w-full h-14 bg-saffron-600 text-white rounded-xl font-bold active:scale-95 shadow-md text-sm disabled:opacity-60 flex items-center justify-center gap-2"
+          className="w-full max-w-[640px] h-14 bg-primary text-on-primary rounded-xl font-bold active:scale-95 shadow-lg text-sm disabled:opacity-60 flex items-center justify-center gap-2 pointer-events-auto cursor-pointer"
         >
-          {isPlacingOrder && <span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />}
+          {isPlacingOrder && <span className="w-4 h-4 border-2 border-on-primary/40 border-t-on-primary rounded-full animate-spin" />}
           <span>
             {isPlacingOrder ? 'Sending to Kitchen…' : `Send to Kitchen • ${formatInvoiceAmount(totals.totalPayable || totals.grandTotal)}`}
           </span>

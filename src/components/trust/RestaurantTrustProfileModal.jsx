@@ -1,365 +1,456 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { RESTAURANT_TRUST_PROFILE, VERIFIED_CUSTOMER_PHOTOS, VERIFIED_CUSTOMER_REVIEWS } from '../../data/restaurantPrototypeData';
 import Icon from '../common/Icon';
+import {
+  ShieldCheck,
+  Utensils,
+  Award,
+  Sparkles,
+  HelpCircle,
+  CheckCircle2,
+  ChevronDown,
+  ChevronUp,
+  PhoneCall,
+  FileBadge,
+  Star,
+} from 'lucide-react';
+
+const TABS = [
+  { id: 'overview', label: 'Overview', icon: Utensils },
+  { id: 'hygiene', label: 'Hygiene', icon: ShieldCheck },
+  { id: 'credentials', label: 'Credentials', icon: FileBadge },
+];
 
 const RestaurantTrustProfileModal = ({ isOpen, onClose, onRequestAssistance }) => {
-  const [showFullStory, setShowFullStory] = useState(false);
+  const [activeTab, setActiveTab] = useState('overview');
+  const [isChefExpanded, setIsChefExpanded] = useState(false);
+  const [isSourcingExpanded, setIsSourcingExpanded] = useState(false);
+  const [isReviewsExpanded, setIsReviewsExpanded] = useState(false);
   const [showCalculationModal, setShowCalculationModal] = useState(false);
-  const [activeTab, setActiveTab] = useState('overview'); // 'overview', 'hygiene_safety', 'reviews_photos'
+
+  const panelRef = useRef(null);
+  const closeButtonRef = useRef(null);
+  const restoreFocusRef = useRef(null);
+
+  // Focus management + focus trap + Escape-to-close, mirroring CustomizationModal's pattern.
+  useEffect(() => {
+    if (!isOpen) return;
+    restoreFocusRef.current = document.activeElement;
+    const raf = requestAnimationFrame(() => closeButtonRef.current?.focus());
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        e.stopPropagation();
+        onClose();
+        return;
+      }
+      if (e.key === 'Tab' && panelRef.current) {
+        const focusable = panelRef.current.querySelectorAll(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        if (focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      cancelAnimationFrame(raf);
+      document.removeEventListener('keydown', handleKeyDown);
+      if (restoreFocusRef.current && typeof restoreFocusRef.current.focus === 'function') {
+        restoreFocusRef.current.focus();
+      }
+    };
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
   const profile = RESTAURANT_TRUST_PROFILE;
+  const sourcingSummary = (profile.ingredientSourcing || []).map((src) => src.label).join(' · ');
+  const reviewCount = VERIFIED_CUSTOMER_REVIEWS.length;
+  const photoCount = VERIFIED_CUSTOMER_PHOTOS.length;
+  const avgRating =
+    reviewCount > 0
+      ? (VERIFIED_CUSTOMER_REVIEWS.reduce((sum, rev) => sum + rev.rating, 0) / reviewCount).toFixed(1)
+      : null;
 
   return (
-    <div className="fixed inset-0 z-[70] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fadeIn">
-      <div className="bg-surface border border-outline-variant/30 rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] flex flex-col overflow-hidden text-on-surface">
-        {/* Modal Header */}
-        <div className="px-6 py-4 bg-surface-container-high border-b border-outline-variant/20 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">
-              <Icon name="verified_user" className="text-xl" />
-            </div>
-            <div>
-              <h3 className="text-lg font-bold text-on-surface">{profile.restaurantName}</h3>
-              <p className="text-xs text-on-surface-variant">Restaurant Trust Profile & Standards</p>
+    <div className="fixed inset-0 z-[70] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/65 backdrop-blur-md animate-fadeIn">
+      <div
+        ref={panelRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="trust-profile-title"
+        className="bg-surface border border-outline-variant rounded-t-[20px] sm:rounded-2xl shadow-2xl w-full max-w-lg max-h-[88vh] sm:max-h-[80vh] flex flex-col overflow-hidden text-on-surface"
+      >
+        {/* Mobile Grab Handle Bar */}
+        <div className="w-12 h-1 bg-outline rounded-full mx-auto my-2 sm:hidden shrink-0" />
+
+        {/* Header — compact, no gradient, no competing badge */}
+        <div className="px-4 sm:px-5 py-3 flex items-center justify-between gap-3 border-b border-outline-variant/60 shrink-0">
+          <div className="flex items-center gap-2.5 min-w-0">
+            <span className="w-9 h-9 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0" aria-hidden="true">
+              <ShieldCheck className="w-[18px] h-[18px]" />
+            </span>
+            <div className="min-w-0">
+              <h3 id="trust-profile-title" className="text-[17px] font-semibold text-on-surface leading-tight truncate">
+                {profile.restaurantName}
+              </h3>
+              <p className="text-[12.5px] text-on-surface-variant leading-tight">Kitchen transparency</p>
             </div>
           </div>
           <button
+            ref={closeButtonRef}
+            type="button"
             onClick={onClose}
-            className="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant hover:bg-surface-container-highest transition-colors"
-            aria-label="Close Trust Profile"
+            aria-label="Close kitchen trust profile"
+            className="w-11 h-11 -m-1 shrink-0 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container transition-colors cursor-pointer"
           >
             <Icon name="close" className="text-lg" />
           </button>
         </div>
 
-        {/* Tab Navigation */}
-        <div className="px-6 bg-surface-container-low border-b border-outline-variant/10 flex gap-2 overflow-x-auto text-xs font-semibold">
-          <button
-            onClick={() => setActiveTab('overview')}
-            className={`py-3 px-4 border-b-2 flex items-center gap-1.5 transition-colors whitespace-nowrap ${
-              activeTab === 'overview'
-                ? 'border-primary text-primary font-bold'
-                : 'border-transparent text-on-surface-variant hover:text-on-surface'
-            }`}
-          >
-            <Icon name="restaurant" className="text-sm" />
-            <span>Kitchen & Sourcing</span>
-          </button>
-          <button
-            onClick={() => setActiveTab('hygiene_safety')}
-            className={`py-3 px-4 border-b-2 flex items-center gap-1.5 transition-colors whitespace-nowrap ${
-              activeTab === 'hygiene_safety'
-                ? 'border-primary text-primary font-bold'
-                : 'border-transparent text-on-surface-variant hover:text-on-surface'
-            }`}
-          >
-            <Icon name="sanitizer" className="text-sm" />
-            <span>Hygiene, Allergy & Licences</span>
-          </button>
-          <button
-            onClick={() => setActiveTab('reviews_photos')}
-            className={`py-3 px-4 border-b-2 flex items-center gap-1.5 transition-colors whitespace-nowrap ${
-              activeTab === 'reviews_photos'
-                ? 'border-primary text-primary font-bold'
-                : 'border-transparent text-on-surface-variant hover:text-on-surface'
-            }`}
-          >
-            <Icon name="photo_camera" className="text-sm" />
-            <span>Verified Photos & Reviews</span>
-          </button>
+        {/* Verification summary — one treatment only, icon + text, never color alone */}
+        <div className="px-4 sm:px-5 py-3 flex items-start gap-2.5 border-b border-outline-variant/40 shrink-0">
+          <CheckCircle2 className="w-[18px] h-[18px] text-success shrink-0 mt-0.5" aria-hidden="true" />
+          <p className="text-[13.5px] leading-snug">
+            <span className="font-semibold text-on-surface">Verified kitchen</span>
+            <span className="text-on-surface-variant"> · Reviewed {profile.hygieneAudit.lastAuditDate}</span>
+          </p>
         </div>
 
-        {/* Modal Scrollable Content */}
-        <div className="p-6 overflow-y-auto space-y-6 flex-1 text-sm">
+        {/* Segmented tab navigation — exactly 3, never clipped, no horizontal scroll */}
+        <div
+          role="tablist"
+          aria-label="Trust profile sections"
+          className="grid grid-cols-3 gap-1.5 px-4 sm:px-5 py-2.5 border-b border-outline-variant/40 shrink-0"
+        >
+          {TABS.map((tab) => {
+            const TabIcon = tab.icon;
+            const isActive = activeTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                type="button"
+                role="tab"
+                id={`trust-tab-${tab.id}`}
+                aria-selected={isActive}
+                aria-controls={`trust-panel-${tab.id}`}
+                onClick={() => setActiveTab(tab.id)}
+                className={`h-[42px] rounded-xl flex items-center justify-center gap-1.5 text-[13px] font-semibold transition-colors cursor-pointer ${
+                  isActive
+                    ? 'bg-primary text-on-primary'
+                    : 'bg-surface-container text-on-surface-variant hover:text-on-surface'
+                }`}
+              >
+                <TabIcon className="w-[15px] h-[15px]" aria-hidden="true" />
+                <span>{tab.label}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Scrollable content */}
+        <div className="flex-1 overflow-y-auto no-scrollbar">
           {activeTab === 'overview' && (
-            <>
-              {/* Section 1: Our Kitchen */}
-              <section className="bg-surface-container-lowest p-4 rounded-xl border border-outline-variant/20">
-                <h4 className="font-bold text-on-surface mb-1 flex items-center gap-2 text-base">
-                  <Icon name="soup_kitchen" className="text-primary" />
-                  1. Our Kitchen
-                </h4>
-                <p className="text-on-surface-variant leading-relaxed">{profile.shortKitchenIntroduction}</p>
+            <div id="trust-panel-overview" role="tabpanel" aria-labelledby="trust-tab-overview" className="px-4 sm:px-5 py-4">
+              {/* Culinary standards */}
+              <section>
+                <h4 className="text-[15px] font-semibold text-on-surface mb-1.5">Culinary standards</h4>
+                <p className="text-[14px] text-on-surface-variant leading-relaxed">{profile.shortKitchenIntroduction}</p>
               </section>
 
-              {/* Section 2: Chef & Team */}
-              <section className="bg-surface-container-lowest p-4 rounded-xl border border-outline-variant/20">
-                <div className="flex items-start gap-4">
+              <div className="h-px bg-outline-variant/50 my-4" aria-hidden="true" />
+
+              {/* Chef — compact row, everything else behind "View profile" */}
+              <section>
+                <div className="flex items-center gap-3">
                   <img
                     src={profile.chefProfile.image}
                     alt={profile.chefProfile.name}
-                    className="w-16 h-16 rounded-full object-cover border-2 border-primary/20"
+                    className="w-[52px] h-[52px] rounded-full object-cover shrink-0"
                   />
-                  <div className="flex-1">
-                    <div className="flex items-baseline justify-between">
-                      <h4 className="font-bold text-on-surface text-base">{profile.chefProfile.name}</h4>
-                      <span className="text-xs bg-primary/10 text-primary font-semibold px-2 py-0.5 rounded-full">
-                        {profile.chefProfile.role}
-                      </span>
-                    </div>
-                    <p className="text-xs text-on-surface-variant font-medium mt-0.5">{profile.chefProfile.experienceLabel}</p>
-                    <p className="text-xs italic text-on-surface/80 mt-1">"{profile.chefProfile.philosophy}"</p>
-
-                    {!showFullStory ? (
-                      <button
-                        onClick={() => setShowFullStory(true)}
-                        className="text-xs font-bold text-primary hover:underline mt-2 flex items-center gap-1"
-                      >
-                        Read the kitchen story
-                        <Icon name="expand_more" className="text-sm" />
-                      </button>
-                    ) : (
-                      <div className="mt-3 pt-3 border-t border-outline-variant/20 space-y-2 text-xs">
-                        <p className="text-on-surface-variant leading-relaxed">{profile.chefProfile.story}</p>
-                        <p className="text-on-surface font-semibold">Speciality: {profile.chefProfile.speciality}</p>
-                        <button
-                          onClick={() => setShowFullStory(false)}
-                          className="text-xs font-bold text-primary hover:underline mt-1 flex items-center gap-1"
-                        >
-                          Show less
-                          <Icon name="expand_less" className="text-sm" />
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </section>
-
-              {/* Section 3: Ingredient Sourcing */}
-              <section className="bg-surface-container-lowest p-4 rounded-xl border border-outline-variant/20">
-                <h4 className="font-bold text-on-surface mb-3 flex items-center gap-2 text-base">
-                  <Icon name="eco" className="text-emerald-600" />
-                  3. Ingredient Sourcing
-                </h4>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                  {profile.ingredientSourcing.map((src, idx) => (
-                    <div key={idx} className="bg-surface-container-low p-3 rounded-lg border border-outline-variant/10">
-                      <p className="font-bold text-xs text-on-surface">{src.label}</p>
-                      <p className="text-xs text-on-surface-variant mt-1 leading-snug">{src.description}</p>
-                    </div>
-                  ))}
-                </div>
-              </section>
-
-              {/* Section 7 & 8: Service Promise & Preparation Reliability */}
-              <section className="bg-primary/5 p-4 rounded-xl border border-primary/20 space-y-3">
-                <div className="flex items-center justify-between">
-                  <h4 className="font-bold text-on-surface flex items-center gap-2 text-base">
-                    <Icon name="timer" className="text-primary" />
-                    Preparation Reliability & Service Promise
-                  </h4>
-                  <span className="text-xs font-bold text-primary bg-primary/10 px-2.5 py-1 rounded-full">
-                    {profile.preparationAccuracy.value}% Prep Accuracy
-                  </span>
-                </div>
-                <p className="text-xs text-on-surface-variant">{profile.servicePromise.description}</p>
-                <div className="bg-surface-container-lowest p-3 rounded-lg border border-outline-variant/20 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
-                  <div>
-                    <span className="font-semibold text-on-surface">{profile.preparationAccuracy.label}</span>
-                    <p className="text-on-surface-variant/80 text-[11px]">
-                      Based on {profile.preparationAccuracy.sampleSize} completed orders ({profile.preparationAccuracy.period}).
+                  <div className="min-w-0 flex-1">
+                    <p className="text-[14.5px] font-semibold text-on-surface truncate">{profile.chefProfile.name}</p>
+                    <p className="text-[12.5px] text-on-surface-variant truncate">
+                      {profile.chefProfile.role} · {profile.chefProfile.experienceLabel}
                     </p>
                   </div>
-                  <button
-                    onClick={() => setShowCalculationModal(true)}
-                    className="text-xs text-primary font-bold hover:underline whitespace-nowrap flex items-center gap-1"
-                  >
-                    How this is calculated
-                    <Icon name="help_outline" className="text-sm" />
-                  </button>
                 </div>
+                <button
+                  type="button"
+                  onClick={() => setIsChefExpanded((v) => !v)}
+                  aria-expanded={isChefExpanded}
+                  aria-controls="chef-profile-detail"
+                  className="mt-2 text-[13px] font-semibold text-primary inline-flex items-center gap-1 cursor-pointer"
+                >
+                  {isChefExpanded ? 'Hide profile' : 'View profile'}
+                  {isChefExpanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+                </button>
+                {isChefExpanded && (
+                  <div id="chef-profile-detail" className="mt-3 space-y-2.5 text-[13px]">
+                    <blockquote className="text-on-surface-variant italic leading-relaxed border-l-2 border-primary/30 pl-3">
+                      "{profile.chefProfile.philosophy}"
+                    </blockquote>
+                    <p className="text-on-surface-variant leading-relaxed">{profile.chefProfile.story}</p>
+                    <p className="text-on-surface">
+                      <span className="font-semibold">Speciality:</span> {profile.chefProfile.speciality}
+                    </p>
+                  </div>
+                )}
               </section>
-            </>
+
+              <div className="h-px bg-outline-variant/50 my-4" aria-hidden="true" />
+
+              {/* Ingredient sourcing */}
+              <section>
+                <h4 className="text-[15px] font-semibold text-on-surface mb-1.5">Ingredient sourcing</h4>
+                <p className="text-[14px] text-on-surface-variant">{sourcingSummary}</p>
+                <button
+                  type="button"
+                  onClick={() => setIsSourcingExpanded((v) => !v)}
+                  aria-expanded={isSourcingExpanded}
+                  aria-controls="sourcing-detail"
+                  className="mt-2 text-[13px] font-semibold text-primary inline-flex items-center gap-1 cursor-pointer"
+                >
+                  {isSourcingExpanded ? 'Hide sourcing details' : 'View sourcing details'}
+                  {isSourcingExpanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+                </button>
+                {isSourcingExpanded && (
+                  <div id="sourcing-detail" className="mt-3 space-y-2.5 text-[13px]">
+                    {profile.ingredientSourcing.map((src, idx) => (
+                      <div key={idx} className="flex items-start gap-2">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-success shrink-0 mt-0.5" aria-hidden="true" />
+                        <div>
+                          <p className="font-semibold text-on-surface">{src.label}</p>
+                          <p className="text-on-surface-variant">{src.description}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </section>
+
+              <div className="h-px bg-outline-variant/50 my-4" aria-hidden="true" />
+
+              {/* Verified by guests — folds the old Reviews & Photos tab in as a disclosure */}
+              <section>
+                <h4 className="text-[15px] font-semibold text-on-surface mb-1.5">Verified by guests</h4>
+                <p className="text-[14px] text-on-surface-variant flex items-center gap-1.5 flex-wrap">
+                  {avgRating && (
+                    <span className="inline-flex items-center gap-1 text-highlight font-semibold" aria-hidden="true">
+                      <Star className="w-3.5 h-3.5 fill-current" /> {avgRating}
+                    </span>
+                  )}
+                  <span>
+                    {avgRating && <span className="sr-only">{avgRating} out of 5 stars, </span>}
+                    {reviewCount} verified review{reviewCount === 1 ? '' : 's'} · {photoCount} photo{photoCount === 1 ? '' : 's'}
+                  </span>
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setIsReviewsExpanded((v) => !v)}
+                  aria-expanded={isReviewsExpanded}
+                  aria-controls="reviews-detail"
+                  className="mt-2 text-[13px] font-semibold text-primary inline-flex items-center gap-1 cursor-pointer"
+                >
+                  {isReviewsExpanded ? 'Hide reviews & photos' : 'View reviews & photos'}
+                  {isReviewsExpanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+                </button>
+                {isReviewsExpanded && (
+                  <div id="reviews-detail" className="mt-3 space-y-4">
+                    <div>
+                      <h5 className="text-[13px] font-semibold text-on-surface mb-2 flex items-center gap-1.5">
+                        <Sparkles className="w-3.5 h-3.5 text-primary" aria-hidden="true" />
+                        Verified customer dish photos
+                      </h5>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        {VERIFIED_CUSTOMER_PHOTOS.map((photo) => (
+                          <div key={photo.photoId} className="bg-surface-container rounded-xl overflow-hidden border border-outline-variant/60">
+                            <img src={photo.image} alt={photo.caption} className="w-full h-32 object-cover" />
+                            <div className="p-2.5">
+                              <div className="flex items-center justify-between gap-2">
+                                <span className="text-[10px] font-semibold text-success inline-flex items-center gap-1">
+                                  <CheckCircle2 className="w-3 h-3" /> Verified order
+                                </span>
+                                <span className="text-[10px] text-on-surface-variant shrink-0">{photo.submittedAt}</span>
+                              </div>
+                              <p className="text-[12px] font-semibold text-on-surface mt-1">{photo.caption}</p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div>
+                      <h5 className="text-[13px] font-semibold text-on-surface mb-2 flex items-center gap-1.5">
+                        <Award className="w-3.5 h-3.5 text-primary" aria-hidden="true" />
+                        Verified guest reviews
+                      </h5>
+                      <div className="space-y-2.5">
+                        {VERIFIED_CUSTOMER_REVIEWS.map((rev) => (
+                          <div key={rev.reviewId} className="bg-surface-container rounded-xl p-3 border border-outline-variant/60 space-y-1.5">
+                            <div className="flex items-center justify-between gap-2">
+                              <div className="flex items-center gap-0.5 text-highlight" aria-label={`${rev.rating} out of 5 stars`}>
+                                {[...Array(rev.rating)].map((_, i) => (
+                                  <Star key={i} className="w-3.5 h-3.5 fill-current" aria-hidden="true" />
+                                ))}
+                              </div>
+                              <span className="text-[10px] font-semibold text-success inline-flex items-center gap-1 shrink-0">
+                                <CheckCircle2 className="w-3 h-3" /> Verified order
+                              </span>
+                            </div>
+                            <p className="text-[12px] text-on-surface-variant italic leading-snug">"{rev.reviewText}"</p>
+                            <div className="flex items-center justify-between text-[10.5px] text-on-surface-variant pt-1 border-t border-outline-variant/50">
+                              <span className="font-semibold text-on-surface">{rev.displayName}</span>
+                              <span>{rev.submittedAt}</span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </section>
+            </div>
           )}
 
-          {activeTab === 'hygiene_safety' && (
-            <>
-              {/* Section 4: Hygiene and Safety */}
-              <section className="bg-surface-container-lowest p-4 rounded-xl border border-outline-variant/20 space-y-3">
-                <h4 className="font-bold text-on-surface flex items-center gap-2 text-base">
-                  <Icon name="sanitizer" className="text-blue-600" />
-                  4. Hygiene and Safety
-                </h4>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-3 text-xs">
-                  <div className="bg-surface-container-low p-2.5 rounded-lg">
-                    <span className="text-on-surface-variant font-medium block">Last review date</span>
-                    <span className="font-bold text-on-surface text-sm">{profile.hygieneAudit.lastAuditDate}</span>
+          {activeTab === 'hygiene' && (
+            <div id="trust-panel-hygiene" role="tabpanel" aria-labelledby="trust-tab-hygiene" className="px-4 sm:px-5 py-4">
+              <section>
+                <h4 className="text-[15px] font-semibold text-on-surface mb-2.5">Hygiene audit</h4>
+                <dl className="grid grid-cols-3 gap-3 text-[13px]">
+                  <div>
+                    <dt className="text-on-surface-variant text-[11.5px]">Last review</dt>
+                    <dd className="font-semibold text-on-surface mt-0.5">{profile.hygieneAudit.lastAuditDate}</dd>
                   </div>
-                  <div className="bg-surface-container-low p-2.5 rounded-lg">
-                    <span className="text-on-surface-variant font-medium block">Review type</span>
-                    <span className="font-bold text-on-surface text-sm">{profile.hygieneAudit.auditType}</span>
+                  <div>
+                    <dt className="text-on-surface-variant text-[11.5px]">Standard</dt>
+                    <dd className="font-semibold text-on-surface mt-0.5">{profile.hygieneAudit.auditType}</dd>
                   </div>
-                  <div className="bg-surface-container-low p-2.5 rounded-lg col-span-2 md:col-span-1">
-                    <span className="text-on-surface-variant font-medium block">Next scheduled review</span>
-                    <span className="font-bold text-on-surface text-sm">{profile.hygieneAudit.nextReviewDate}</span>
+                  <div>
+                    <dt className="text-on-surface-variant text-[11.5px]">Next review</dt>
+                    <dd className="font-semibold text-on-surface mt-0.5">{profile.hygieneAudit.nextReviewDate}</dd>
                   </div>
-                </div>
-                <p className="text-[11px] text-on-surface-variant/70 italic">
-                  Note: Distinguishes internal restaurant review protocols from third-party audits.
-                </p>
+                </dl>
               </section>
 
-              {/* Section 5: Dietary Practices & Kitchen Separation */}
-              <section className="bg-surface-container-lowest p-4 rounded-xl border border-outline-variant/20 space-y-2">
-                <h4 className="font-bold text-on-surface flex items-center gap-2 text-base">
-                  <Icon name="kitchen" className="text-amber-600" />
-                  5. Kitchen Preparation & Dietary Separation
-                </h4>
-                <p className="text-xs text-on-surface-variant leading-relaxed">{profile.kitchenSeparation.description}</p>
-                <div className="flex gap-2 pt-1">
-                  <span className="bg-emerald-500/10 text-emerald-700 text-xs font-semibold px-2.5 py-1 rounded-md flex items-center gap-1">
-                    <Icon name="check_circle" className="text-sm" /> Veg Preparation Area
+              <div className="h-px bg-outline-variant/50 my-4" aria-hidden="true" />
+
+              <section>
+                <h4 className="text-[15px] font-semibold text-on-surface mb-1.5">Dietary & workstation separation</h4>
+                <p className="text-[13.5px] text-on-surface-variant leading-relaxed mb-2.5">{profile.kitchenSeparation.description}</p>
+                <div className="flex flex-wrap gap-x-4 gap-y-1.5">
+                  <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-success">
+                    <CheckCircle2 className="w-3.5 h-3.5" aria-hidden="true" /> Veg workstation
                   </span>
-                  <span className="bg-amber-500/10 text-amber-800 text-xs font-semibold px-2.5 py-1 rounded-md flex items-center gap-1">
-                    <Icon name="check_circle" className="text-sm" /> Labelled Equipment
+                  <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-warning">
+                    <CheckCircle2 className="w-3.5 h-3.5" aria-hidden="true" /> Color-coded utensils
                   </span>
                 </div>
               </section>
 
-              {/* Section 6: Allergy-Handling Policy */}
-              <section className="bg-amber-50 dark:bg-amber-950/30 p-4 rounded-xl border border-amber-200 dark:border-amber-800/40 space-y-3">
-                <h4 className="font-bold text-amber-900 dark:text-amber-200 flex items-center gap-2 text-base">
-                  <Icon name="warning" className="text-amber-600" />
-                  6. Allergy-Handling Policy
-                </h4>
-                <p className="text-xs text-amber-900/90 dark:text-amber-300 leading-relaxed font-medium">
-                  {profile.allergyPolicy.summary}
+              <div className="h-px bg-outline-variant/50 my-4" aria-hidden="true" />
+
+              <section>
+                <h4 className="text-[15px] font-semibold text-on-surface mb-1.5">Allergy-handling policy</h4>
+                <p className="text-[13.5px] text-on-surface-variant leading-relaxed">{profile.allergyPolicy.summary}</p>
+                <p className="text-[12.5px] text-on-surface-variant mt-1.5">
+                  <span className="font-semibold text-on-surface">Notice:</span> {profile.allergyPolicy.crossContactWarning}
                 </p>
-                <div className="p-2.5 bg-amber-100/60 dark:bg-amber-900/40 rounded-lg text-xs text-amber-950 dark:text-amber-200 border border-amber-300/50">
-                  <strong>Notice:</strong> {profile.allergyPolicy.crossContactWarning}
-                </div>
                 {onRequestAssistance && (
                   <button
+                    type="button"
                     onClick={() => {
                       onClose();
                       onRequestAssistance('Allergy assistance');
                     }}
-                    className="w-full py-2.5 bg-amber-600 hover:bg-amber-700 text-white rounded-lg font-bold text-xs shadow transition-colors flex items-center justify-center gap-1.5"
+                    className="mt-3 w-full min-h-11 py-2.5 bg-warning hover:brightness-90 text-on-warning rounded-xl font-semibold text-[13px] flex items-center justify-center gap-2 cursor-pointer transition-colors"
                   >
-                    <Icon name="support_agent" className="text-base" />
+                    <PhoneCall className="w-3.5 h-3.5" aria-hidden="true" />
                     Speak to staff about an allergy
                   </button>
                 )}
               </section>
+            </div>
+          )}
 
-              {/* Section 11: Restaurant Licences */}
-              <section className="bg-surface-container-lowest p-4 rounded-xl border border-outline-variant/20 space-y-2">
-                <h4 className="font-bold text-on-surface flex items-center gap-2 text-base">
-                  <Icon name="badge" className="text-primary" />
-                  11. Restaurant Licences & Registration
-                </h4>
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between p-3 bg-surface-container-low rounded-lg border border-outline-variant/10 gap-2">
-                  <div>
-                    <span className="text-xs font-bold text-on-surface block">FSSAI Licence / Registration</span>
-                    <span className="font-mono font-bold text-sm text-primary tracking-wide">{profile.fssai.number}</span>
-                  </div>
-                  <span className="text-[11px] font-semibold text-on-surface-variant bg-surface-container px-2.5 py-1 rounded-full w-fit">
-                    {profile.fssai.statusLabel}
+          {activeTab === 'credentials' && (
+            <div id="trust-panel-credentials" role="tabpanel" aria-labelledby="trust-tab-credentials" className="px-4 sm:px-5 py-4">
+              <section>
+                <h4 className="text-[15px] font-semibold text-on-surface mb-1.5">FSSAI licence</h4>
+                <div className="flex items-center justify-between gap-2 flex-wrap">
+                  <span className="font-mono font-semibold text-[14px] text-primary tracking-wide">{profile.fssai.number}</span>
+                  <span className="text-[11.5px] font-semibold text-success inline-flex items-center gap-1">
+                    <CheckCircle2 className="w-3.5 h-3.5" aria-hidden="true" /> Verified licence
                   </span>
                 </div>
               </section>
-            </>
-          )}
 
-          {activeTab === 'reviews_photos' && (
-            <>
-              {/* Section 9: Verified Customer Photos */}
-              <section className="space-y-3">
-                <h4 className="font-bold text-on-surface flex items-center gap-2 text-base">
-                  <Icon name="photo_library" className="text-primary" />
-                  9. Verified Customer Photos
-                </h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {VERIFIED_CUSTOMER_PHOTOS.map((photo) => (
-                    <div key={photo.photoId} className="bg-surface-container-lowest rounded-xl overflow-hidden border border-outline-variant/20 shadow-sm">
-                      <img src={photo.image} alt={photo.caption} className="w-full h-36 object-cover" />
-                      <div className="p-3">
-                        <div className="flex items-center justify-between">
-                          <span className="bg-emerald-500/10 text-emerald-700 text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1">
-                            <Icon name="check_circle" className="text-[12px]" /> Verified order photo
-                          </span>
-                          <span className="text-[10px] text-on-surface-variant">{photo.submittedAt}</span>
-                        </div>
-                        <p className="text-xs font-semibold text-on-surface mt-1">{photo.caption}</p>
-                      </div>
-                    </div>
-                  ))}
+              <div className="h-px bg-outline-variant/50 my-4" aria-hidden="true" />
+
+              <section>
+                <div className="flex items-center justify-between gap-2 mb-1.5">
+                  <h4 className="text-[15px] font-semibold text-on-surface">Preparation reliability</h4>
+                  <span className="text-[13px] font-semibold text-primary">{profile.preparationAccuracy.value}%</span>
                 </div>
+                <p className="text-[13.5px] text-on-surface-variant leading-relaxed">{profile.servicePromise.description}</p>
+                <p className="text-[12px] text-on-surface-variant mt-1">
+                  {profile.preparationAccuracy.label} · {profile.preparationAccuracy.sampleSize} orders ({profile.preparationAccuracy.period})
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setShowCalculationModal(true)}
+                  className="mt-2 text-[13px] font-semibold text-primary inline-flex items-center gap-1 cursor-pointer"
+                >
+                  Calculation details
+                  <HelpCircle className="w-3.5 h-3.5" />
+                </button>
               </section>
-
-              {/* Section 10: Verified Reviews */}
-              <section className="space-y-3 pt-2">
-                <h4 className="font-bold text-on-surface flex items-center gap-2 text-base">
-                  <Icon name="rate_review" className="text-primary" />
-                  10. Verified Customer Reviews
-                </h4>
-                <div className="space-y-3">
-                  {VERIFIED_CUSTOMER_REVIEWS.map((rev) => (
-                    <div key={rev.reviewId} className="bg-surface-container-lowest p-4 rounded-xl border border-outline-variant/20 space-y-2">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-1 text-amber-500">
-                          {[...Array(rev.rating)].map((_, i) => (
-                            <Icon name="star" key={i} className="text-sm fill-current" />
-                          ))}
-                        </div>
-                        <span className="bg-emerald-500/10 text-emerald-700 text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1">
-                          <Icon name="verified" className="text-[12px]" /> Verified completed order
-                        </span>
-                      </div>
-                      <p className="text-xs text-on-surface-variant italic">"{rev.reviewText}"</p>
-                      <div className="flex items-center justify-between text-[10px] text-on-surface-variant/70 pt-1 border-t border-outline-variant/10">
-                        <span>{rev.displayName}</span>
-                        <span>{rev.submittedAt}</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </section>
-            </>
+            </div>
           )}
-        </div>
-
-        {/* Modal Footer */}
-        <div className="p-4 bg-surface-container-high border-t border-outline-variant/20 flex justify-end">
-          <button
-            onClick={onClose}
-            className="px-6 py-2 bg-primary text-on-primary font-bold text-xs rounded-xl shadow hover:bg-primary/90 transition-colors"
-          >
-            Close Trust Profile
-          </button>
         </div>
       </div>
 
-      {/* Preparation Accuracy Calculation Explanation Sub-Modal */}
+      {/* Preparation Accuracy Calculation Sub-Modal — unchanged behavior, now triggered from Credentials */}
       {showCalculationModal && (
-        <div className="fixed inset-0 z-60 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
-          <div className="bg-surface p-6 rounded-2xl max-w-md w-full border border-outline-variant/30 space-y-4 text-on-surface shadow-2xl">
-            <div className="flex justify-between items-center border-b border-outline-variant/20 pb-3">
-              <h4 className="font-bold text-base flex items-center gap-2 text-primary">
-                <Icon name="analytics" />
-                How Preparation Accuracy Is Calculated
+        <div className="fixed inset-0 z-80 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm">
+          <div role="dialog" aria-modal="true" aria-labelledby="calc-modal-title" className="bg-surface p-5 rounded-2xl max-w-md w-full border border-outline-variant space-y-3.5 text-on-surface shadow-2xl">
+            <div className="flex justify-between items-center border-b border-outline-variant pb-3">
+              <h4 id="calc-modal-title" className="font-extrabold text-[15px] flex items-center gap-2 text-primary">
+                <Icon name="analytics" className="text-base" />
+                How Accuracy Is Calculated
               </h4>
               <button
+                type="button"
                 onClick={() => setShowCalculationModal(false)}
-                className="w-7 h-7 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant hover:bg-surface-container-highest"
+                aria-label="Close calculation details"
+                className="w-7 h-7 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant hover:bg-outline-variant cursor-pointer"
               >
                 <Icon name="close" className="text-sm" />
               </button>
             </div>
-            <div className="text-xs space-y-2 text-on-surface-variant leading-relaxed">
+            <div className="text-[12px] space-y-2 text-on-surface-variant leading-relaxed">
               <p>{profile.preparationAccuracy.calculationExplanation}</p>
-              <div className="bg-surface-container-low p-3 rounded-lg border border-outline-variant/10 space-y-1">
-                <p className="font-semibold text-on-surface">Metric Audit Parameters:</p>
-                <p>• Measurement Period: <strong>{profile.preparationAccuracy.period}</strong></p>
-                <p>• Total Sample Size: <strong>{profile.preparationAccuracy.sampleSize} verified orders</strong></p>
+              <div className="bg-surface-container p-3 rounded-xl border border-outline-variant space-y-1">
+                <p className="font-bold text-on-surface">Audit Parameters:</p>
+                <p>• Period: <strong>{profile.preparationAccuracy.period}</strong></p>
+                <p>• Sample Size: <strong>{profile.preparationAccuracy.sampleSize} orders</strong></p>
                 <p>• Last Updated: <strong>{profile.preparationAccuracy.lastUpdated}</strong></p>
               </div>
             </div>
             <button
+              type="button"
               onClick={() => setShowCalculationModal(false)}
-              className="w-full py-2 bg-primary text-on-primary rounded-xl font-bold text-xs"
+              className="w-full py-2 bg-primary text-on-primary rounded-xl font-bold text-[12px] cursor-pointer"
             >
               Got it
             </button>

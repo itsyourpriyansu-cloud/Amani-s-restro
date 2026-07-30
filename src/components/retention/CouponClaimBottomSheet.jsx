@@ -320,9 +320,9 @@ const CouponClaimBottomSheet = ({
 
         {step === 'CONFIRMED' && (
           <>
-            <div className="p-4 bg-emerald-50 rounded-2xl border border-emerald-200 space-y-1.5 text-xs text-emerald-950">
-              <div className="font-bold text-sm text-emerald-900">Coupon Request Recorded</div>
-              <p className="text-emerald-900/90">
+            <div className="p-4 bg-success/10 rounded-2xl border border-success/30 space-y-1.5 text-xs text-on-background">
+              <div className="font-bold text-sm text-success">Coupon Request Recorded</div>
+              <p className="text-on-background/90">
                 Your request has been recorded in this prototype. Mangamma Ruchulu will review the WhatsApp message and update the coupon status.
               </p>
               <p className="font-mono font-semibold pt-1">Request ID: {requestId}</p>

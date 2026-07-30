@@ -21,11 +21,11 @@ const BASE_CATEGORIES = [
     badge: 'Most Loved',
     itemCount: '18+ Items',
     icon: biryaniIcon,
-    accentColor: '#A30F3B',
-    bgColor: 'bg-[#FFF6F3]',
-    borderColor: 'border-[#F8DED6]',
-    hoverBorder: 'hover:border-[#A30F3B]/40',
-    badgeBg: 'bg-[#A30F3B] text-white',
+    accentColor: 'var(--color-primary)',
+    bgColor: 'bg-primary/8',
+    borderColor: 'border-primary/15',
+    hoverBorder: 'hover:border-primary/40',
+    badgeBg: 'bg-primary text-on-primary',
     badgeIcon: Star,
   },
   {
@@ -35,11 +35,11 @@ const BASE_CATEGORIES = [
     badge: 'Chef Special',
     itemCount: '24+ Items',
     icon: curriesIcon,
-    accentColor: '#D96B00',
-    bgColor: 'bg-[#FFF9F2]',
-    borderColor: 'border-[#F9E6CE]',
-    hoverBorder: 'hover:border-[#D96B00]/40',
-    badgeBg: 'bg-[#D96B00] text-white',
+    accentColor: 'var(--color-error)',
+    bgColor: 'bg-error/8',
+    borderColor: 'border-error/15',
+    hoverBorder: 'hover:border-error/40',
+    badgeBg: 'bg-error text-on-error',
     badgeIcon: Sparkles,
   },
   {
@@ -49,11 +49,11 @@ const BASE_CATEGORIES = [
     badge: 'Best Value',
     itemCount: '14+ Items',
     icon: mealsIcon,
-    accentColor: '#2E7D32',
-    bgColor: 'bg-[#F4FAF5]',
-    borderColor: 'border-[#D6EFE0]',
-    hoverBorder: 'hover:border-[#2E7D32]/40',
-    badgeBg: 'bg-[#2E7D32] text-white',
+    accentColor: 'var(--color-success)',
+    bgColor: 'bg-success/8',
+    borderColor: 'border-success/15',
+    hoverBorder: 'hover:border-success/40',
+    badgeBg: 'bg-success text-on-success',
     badgeIcon: Utensils,
   },
   {
@@ -63,11 +63,11 @@ const BASE_CATEGORIES = [
     badge: 'Fresh Picks',
     itemCount: '10+ Items',
     icon: drinksIcon,
-    accentColor: '#0284C7',
-    bgColor: 'bg-[#F0F9FF]',
-    borderColor: 'border-[#D0ECFE]',
-    hoverBorder: 'hover:border-[#0284C7]/40',
-    badgeBg: 'bg-[#0284C7] text-white',
+    accentColor: 'var(--color-information)',
+    bgColor: 'bg-information/8',
+    borderColor: 'border-information/15',
+    hoverBorder: 'hover:border-information/40',
+    badgeBg: 'bg-information text-on-info',
     badgeIcon: Zap,
   },
 ];
@@ -105,7 +105,7 @@ const TopCategoriesSection = () => {
               role="button"
               tabIndex={0}
               onKeyDown={(e) => e.key === 'Enter' && handleCategoryClick(cat.id)}
-              className={`group relative overflow-hidden rounded-[26px] p-4 flex flex-col justify-between border ${cat.bgColor} ${cat.borderColor} ${cat.hoverBorder} shadow-[0_4px_16px_rgba(0,0,0,0.03)] hover:shadow-[0_14px_30px_rgba(163,15,59,0.09)] transition-all duration-300 cursor-pointer min-h-[195px] sm:min-h-[210px]`}
+              className={`group relative overflow-hidden rounded-[26px] p-4 flex flex-col justify-between border ${cat.bgColor} ${cat.borderColor} ${cat.hoverBorder} shadow-[0_4px_16px_rgba(0,0,0,0.03)] hover:shadow-[0_14px_30px_rgba(122,31,36,0.09)] transition-all duration-300 cursor-pointer min-h-[195px] sm:min-h-[210px]`}
             >
               {/* Settled Top Tag Badge */}
               <div className="w-full flex items-center justify-start gap-2 z-10">
@@ -134,13 +134,13 @@ const TopCategoriesSection = () => {
               {/* Category Title & Subtitle */}
               <div className="w-full text-center z-10">
                 <div className="flex items-center justify-center gap-1">
-                  <h3 className="text-[17px] sm:text-[19px] font-bold text-[#211917] leading-tight group-hover:text-[#A30F3B] transition-colors">
+                  <h3 className="text-[17px] sm:text-[19px] font-bold text-on-surface leading-tight group-hover:text-primary transition-colors">
                     {cat.title}
                   </h3>
-                  <ChevronRight className="w-4 h-4 text-[#A30F3B] opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" aria-hidden="true" />
+                  <ChevronRight className="w-4 h-4 text-primary opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" aria-hidden="true" />
                 </div>
 
-                <p className="text-[11.5px] sm:text-[12.5px] text-[#705F58] mt-0.5 font-medium line-clamp-1">
+                <p className="text-[11.5px] sm:text-[12.5px] text-on-surface-variant mt-0.5 font-medium line-clamp-1">
                   {cat.subtitle}
                 </p>
               </div>

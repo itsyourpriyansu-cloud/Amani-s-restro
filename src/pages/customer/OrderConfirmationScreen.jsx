@@ -62,7 +62,7 @@ const OrderConfirmationScreen = () => {
           >
             <Icon name="arrow_back" />
           </button>
-          <span className="text-xs font-bold text-maroon-800 bg-saffron-100 px-3 py-2 rounded-full">
+          <span className="text-xs font-bold text-on-primary-container bg-primary-container px-3 py-2 rounded-full">
             Table #{tableNumber}
           </span>
         </header>
@@ -74,7 +74,7 @@ const OrderConfirmationScreen = () => {
         >
           <div className="text-center px-5 pt-7 pb-5">
             <div className="mx-auto w-16 h-16 rounded-full bg-success/10 flex items-center justify-center mb-3">
-              <div className="w-12 h-12 rounded-full bg-success flex items-center justify-center text-white shadow-sm">
+              <div className="w-12 h-12 rounded-full bg-success flex items-center justify-center text-on-success shadow-sm">
                 <CheckCircle2 className="w-7 h-7" strokeWidth={2.5} aria-hidden="true" />
               </div>
             </div>
@@ -109,7 +109,7 @@ const OrderConfirmationScreen = () => {
           </dl>
 
           {/* ETA strip */}
-          <div className="flex items-center gap-3 px-5 py-4 border-t border-border bg-saffron-100/60">
+          <div className="flex items-center gap-3 px-5 py-4 border-t border-border bg-primary-container/60">
             <div className="bg-surface-container-lowest p-2 rounded-xl text-maroon-800 flex-shrink-0">
               <Clock className="w-5 h-5" aria-hidden="true" />
             </div>
@@ -132,16 +132,16 @@ const OrderConfirmationScreen = () => {
                 <li key={step.key} className="flex-1 flex flex-col items-center text-center relative">
                   {idx > 0 && (
                     <span
-                      className={`absolute top-4 right-1/2 w-full h-0.5 -z-0 ${isDone || isActive ? 'bg-saffron-600' : 'bg-border'}`}
+                      className={`absolute top-4 right-1/2 w-full h-0.5 -z-0 ${isDone || isActive ? 'bg-primary' : 'bg-border'}`}
                       aria-hidden="true"
                     />
                   )}
                   <span
                     className={`relative z-10 w-8 h-8 rounded-full flex items-center justify-center border-2 ${
                       isDone
-                        ? 'bg-success border-success text-white'
+                        ? 'bg-success border-success text-on-success'
                         : isActive
-                        ? 'bg-saffron-600 border-saffron-600 text-white animate-pulse'
+                        ? 'bg-primary border-primary text-on-primary animate-pulse'
                         : 'bg-surface-container-lowest border-border text-muted'
                     }`}
                   >
@@ -200,7 +200,7 @@ const OrderConfirmationScreen = () => {
                   </div>
 
                   {hasModifiers && (
-                    <div className="mt-2.5 bg-saffron-100/70 p-2.5 rounded-xl border border-saffron-600/30 text-xs space-y-1 text-ink">
+                    <div className="mt-2.5 bg-primary-container/70 p-2.5 rounded-xl border border-primary/30 text-xs space-y-1 text-on-primary-container">
                       {item.makeVegan && <div className="font-semibold text-success">Vegan preparation</div>}
                       {item.jainPreparation && <div className="font-semibold text-success">Jain preparation</div>}
                       {item.selectedCustomizations?.map((mod, mIdx) => (
@@ -213,12 +213,12 @@ const OrderConfirmationScreen = () => {
                   )}
 
                   {item.allergyAlert && (
-                    <div className="mt-2.5 bg-red-50 border-l-4 border-red-600 p-2.5 rounded-r-xl text-xs text-red-900 font-bold space-y-0.5">
+                    <div className="mt-2.5 bg-error-container/50 border-l-4 border-error p-2.5 rounded-r-xl text-xs text-on-error-container font-bold space-y-0.5">
                       <div className="flex items-center gap-1.5 uppercase tracking-wider text-[11px]">
-                        <Flame className="w-3.5 h-3.5 text-red-600" aria-hidden="true" />
+                        <Flame className="w-3.5 h-3.5 text-error" aria-hidden="true" />
                         <span>Allergy alert</span>
                       </div>
-                      <p className="text-red-900 font-normal">{item.allergyAlert}</p>
+                      <p className="text-on-error-container font-normal">{item.allergyAlert}</p>
                     </div>
                   )}
 
@@ -259,7 +259,7 @@ const OrderConfirmationScreen = () => {
             )}
           </div>
           <div className="border-t border-dashed border-border my-3" />
-          <div className="flex justify-between items-center bg-saffron-100/60 -mx-4 -mb-4 px-4 py-3.5 rounded-b-2xl">
+          <div className="flex justify-between items-center bg-primary-container/60 -mx-4 -mb-4 px-4 py-3.5 rounded-b-2xl">
             <span className="font-bold text-sm text-ink">Total payable</span>
             <span className="font-bold text-xl text-maroon-800 font-mono">
               {formatInvoiceAmount(totals.totalPayable || totals.grandTotal || 0)}
@@ -271,7 +271,7 @@ const OrderConfirmationScreen = () => {
         <footer className="mt-auto space-y-3 pb-6">
           <button
             onClick={() => navigate('/order-tracking')}
-            className="w-full min-h-[48px] bg-saffron-600 hover:bg-saffron-500 active:bg-saffron-500 text-white font-bold py-3.5 rounded-xl flex items-center justify-center gap-2 shadow-md transition-colors text-sm"
+            className="w-full min-h-[48px] bg-primary hover:brightness-90 active:brightness-90 text-on-primary font-bold py-3.5 rounded-xl flex items-center justify-center gap-2 shadow-md transition-colors text-sm"
           >
             <span>Track order</span>
             <Icon name="chevron_right" />

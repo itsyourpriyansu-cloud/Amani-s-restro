@@ -202,7 +202,7 @@ const DiagnosticFeedbackModal = ({ isOpen, onClose, order }) => {
                       onClick={() => toggleImprovementCategory(opt.key)}
                       className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
                         isSelected
-                          ? 'bg-amber-600 text-white font-bold shadow-sm'
+                          ? 'bg-warning text-on-warning font-bold shadow-sm'
                           : 'bg-surface-container-high text-on-surface-variant hover:bg-surface-container-highest'
                       }`}
                     >
@@ -250,12 +250,12 @@ const DiagnosticFeedbackModal = ({ isOpen, onClose, order }) => {
         {/* Step 2: Submission Routing Notice */}
         {step === 'SUBMITTED_NOTICE' && (
           <div className="space-y-5 py-2">
-            <div className="p-4 rounded-2xl bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200 space-y-2">
-              <div className="flex items-center gap-2 text-emerald-950 font-bold text-sm">
-                <CheckCircle className="w-5 h-5 text-emerald-600" />
+            <div className="p-4 rounded-2xl bg-success/10 border border-success/30 space-y-2">
+              <div className="flex items-center gap-2 text-success font-bold text-sm">
+                <CheckCircle className="w-5 h-5 text-success" />
                 Thank you for telling us!
               </div>
-              <p className="text-xs text-emerald-900/90 leading-relaxed">
+              <p className="text-xs text-on-background/90 leading-relaxed">
                 {isNegative
                   ? 'A restaurant manager will review your notes privately so the team can respond appropriately and improve operational quality.'
                   : 'Your operational ratings have been recorded to help our kitchen and floor teams maintain high standards.'}
@@ -264,12 +264,12 @@ const DiagnosticFeedbackModal = ({ isOpen, onClose, order }) => {
 
             {/* Negative Feedback Manager Routing Card */}
             {isNegative && (
-              <div className="p-3.5 bg-amber-50 rounded-xl border border-amber-200 space-y-1.5 text-xs text-amber-950">
-                <div className="flex items-center gap-2 font-bold text-amber-900">
-                  <ShieldCheck className="w-4 h-4 text-amber-700" />
+              <div className="p-3.5 bg-warning/10 rounded-xl border border-warning/30 space-y-1.5 text-xs text-on-background">
+                <div className="flex items-center gap-2 font-bold text-warning">
+                  <ShieldCheck className="w-4 h-4 text-warning" />
                   Private Manager Review Assigned
                 </div>
-                <p className="text-[11px] text-amber-800">
+                <p className="text-[11px] text-warning">
                   Feedback ID: <span className="font-mono font-bold">{submittedRecord?.feedbackId}</span> assigned to Shift Manager Ananya Reddy for private follow-up.
                 </p>
               </div>
@@ -312,16 +312,16 @@ const DiagnosticFeedbackModal = ({ isOpen, onClose, order }) => {
                   </div>
                 </div>
               ) : (
-                <div className="p-3 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-emerald-900 space-y-1">
-                  <div className="flex items-center gap-1.5 font-bold text-emerald-950">
-                    <CheckCircle className="w-4 h-4 text-emerald-600" />
+                <div className="p-3 bg-success/10 rounded-xl border border-success/30 text-xs text-success space-y-1">
+                  <div className="flex items-center gap-1.5 font-bold text-success">
+                    <CheckCircle className="w-4 h-4 text-success" />
                     Public Review Published with Verification Badge
                   </div>
                   <div className="flex items-center gap-2 pt-1">
-                    <span className="bg-emerald-600 text-white px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider">
+                    <span className="bg-success text-on-success px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider">
                       Verified completed order
                     </span>
-                    <span className="text-[11px] text-emerald-800">Linked to Order #{order?.orderId || 'ORD-1048'}</span>
+                    <span className="text-[11px] text-success">Linked to Order #{order?.orderId || 'ORD-1048'}</span>
                   </div>
                 </div>
               )}

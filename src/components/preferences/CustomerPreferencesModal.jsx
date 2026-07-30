@@ -78,17 +78,17 @@ const CustomerPreferencesModal = ({
         <div className="p-6 space-y-5 text-sm max-h-[75vh] overflow-y-auto">
           {customerMemory && step === 'VIEW_PREFERENCES' ? (
             <div className="space-y-4">
-              <div className="p-4 bg-emerald-500/10 border border-emerald-500/30 rounded-xl space-y-2">
+              <div className="p-4 bg-success/10 border border-success/30 rounded-xl space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="font-bold text-emerald-800 dark:text-emerald-300 text-xs flex items-center gap-1.5">
+                  <span className="font-bold text-success text-xs flex items-center gap-1.5">
                     <Icon name="check_circle" className="text-base" />
                     Session Preferences Saved
                   </span>
-                  <span className="text-[11px] font-semibold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full">
+                  <span className="text-[11px] font-semibold text-success bg-success/15 px-2 py-0.5 rounded-full">
                     QR Table Session Active
                   </span>
                 </div>
-                <div className="text-xs space-y-1 text-on-surface-variant pt-1 border-t border-emerald-500/20">
+                <div className="text-xs space-y-1 text-on-surface-variant pt-1 border-t border-success/20">
                   {customerMemory.dietaryPreference && (
                     <p>• Dietary: <strong>{customerMemory.dietaryPreference}</strong></p>
                   )}
@@ -113,7 +113,7 @@ const CustomerPreferencesModal = ({
                     onForgetMemory();
                     onClose();
                   }}
-                  className="px-4 py-2.5 bg-rose-500/10 hover:bg-rose-500/20 text-rose-700 dark:text-rose-300 font-semibold text-xs rounded-xl border border-rose-500/30"
+                  className="px-4 py-2.5 bg-error/10 hover:bg-error/20 text-error font-semibold text-xs rounded-xl border border-error/30"
                 >
                   Reset Session Preferences
                 </button>
@@ -149,37 +149,37 @@ const CustomerPreferencesModal = ({
               </div>
 
               {/* Sensitive Allergy Option with Separate Consent */}
-              <div className="p-3 bg-rose-500/10 border border-rose-500/30 rounded-xl space-y-2 text-xs">
+              <div className="p-3 bg-error/10 border border-error/30 rounded-xl space-y-2 text-xs">
                 <div className="flex items-start gap-2.5">
                   <input
                     type="checkbox"
                     checked={consent.allergyInformation}
                     onChange={() => handleToggleConsent('allergyInformation')}
-                    className="w-4 h-4 rounded text-rose-600 focus:ring-rose-500 mt-0.5"
+                    className="w-4 h-4 rounded text-error focus:ring-error mt-0.5"
                   />
                   <div>
-                    <span className="font-bold text-rose-800 dark:text-rose-300 block">Allergy information memory</span>
-                    <p className="text-[11px] text-rose-900/80 dark:text-rose-200">
+                    <span className="font-bold text-error block">Allergy information memory</span>
+                    <p className="text-[11px] text-error/80">
                       Allergy information is sensitive and will be used only to help staff review future food requests.
                     </p>
                   </div>
                 </div>
 
                 {consent.allergyInformation && (
-                  <div className="pt-2 border-t border-rose-500/20 space-y-2">
+                  <div className="pt-2 border-t border-error/20 space-y-2">
                     <input
                       type="text"
                       placeholder="e.g. Peanut allergy, Dairy intolerance"
                       value={allergyNote}
                       onChange={(e) => setAllergyNote(e.target.value)}
-                      className="w-full px-3 py-1.5 bg-surface border border-rose-400/40 rounded-lg text-xs"
+                      className="w-full px-3 py-1.5 bg-surface border border-error/40 rounded-lg text-xs"
                     />
-                    <label className="flex items-center gap-2 text-[11px] text-rose-900 dark:text-rose-300 font-semibold cursor-pointer">
+                    <label className="flex items-center gap-2 text-[11px] text-error font-semibold cursor-pointer">
                       <input
                         type="checkbox"
                         checked={savedAllergyConsent}
                         onChange={(e) => setSavedAllergyConsent(e.target.checked)}
-                        className="rounded text-rose-600"
+                        className="rounded text-error"
                       />
                       Explicitly confirm saving this allergy concern
                     </label>

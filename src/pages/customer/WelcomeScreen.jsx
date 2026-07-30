@@ -8,78 +8,103 @@ import { useToast } from '../../context/ToastContext';
 import { RESTAURANT_INFO } from '../../utils/mockData';
 import { restaurantConfig } from '../../config/restaurantConfig';
 import { formatInvoiceAmount } from '../../utils/formatters';
-import TopAppBar from '../../components/layout/TopAppBar';
 import TopCategoriesSection from '../../components/home/TopCategoriesSection';
 import RestaurantTrustProfileModal from '../../components/trust/RestaurantTrustProfileModal';
 import CustomerPreferencesModal from '../../components/preferences/CustomerPreferencesModal';
 import CustomizationModal from '../../components/menu/CustomizationModal';
-import { ArrowRight, Bell, Search, UtensilsCrossed } from 'lucide-react';
+import { ArrowRight, Bell, Search, UtensilsCrossed, Clock, Flame, CheckCircle2, AlertCircle } from 'lucide-react';
 
 /* ─────────────────────────────────────────────
-   Kitchen status metadata
+   Kitchen status metadata & semantic states (Minimal & Concise)
 ───────────────────────────────────────────── */
 const KITCHEN_STATUS_META = {
-  NORMAL: { label: 'Kitchen running smoothly', dot: 'bg-emerald-600' },
-  BUSY: { label: 'Kitchen moderately busy', dot: 'bg-[#B56B08]' },
-  VERY_BUSY: { label: 'Kitchen very busy right now', dot: 'bg-red-600' },
-  PAUSED: { label: 'Kitchen has paused new orders briefly', dot: 'bg-red-600' },
+  NORMAL: {
+    label: 'Kitchen Running Smoothly',
+    subLabel: 'Est. prep time',
+    icon: CheckCircle2,
+    badgeBg: 'bg-secondary-container/80 text-on-secondary-container border border-secondary/30',
+    dotBg: 'bg-secondary',
+  },
+  BUSY: {
+    label: 'Kitchen Moderately Busy',
+    subLabel: 'Est. prep time',
+    icon: Flame,
+    badgeBg: 'bg-amber-100/90 text-amber-950 border border-amber-300/60',
+    dotBg: 'bg-warning',
+  },
+  VERY_BUSY: {
+    label: 'Kitchen Very Busy',
+    subLabel: 'Est. prep time',
+    icon: Clock,
+    badgeBg: 'bg-error-container/80 text-on-error-container border border-error/30',
+    dotBg: 'bg-error',
+  },
+  PAUSED: {
+    label: 'Orders Temporarily Paused',
+    subLabel: 'Brief delay',
+    icon: AlertCircle,
+    badgeBg: 'bg-error-container/80 text-on-error-container border border-error/30',
+    dotBg: 'bg-error',
+  },
 };
-
-
 
 /* ─────────────────────────────────────────────
    Sub-component: RestaurantHero
-   Compact hero — native name + tagline only.
-   English name lives once, in the sticky header above.
+   Aspect ratio ~16:9 (clamp 190-220px), authentic photography,
+   lower-left text alignment, Noto Sans Telugu + Inter font styling.
 ───────────────────────────────────────────── */
 const RestaurantHero = ({ heroImage }) => {
   const [heroImgFailed, setHeroImgFailed] = useState(false);
 
   return (
     <div
-      className="relative w-full overflow-hidden bg-[#201714]"
-      style={{ height: 'clamp(150px, 40vw, 180px)' }}
+      className="relative w-full overflow-hidden bg-on-background"
+      style={{ height: 'clamp(190px, 48vw, 220px)' }}
     >
       {!heroImgFailed ? (
         <img
-          src={heroImage}
-          alt="Mangamma Ruchulu restaurant interior — warm dining room with hanging lights"
+          src={heroImage || '/mangamma_hero_banner.png'}
+          alt="Mangamma Ruchulu authentic Telugu dining meal and ambience"
           fetchpriority="high"
           loading="eager"
           onError={() => setHeroImgFailed(true)}
           className="w-full h-full object-cover"
-          style={{ objectPosition: 'center 48%' }}
+          style={{ objectPosition: 'center 45%' }}
         />
       ) : (
-        <div className="w-full h-full bg-[#201714] flex items-center justify-center">
-          <UtensilsCrossed className="w-12 h-12 text-[#95847C]" aria-hidden="true" />
+        <div className="w-full h-full bg-on-background flex items-center justify-center">
+          <UtensilsCrossed className="w-12 h-12 text-inverse-on-surface/50" aria-hidden="true" />
         </div>
       )}
 
+      {/* Restrained dark gradient (85% black at bottom, fading to 45% near middle) */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            'linear-gradient(to top, rgba(22, 12, 9, 0.82) 0%, rgba(22, 12, 9, 0.48) 36%, rgba(22, 12, 9, 0.08) 70%, transparent 100%)',
+            'linear-gradient(to top, rgba(26, 18, 13, 0.85) 0%, rgba(26, 18, 13, 0.45) 50%, transparent 100%)',
         }}
         aria-hidden="true"
       />
 
+      {/* Lower-left text: 20px padding, 27px bottom padding, max 85% width */}
       <motion.div
         initial={{ opacity: 0, y: 6 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, ease: 'easeOut', delay: 0.1 }}
-        className="absolute bottom-0 left-0 right-0 px-4 pb-9 flex flex-col gap-1 z-10"
-        style={{ maxWidth: '90%' }}
+        className="absolute bottom-0 left-0 right-0 px-[20px] pb-[27px] flex flex-col gap-1 z-10 max-w-[85%]"
       >
         <p
-          className="font-telugu text-white font-semibold leading-tight drop-shadow-xs"
-          style={{ fontSize: '19px' }}
+          className="font-telugu text-white font-bold leading-tight drop-shadow-xs"
+          style={{ fontSize: '28px' }}
           lang="te"
         >
           {RESTAURANT_INFO.nativeName}
         </p>
-        <p className="text-white/90 font-medium leading-snug drop-shadow-xs" style={{ fontSize: '13px' }}>
+        <p
+          className="font-sans text-white/95 font-medium leading-snug drop-shadow-xs"
+          style={{ fontSize: '15px' }}
+        >
           {RESTAURANT_INFO.tagline}
         </p>
       </motion.div>
@@ -88,24 +113,56 @@ const RestaurantHero = ({ heroImage }) => {
 };
 
 /* ─────────────────────────────────────────────
-   Sub-component: KitchenStatusStrip
-   Single-line kitchen status card. Table info lives once, in the header chip.
+   Sub-component: KitchenStatusCard
+   Minimal, clean, easy-to-read status card with no text truncation.
 ───────────────────────────────────────────── */
-const KitchenStatusStrip = ({ statusMeta, etaLow }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 8 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.4, ease: 'easeOut', delay: 0.2 }}
-    className="mx-4 relative z-20 bg-white border border-[#EADFD6] shadow-[0_8px_24px_rgba(63,34,23,0.07)] flex items-center gap-2.5"
-    style={{ marginTop: '-18px', padding: '14px 16px', borderRadius: '18px' }}
-  >
-    <span className={`w-2.5 h-2.5 rounded-full shrink-0 ${statusMeta.dot}`} aria-hidden="true" />
-    <p className="text-[13.5px] leading-snug min-w-0 truncate">
-      <span className="font-bold text-[#211917]">{statusMeta.label}</span>
-      <span className="text-[#705F58] font-medium"> · {etaLow}–{etaLow + 5} min prep</span>
-    </p>
-  </motion.div>
-);
+const KitchenStatusCard = ({ statusMeta, etaLow }) => {
+  const IconComponent = statusMeta?.icon || Flame;
+  const etaRange = `${etaLow}–${etaLow + 5} min`;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, ease: 'easeOut', delay: 0.2 }}
+      className="mx-4 relative z-20 bg-surface border border-outline-variant/70 shadow-[0_4px_14px_rgba(26,18,13,0.05)] flex items-center justify-between gap-2.5 px-3.5 py-3 sm:px-4 sm:py-3.5"
+      style={{ marginTop: '-18px', borderRadius: '16px' }}
+    >
+      {/* Left + Middle section */}
+      <div className="flex items-center gap-2.5 min-w-0 flex-1">
+        {/* Status icon / non-color cue + dot */}
+        <div className="relative shrink-0 flex items-center justify-center w-8.5 h-8.5 rounded-full bg-surface-container-low border border-outline-variant/40 text-on-surface-variant">
+          <IconComponent className="w-4 h-4 text-on-surface" aria-hidden="true" />
+          <span
+            className={`absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full ring-2 ring-surface ${statusMeta.dotBg}`}
+            aria-hidden="true"
+          />
+        </div>
+
+        {/* Labels — concise, minimal text */}
+        <div className="flex flex-col min-w-0">
+          <span className="font-semibold text-on-surface text-[14px] sm:text-[15px] leading-tight truncate">
+            {statusMeta.label}
+          </span>
+          <span className="text-on-surface-variant font-medium text-[12px] sm:text-[13px] leading-tight mt-0.5">
+            {statusMeta.subLabel}
+          </span>
+        </div>
+      </div>
+
+      {/* Right side: time badge */}
+      <div className="shrink-0 flex items-center">
+        <div
+          className={`px-2.5 py-1.5 sm:px-3 sm:py-1.5 rounded-xl font-semibold text-[12.5px] sm:text-[13.5px] leading-none flex items-center gap-1.5 select-none ${statusMeta.badgeBg}`}
+          aria-label={`Estimated preparation time: ${etaRange}`}
+        >
+          <Clock className="w-3.5 h-3.5 opacity-80" aria-hidden="true" />
+          <span>{etaRange}</span>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
 
 
 
@@ -115,17 +172,17 @@ const KitchenStatusStrip = ({ statusMeta, etaLow }) => (
 ───────────────────────────────────────────── */
 const RestaurantTrustFooter = ({ onOpenTrustProfile }) => (
   <div className="flex items-center justify-center flex-wrap gap-x-2 gap-y-1 px-4 py-6">
-    <span className="text-[#95847C] text-[12px]">
+    <span className="text-on-surface-variant text-[12px]">
       Since {RESTAURANT_INFO.established}
     </span>
-    <span className="text-[#95847C] text-[10px]" aria-hidden="true">·</span>
-    <span className="text-[#95847C] text-[12px]">
+    <span className="text-on-surface-variant text-[10px]" aria-hidden="true">·</span>
+    <span className="text-on-surface-variant text-[12px]">
       {restaurantConfig.parentCompanyLabel}
     </span>
-    <span className="text-[#95847C] text-[10px]" aria-hidden="true">·</span>
+    <span className="text-on-surface-variant text-[10px]" aria-hidden="true">·</span>
     <button
       onClick={onOpenTrustProfile}
-      className="text-[#A30F3B] font-semibold underline-offset-2 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A30F3B] rounded text-[12px] cursor-pointer"
+      className="text-primary font-semibold underline-offset-2 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded text-[12px] cursor-pointer"
     >
       Our Story
     </button>
@@ -138,14 +195,14 @@ const RestaurantTrustFooter = ({ onOpenTrustProfile }) => (
 ───────────────────────────────────────────── */
 const StickyFooterBar = ({ onCallWaiter, assistanceSent, itemCount, totalAmount, onViewCart }) => (
   <div
-    className="fixed left-0 bottom-0 w-full z-40 bg-white/95 backdrop-blur-md border-t border-[#EADFD6] px-4 pt-3"
+    className="fixed left-0 bottom-0 w-full z-40 bg-surface/95 backdrop-blur-md border-t border-outline-variant px-4 pt-3"
     style={{ paddingBottom: 'calc(12px + env(safe-area-inset-bottom))' }}
   >
     <div className="max-w-[640px] mx-auto flex items-center gap-3">
       <button
         onClick={onCallWaiter}
         disabled={assistanceSent}
-        className={`h-[48px] rounded-[14px] border border-[#A30F3B]/30 text-[#A30F3B] font-bold text-[13px] flex items-center justify-center gap-2 hover:bg-[#FBECEF]/50 active:bg-[#FBECEF] disabled:opacity-60 transition-colors cursor-pointer ${
+        className={`h-[48px] rounded-[14px] border border-primary/30 text-primary font-bold text-[13px] flex items-center justify-center gap-2 hover:bg-primary-container/50 active:bg-primary-container disabled:opacity-60 transition-colors cursor-pointer ${
           itemCount > 0 ? 'px-4 shrink-0' : 'flex-1'
         }`}
       >
@@ -156,7 +213,7 @@ const StickyFooterBar = ({ onCallWaiter, assistanceSent, itemCount, totalAmount,
       {itemCount > 0 && (
         <button
           onClick={onViewCart}
-          className="flex-1 min-w-0 h-[48px] bg-[#A30F3B] hover:bg-[#7E0D2F] text-white rounded-[14px] flex items-center justify-between px-4 font-bold text-[13px] transition-colors cursor-pointer"
+          className="flex-1 min-w-0 h-[48px] bg-primary hover:brightness-90 text-on-primary rounded-[14px] flex items-center justify-between px-4 font-bold text-[13px] transition-colors cursor-pointer"
         >
           <span className="truncate">
             {itemCount} {itemCount === 1 ? 'item' : 'items'} · {formatInvoiceAmount(totalAmount)}
@@ -186,7 +243,6 @@ const WelcomeScreen = () => {
   const [assistanceSent, setAssistanceSent] = useState(false);
   const [customizingDish, setCustomizingDish] = useState(null);
   const [isCustomizationOpen, setIsCustomizationOpen] = useState(false);
-
   const popularSectionRef = useRef(null);
 
   const statusMeta =
@@ -208,18 +264,11 @@ const WelcomeScreen = () => {
   const totalAmount = totals.totalPayable || totals.grandTotal || 0;
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#FFFDF9]">
-      <TopAppBar
-        variant="brand"
-        logoSrc={null}
-        onOpenTrustProfile={() => setIsTrustOpen(true)}
-        onOpenPreferences={() => setIsPrefsOpen(true)}
-      />
-
+    <div className="min-h-screen flex flex-col bg-background">
       <main
         className="flex-1 flex flex-col overflow-x-hidden"
         style={{
-          paddingTop: 'calc(58px + env(safe-area-inset-top))',
+          paddingTop: 'env(safe-area-inset-top, 0px)',
           paddingBottom: 'calc(88px + env(safe-area-inset-bottom))',
         }}
       >
@@ -229,8 +278,8 @@ const WelcomeScreen = () => {
 
           {/* ── Content stack ── */}
           <div className="flex flex-col">
-            {/* Kitchen status strip (overlaps hero by ~18px) — table number lives only in the header chip */}
-            <KitchenStatusStrip statusMeta={statusMeta} etaLow={etaLow} />
+            {/* Kitchen status card (overlaps hero by ~18px) */}
+            <KitchenStatusCard statusMeta={statusMeta} etaLow={etaLow} />
 
             {/* Primary CTA — eye-catchy brand button */}
             <motion.button
@@ -239,7 +288,7 @@ const WelcomeScreen = () => {
               transition={{ duration: 0.35, delay: 0.3 }}
               whileTap={{ scale: 0.985 }}
               onClick={() => navigate('/menu')}
-              className="mx-4 mt-5 flex items-center justify-center gap-2 bg-gradient-to-r from-[#E86D00] via-[#F47712] to-[#D96000] hover:brightness-105 active:scale-[0.985] text-white font-bold transition-all shadow-[0_4px_16px_rgba(244,119,18,0.25)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A30F3B] focus-visible:ring-offset-2 group cursor-pointer"
+              className="mx-4 mt-5 flex items-center justify-center gap-2 bg-gradient-to-r from-primary via-primary to-maroon-950 hover:brightness-105 active:scale-[0.985] text-on-primary font-bold transition-all shadow-[0_4px_16px_rgba(122,31,36,0.25)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-highlight focus-visible:ring-offset-2 group cursor-pointer"
               style={{ height: '54px', borderRadius: '14px', fontSize: '16px' }}
             >
               <span>Explore Authentic Flavours</span>

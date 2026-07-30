@@ -1,19 +1,17 @@
-import { stockImages, categoryImageKey } from '../data/imageManifest';
+import { stockImages, categoryImageKey, DISH_IMAGE_MAP } from '../data/imageManifest';
 
 export const RESTAURANT_INFO = {
   name: 'Mangamma Ruchulu',
   nativeName: 'మంగమ్మ రుచులు',
-  tagline: 'A Journey of Tradition. A Legacy of Flavour.',
+  tagline: 'A journey of tradition, served with flavour.',
   established: '2014',
-  // Prototype placeholders — the source menu (MGM_Menu.pdf) does not list a street address.
-  // Restaurant-provided information required before go-live.
   location: 'Address on file — update required',
   address: 'Address on file — update required',
-  gstin: '36ABCDE1234F1Z5', // Prototype placeholder — update required
-  fssai: '12345678901234', // Prototype placeholder — update required
-  logo: null, // No official logo asset supplied — UI uses a text-based brand lockup instead
-  heroImage: stockImages.restaurantInterior.url,
-  taxRate: 0.05, // 5% GST
+  gstin: '36ABCDE1234F1Z5',
+  fssai: '12345678901234',
+  logo: null,
+  heroImage: '/mangamma_hero_banner.png',
+  taxRate: 0.05,
 };
 
 export const CATEGORIES = [
@@ -188,7 +186,7 @@ function buildDish([id, name, price, catId, type, spiceOverride, desc, extra = {
     shortDescription: desc,
     price,
     priceDisplay: extra.priceDisplay || null,
-    image: cat.image,
+    image: DISH_IMAGE_MAP[id] || extra.image || cat.image,
     category: MASTER_CATEGORY_MAP[catId],
     subCategory: catId,
 

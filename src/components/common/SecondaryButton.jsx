@@ -24,11 +24,11 @@ const SecondaryButton = ({
       type={type}
       onClick={onClick}
       disabled={disabled}
-      className={`inline-flex items-center justify-center gap-2 bg-cream hover:bg-sand text-text border border-border transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-maroon-700/40 disabled:opacity-50 disabled:cursor-not-allowed ${
+      className={`inline-flex items-center justify-center gap-2 bg-transparent hover:bg-secondary-container text-secondary border border-secondary transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-highlight/60 disabled:opacity-50 disabled:cursor-not-allowed ${
         fullWidth ? 'w-full' : ''
       } ${sizeClasses[size]} ${className}`}
     >
-      {Icon && <Icon className="w-4 h-4 text-muted" />}
+      {Icon && <Icon className="w-4 h-4 text-secondary" />}
       <span>{children}</span>
     </motion.button>
   );

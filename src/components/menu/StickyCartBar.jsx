@@ -27,12 +27,12 @@ const StickyCartBar = () => {
         tabIndex={0}
         onKeyDown={(e) => e.key === 'Enter' && navigate('/cart')}
         aria-label={`Cart summary: ${totals.itemCount} ${totals.itemCount === 1 ? 'item' : 'items'}, total ${formatInvoiceAmount(totalAmount)}. Click to view cart.`}
-        className="max-w-[520px] mx-auto h-[64px] sm:h-[68px] bg-[#A30F3B] text-white rounded-[18px] shadow-xl flex items-center justify-between px-4 cursor-pointer active:scale-[0.98] transition-transform pointer-events-auto border border-[#7E0D2F]"
+        className="max-w-[520px] mx-auto h-[64px] sm:h-[68px] bg-primary text-on-primary rounded-[18px] shadow-xl flex items-center justify-between px-4 cursor-pointer active:scale-[0.98] transition-transform pointer-events-auto border border-primary"
       >
         <div className="flex items-center gap-3">
-          <div className="relative bg-white/20 p-2.5 rounded-xl flex items-center justify-center">
-            <ShoppingBag className="w-5 h-5 text-white" aria-hidden="true" />
-            <span className="absolute -top-1.5 -right-1.5 bg-[#F47712] text-white text-[10px] font-extrabold w-5 h-5 rounded-full flex items-center justify-center border-2 border-[#A30F3B]">
+          <div className="relative bg-on-primary/20 p-2.5 rounded-xl flex items-center justify-center">
+            <ShoppingBag className="w-5 h-5 text-on-primary" aria-hidden="true" />
+            <span className="absolute -top-1.5 -right-1.5 bg-error text-on-error text-[10px] font-extrabold w-5 h-5 rounded-full flex items-center justify-center border-2 border-primary">
               {totals.itemCount}
             </span>
           </div>
@@ -47,9 +47,9 @@ const StickyCartBar = () => {
           </div>
         </div>
 
-        <div className="flex items-center gap-1.5 bg-white text-[#A30F3B] px-4 py-2.5 rounded-xl font-bold text-[13px] shadow-xs hover:bg-[#FFF7EE] transition-colors">
+        <div className="flex items-center gap-1.5 bg-surface text-primary px-4 py-2.5 rounded-xl font-bold text-[13px] shadow-xs hover:bg-surface-container transition-colors">
           <span>View Cart</span>
-          <ArrowRight className="w-4 h-4 text-[#A30F3B]" aria-hidden="true" />
+          <ArrowRight className="w-4 h-4 text-primary" aria-hidden="true" />
         </div>
       </div>
     </div>

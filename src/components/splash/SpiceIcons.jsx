@@ -4,14 +4,14 @@ import React from 'react';
  * Handcrafted SVG vector components for South Indian spices, herbs, aroma lines & motifs.
  * Color token references:
  * - Curry leaf: #3B6032, #4C7C40, #6E9B5F
- * - Chili: #A30F3B, #D62828, #E59E2B
+ * - Chili: #A30F3B, #D62828, #C9953D
  * - Coriander: #2D4A27, #3B6032
- * - Cardamom: #4C7C40, #E59E2B
+ * - Cardamom: #4C7C40, #C9953D
  * - Star Anise: #3D1D16, #5A2D22, #D48B16
  * - Cloves: #2B140F, #4A231A
  * - Peppercorn: #1F1513, #3B2A27
  * - Garlic & Onion: #FFFDF9, #F8F0E5, #D4A373
- * - Aroma & Steam: #E59E2B (with soft blur & glow)
+ * - Aroma & Steam: #C9953D (highlight/turmeric, with soft blur & glow)
  */
 
 export const CurryLeafIcon = ({ className = 'w-8 h-8', style = {} }) => (
@@ -191,11 +191,11 @@ export const StarAniseIcon = ({ className = 'w-8 h-8', style = {} }) => (
           strokeWidth="1"
         />
         {/* Seed pod inside tip */}
-        <circle cx="32" cy="14" r="2.5" fill="#E59E2B" opacity="0.9" />
+        <circle cx="32" cy="14" r="2.5" fill="#C9953D" opacity="0.9" />
       </g>
     ))}
     {/* Center hub */}
-    <circle cx="32" cy="32" r="6" fill="#4A2316" stroke="#E59E2B" strokeWidth="1" />
+    <circle cx="32" cy="32" r="6" fill="#4A2316" stroke="#C9953D" strokeWidth="1" />
   </svg>
 );
 
@@ -311,9 +311,9 @@ export const AromaStreamIcon = ({ className = 'w-24 h-48', style = {} }) => (
   >
     <defs>
       <linearGradient id="steamGrad" x1="50" y1="200" x2="50" y2="0" gradientUnits="userSpaceOnUse">
-        <stop offset="0%" stopColor="#E59E2B" stopOpacity="0" />
-        <stop offset="40%" stopColor="#E59E2B" stopOpacity="0.4" />
-        <stop offset="80%" stopColor="#F4A261" stopOpacity="0.2" />
+        <stop offset="0%" stopColor="#C9953D" stopOpacity="0" />
+        <stop offset="40%" stopColor="#C9953D" stopOpacity="0.4" />
+        <stop offset="80%" stopColor="#E3C583" stopOpacity="0.2" />
         <stop offset="100%" stopColor="#FFFDF9" stopOpacity="0" />
       </linearGradient>
     </defs>
@@ -342,9 +342,9 @@ export const BrassMotifIcon = ({ className = 'w-32 h-32', style = {} }) => (
     className={className}
     style={style}
   >
-    <circle cx="60" cy="60" r="54" stroke="#E59E2B" strokeWidth="1" strokeDasharray="4 4" opacity="0.35" />
-    <circle cx="60" cy="60" r="42" stroke="#E59E2B" strokeWidth="0.8" opacity="0.25" />
-    <circle cx="60" cy="60" r="30" stroke="#E59E2B" strokeWidth="1.2" opacity="0.4" />
+    <circle cx="60" cy="60" r="54" stroke="#C9953D" strokeWidth="1" strokeDasharray="4 4" opacity="0.35" />
+    <circle cx="60" cy="60" r="42" stroke="#C9953D" strokeWidth="0.8" opacity="0.25" />
+    <circle cx="60" cy="60" r="30" stroke="#C9953D" strokeWidth="1.2" opacity="0.4" />
     {[0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330].map((deg) => (
       <line
         key={deg}
@@ -352,7 +352,7 @@ export const BrassMotifIcon = ({ className = 'w-32 h-32', style = {} }) => (
         y1="60"
         x2={60 + 54 * Math.cos((deg * Math.PI) / 180)}
         y2={60 + 54 * Math.sin((deg * Math.PI) / 180)}
-        stroke="#E59E2B"
+        stroke="#C9953D"
         strokeWidth="0.6"
         opacity="0.2"
       />

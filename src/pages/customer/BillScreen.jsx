@@ -204,7 +204,7 @@ const BillScreen = () => {
                   </button>
                   <button
                     onClick={() => setIsCashModalOpen(true)}
-                    className="w-full min-h-[52px] bg-transparent border-2 border-primary text-primary rounded-xl font-semibold text-[15px] flex items-center justify-center gap-2 hover:bg-primary/5 active:scale-[0.98] transition-all"
+                    className="w-full min-h-[52px] bg-transparent border-2 border-secondary text-secondary rounded-xl font-semibold text-[15px] flex items-center justify-center gap-2 hover:bg-secondary-container/40 active:scale-[0.98] transition-all"
                   >
                     <Icon name="storefront" />
                     Pay at Counter
@@ -220,7 +220,7 @@ const BillScreen = () => {
               {/* Tertiary support link */}
               <button
                 onClick={() => navigate('/report-issue')}
-                className="w-full min-h-[44px] flex items-center justify-center gap-1.5 text-rose-600 dark:text-rose-400 text-xs font-semibold hover:underline"
+                className="w-full min-h-[44px] flex items-center justify-center gap-1.5 text-error text-xs font-semibold hover:underline"
               >
                 <AlertCircle className="w-3.5 h-3.5" />
                 Report Billing Issue

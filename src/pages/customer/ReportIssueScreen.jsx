@@ -48,12 +48,12 @@ const ReportIssueScreen = () => {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 bg-surface shadow-sm h-14 flex items-center px-4 justify-between border-b border-outline-variant/20">
-        <button onClick={() => navigate(-1)} className="active:scale-95 transition-transform" aria-label="Go back">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-surface shadow-sm min-h-14 py-2.5 flex items-center gap-2 px-4 justify-between border-b border-outline-variant/20">
+        <button onClick={() => navigate(-1)} className="w-11 h-11 -m-2 shrink-0 flex items-center justify-center active:scale-95 transition-transform" aria-label="Go back">
           <Icon name="arrow_back" className="text-primary" />
         </button>
-        <h1 className="text-lg font-bold text-primary italic">Service Recovery</h1>
-        <div className="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-bold border border-primary/20">
+        <h1 className="text-[15px] sm:text-lg font-bold text-primary leading-tight text-center truncate">Service Recovery</h1>
+        <div className="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-bold border border-primary/20 shrink-0 whitespace-nowrap">
           Table {tableNumber}
         </div>
       </header>
@@ -151,7 +151,7 @@ const ReportIssueScreen = () => {
         <button
           onClick={handleSubmit}
           disabled={isSubmitting || !selectedCategory}
-          className="w-full max-w-xl h-12 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-sm font-bold shadow-lg flex items-center justify-center gap-2 disabled:opacity-50 transition-colors"
+          className="w-full max-w-xl h-12 bg-error hover:brightness-90 text-on-error rounded-xl text-sm font-bold shadow-lg flex items-center justify-center gap-2 disabled:opacity-50 transition-colors"
         >
           <span>{isSubmitting ? 'Submitting...' : 'Submit Issue to Staff'}</span>
           <Icon name="send" className="text-base" />

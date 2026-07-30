@@ -279,26 +279,26 @@ const SignatureDishStoryModal = ({ isOpen, onClose, dish }) => {
             </div>
 
             {/* Transparent Participation Reward Conditions Box */}
-            <div className="p-3.5 rounded-2xl bg-amber-50/70 border border-amber-200 space-y-2 text-xs text-amber-950">
+            <div className="p-3.5 rounded-2xl bg-warning/10 border border-warning/30 space-y-2 text-xs text-on-background">
               <div className="flex items-center justify-between">
-                <span className="font-bold text-amber-900 flex items-center gap-1.5">
-                  <ShieldCheck className="w-4 h-4 text-amber-700" />
+                <span className="font-bold text-warning flex items-center gap-1.5">
+                  <ShieldCheck className="w-4 h-4 text-warning" />
                   Participation Conditions
                 </span>
                 <button
                   type="button"
                   onClick={() => setShowRewardConditions(!showRewardConditions)}
-                  className="text-[11px] font-bold text-amber-800 hover:underline"
+                  className="text-[11px] font-bold text-warning hover:underline"
                 >
                   {showRewardConditions ? 'Hide' : 'View Details'}
                 </button>
               </div>
-              <p className="text-[11px] text-amber-900/90 leading-relaxed">
+              <p className="text-[11px] text-on-background/90 leading-relaxed">
                 Participation rewards authentic content based on genuine visits, not positive sentiment or 5-star praise.
               </p>
 
               {showRewardConditions && (
-                <ul className="list-disc pl-4 text-[10px] space-y-1 text-amber-900/80 pt-1">
+                <ul className="list-disc pl-4 text-[10px] space-y-1 text-on-background/80 pt-1">
                   <li>Must relate to an authentic completed visit.</li>
                   <li>Positive, mixed, or neutral food documentation is eligible.</li>
                   <li>Restaurant reviews submissions for relevance and safety.</li>

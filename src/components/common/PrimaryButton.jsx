@@ -26,7 +26,7 @@ const PrimaryButton = ({
       type={type}
       onClick={onClick}
       disabled={disabled || isLoading}
-      className={`relative inline-flex items-center justify-center gap-2 bg-saffron-600 hover:bg-saffron-500 text-white shadow-md shadow-maroon-900/10 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-saffron-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ${
+      className={`relative inline-flex items-center justify-center gap-2 bg-primary hover:brightness-95 active:brightness-90 text-on-primary shadow-md shadow-primary/10 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-highlight focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ${
         fullWidth ? 'w-full' : ''
       } ${sizeClasses[size]} ${className}`}
     >

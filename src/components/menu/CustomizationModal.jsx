@@ -310,7 +310,7 @@ export default function CustomizationModal({ isOpen, onClose, dish, onAddToCart,
           <div className="shrink-0 px-4 py-3.5 border-b border-border flex items-start justify-between gap-3">
             <div className="min-w-0 flex-1">
               <h2 id="customization-title" className="text-base font-bold text-ink leading-snug line-clamp-2 flex items-center gap-1.5">
-                <Sparkles className="w-4 h-4 text-saffron-600 shrink-0" aria-hidden="true" />
+                <Sparkles className="w-4 h-4 text-primary shrink-0" aria-hidden="true" />
                 <span className="truncate">Customize {dish.name}</span>
               </h2>
               <p id="customization-subtitle" className="text-xs text-muted mt-0.5">Base price: {formatMenuPrice(dish.price)}</p>
@@ -343,9 +343,9 @@ export default function CustomizationModal({ isOpen, onClose, dish, onAddToCart,
               )}
               <div className="min-w-0">
                 <p className="text-xs text-muted line-clamp-2">{dish.shortDescription || dish.description}</p>
-                <div className="flex items-center gap-2 mt-1 text-xs text-muted">
+                <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 mt-1 text-xs text-muted">
                   <span>Portion: {dish.portionLabel || 'Regular'}</span>
-                  <span>•</span>
+                  <span aria-hidden="true">•</span>
                   <span>Serves: {dish.serves || '1 person'}</span>
                 </div>
               </div>
@@ -364,7 +364,7 @@ export default function CustomizationModal({ isOpen, onClose, dish, onAddToCart,
                       type="checkbox"
                       checked={makeVegan}
                       onChange={handleVeganToggle}
-                      className="mt-0.5 rounded text-success focus:ring-success h-4 w-4"
+                      className="mt-0.5 rounded accent-success focus:ring-success h-4 w-4"
                     />
                     <div>
                       <span className="font-medium text-ink">Make it Vegan</span>
@@ -379,7 +379,7 @@ export default function CustomizationModal({ isOpen, onClose, dish, onAddToCart,
                       type="checkbox"
                       checked={makeJain}
                       onChange={handleJainToggle}
-                      className="mt-0.5 rounded text-success focus:ring-success h-4 w-4"
+                      className="mt-0.5 rounded accent-success focus:ring-success h-4 w-4"
                     />
                     <div>
                       <span className="font-medium text-ink">Jain preparation</span>
@@ -423,7 +423,7 @@ export default function CustomizationModal({ isOpen, onClose, dish, onAddToCart,
                             isVeganIncompatible
                               ? 'bg-surface-container border-border opacity-50 cursor-not-allowed'
                               : isSelected
-                              ? 'bg-saffron-100/60 border-saffron-600 text-maroon-900'
+                              ? 'bg-primary-container border-primary text-on-primary-container'
                               : 'bg-surface-container-lowest border-border hover:border-outline text-text'
                           }`}
                         >
@@ -445,7 +445,7 @@ export default function CustomizationModal({ isOpen, onClose, dish, onAddToCart,
                                   handleMultiSelect(group.id, option.id);
                                 }
                               }}
-                              className="text-saffron-600 focus:ring-saffron-600 h-4 w-4"
+                              className="accent-primary focus:ring-primary h-4 w-4"
                             />
                             <span className="font-medium">{option.label || option.name}</span>
                           </div>
@@ -477,7 +477,7 @@ export default function CustomizationModal({ isOpen, onClose, dish, onAddToCart,
                     setAllergyChecked(e.target.checked);
                     if (!e.target.checked) setAllergyText('');
                   }}
-                  className="mt-0.5 rounded text-danger focus:ring-danger h-4 w-4"
+                  className="mt-0.5 rounded accent-danger focus:ring-danger h-4 w-4"
                 />
                 <span className="font-medium text-ink text-xs">
                   I need the kitchen to review an allergy concern
@@ -517,33 +517,33 @@ export default function CustomizationModal({ isOpen, onClose, dish, onAddToCart,
                 value={specialInstruction}
                 onChange={(e) => setSpecialInstruction(e.target.value)}
                 placeholder="e.g. Keep chutney separate or use less oil"
-                className="w-full text-xs p-3 border border-border rounded-xl focus:ring-2 focus:ring-saffron-600 focus:border-saffron-600 bg-surface-container-lowest"
+                className="w-full text-xs p-3 border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-primary bg-surface-container-lowest"
               />
             </div>
           </div>
 
           {/* Sticky Footer — quantity and Add to Cart always stay together and visible */}
           <div
-            className="shrink-0 border-t border-border bg-background/98 px-4 pt-3 flex flex-wrap items-center gap-3"
+            className="shrink-0 border-t border-border bg-background/98 px-4 pt-3 flex items-center gap-3"
             style={{ paddingBottom: 'calc(12px + env(safe-area-inset-bottom))' }}
           >
             <div className="flex items-center gap-1 bg-surface-container rounded-xl p-1 shrink-0" role="group" aria-label="Quantity">
               <button
                 type="button"
                 onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                className="w-11 h-11 rounded-lg bg-surface-container-lowest shadow-sm flex items-center justify-center hover:bg-surface-container-high text-text disabled:opacity-40"
+                className="w-10 h-10 rounded-lg bg-surface-container-lowest shadow-sm flex items-center justify-center hover:bg-surface-container-high text-text disabled:opacity-40 cursor-pointer"
                 disabled={quantity <= 1}
                 aria-label="Decrease quantity"
               >
                 <Minus className="w-4 h-4" />
               </button>
-              <span className="w-8 text-center font-bold text-ink text-sm" aria-live="polite">
+              <span className="w-7 text-center font-bold text-ink text-sm" aria-live="polite">
                 {quantity}
               </span>
               <button
                 type="button"
                 onClick={() => setQuantity((q) => q + 1)}
-                className="w-11 h-11 rounded-lg bg-surface-container-lowest shadow-sm flex items-center justify-center hover:bg-surface-container-high text-text"
+                className="w-10 h-10 rounded-lg bg-surface-container-lowest shadow-sm flex items-center justify-center hover:bg-surface-container-high text-text cursor-pointer"
                 aria-label="Increase quantity"
               >
                 <Plus className="w-4 h-4" />
@@ -554,10 +554,13 @@ export default function CustomizationModal({ isOpen, onClose, dish, onAddToCart,
               type="button"
               onClick={handleSubmit}
               disabled={!isValid}
-              className="flex-1 basis-full min-[360px]:basis-0 min-h-[48px] h-12 bg-saffron-600 hover:bg-saffron-500 disabled:bg-surface-container-high disabled:text-muted text-white font-bold px-6 rounded-xl transition-colors shadow-md flex items-center justify-center gap-2"
+              className="flex-1 min-w-0 min-h-[46px] h-12 bg-primary hover:brightness-90 disabled:bg-surface-container-high disabled:text-muted text-on-primary font-bold px-4 rounded-xl transition-colors shadow-md flex items-center justify-between gap-2 whitespace-nowrap cursor-pointer text-sm"
               aria-live="polite"
             >
-              {ctaLabel}
+              <span className="truncate">{initialSelections ? 'Update Cart' : 'Add to Cart'}</span>
+              <span className="bg-on-primary/20 px-2.5 py-1 rounded-lg text-xs font-extrabold shrink-0">
+                {formatMenuPrice(itemTotal)}
+              </span>
             </button>
           </div>
         </motion.div>

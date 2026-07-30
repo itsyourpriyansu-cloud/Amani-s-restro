@@ -72,6 +72,13 @@
   --color-error-container: #FBE0E4;
   --color-on-error-container: #B3263D;
 
+  /* New tokens introduced for the customer app re-theme (mangamma-ruchulu-color-system.md).
+     Unused elsewhere today, so their defaults here are inert outside the customer scope. */
+  --color-on-success: #ffffff;
+  --color-on-warning: #201714;
+  --color-on-info: #ffffff;
+  --color-highlight: #C9953D;
+
   --color-inverse-surface: #201714;
   --color-inverse-on-surface: #FFFDF9;
   --color-inverse-primary: #F28C28;
@@ -141,6 +148,109 @@
 
   /* Radius */
   --radius-card: 18px;
+}
+
+/* ============================================================
+   Mangamma Ruchulu — customer app color overrides
+   Scoped to [data-app="customer"] (set on CustomerLayout's root
+   element) so counter/kitchen/manager/waiter keep today's palette
+   untouched. Overrides the *values* of the existing semantic/brand
+   tokens above — class names (bg-primary, text-on-surface-variant,
+   bg-saffron-600, ...) are unchanged, so existing components pick
+   these up automatically via normal CSS custom-property cascade.
+   Values sourced from mangamma-ruchulu-color-system.md (light theme).
+   ============================================================ */
+[data-app="customer"] {
+  /* M3 semantic tokens */
+  --color-primary: #7A1F24;
+  --color-primary-container: #F2D8D8;
+  --color-on-primary: #FFFDF8;
+  --color-on-primary-container: #4A1118;
+
+  --color-secondary: #4B651F;
+  --color-secondary-container: #DDE6CB;
+  --color-on-secondary: #FFFDF8;
+  --color-on-secondary-container: #253817;
+
+  --color-tertiary: #985D2E;
+  --color-tertiary-container: #F2D9C7;
+  --color-on-tertiary: #FFFDF8;
+  --color-on-tertiary-container: #4A2514;
+
+  --color-background: #F7F1E5;
+  --color-on-background: #1A120D;
+
+  --color-surface: #FFFDF8;
+  --color-surface-dim: #E6D0AC;
+  --color-surface-bright: #FFFDF8;
+  --color-surface-container-lowest: #FFFFFF;
+  --color-surface-container-low: #F0E6D5;
+  --color-surface-container: #EDE1CF;
+  --color-surface-container-high: #E6D0AC;
+  --color-surface-container-highest: #C8B9A2;
+
+  --color-on-surface: #2A241F;
+  --color-on-surface-variant: #5D5147;
+  --color-surface-variant: #EDE1CF;
+  --color-surface-tint: #7A1F24;
+
+  --color-outline: #8C7B6A;
+  --color-outline-variant: #D5C4AE;
+
+  --color-error: #A93F1D;
+  --color-on-error: #FFFDF8;
+  --color-error-container: #F6D7CF;
+  --color-on-error-container: #5B1A0C;
+
+  --color-inverse-surface: #2A241F;
+  --color-inverse-on-surface: #F7F1E5;
+  --color-inverse-primary: #E7A4A5;
+
+  --color-primary-fixed: #F2D8D8;
+  --color-primary-fixed-dim: #E7A4A5;
+  --color-on-primary-fixed: #4A1118;
+  --color-on-primary-fixed-variant: #7A1F24;
+
+  --color-secondary-fixed: #DDE6CB;
+  --color-secondary-fixed-dim: #B6CC88;
+  --color-on-secondary-fixed: #253817;
+  --color-on-secondary-fixed-variant: #4B651F;
+
+  --color-tertiary-fixed: #F2D9C7;
+  --color-tertiary-fixed-dim: #E3A878;
+  --color-on-tertiary-fixed: #4A2514;
+  --color-on-tertiary-fixed-variant: #985D2E;
+
+  /* status */
+  --color-success: #4B651F;
+  --color-on-success: #FFFDF8;
+  --color-warning: #A96C18;
+  --color-on-warning: #1A120D;
+  --color-danger: #A93F1D;
+  --color-information: #365F73;
+  --color-on-info: #FFFDF8;
+  --color-highlight: #C9953D;
+
+  /* raw brand scale — consumed by common/PrimaryButton, SecondaryButton,
+     DishBadges (spice badge), and several customer screens directly */
+  --color-maroon-950: #4A1118;
+  --color-maroon-900: #6B1920;
+  --color-maroon-800: #7A1F24;
+  --color-maroon-700: #7A1F24;
+
+  --color-saffron-600: #A93F1D;
+  --color-saffron-500: #8A3417;
+  --color-saffron-100: #F6D7CF;
+
+  --color-ivory: #FFFDF8;
+  --color-warm-white: #F0E6D5;
+  --color-cream: #FFFDF8;
+  --color-sand: #EDE1CF;
+
+  --color-ink: #1A120D;
+  --color-text: #2A241F;
+  --color-muted: #5D5147;
+  --color-border: #D5C4AE;
 }
 
 /* Force Inter font globally across all HTML elements, utility classes, and components */
@@ -235,6 +345,24 @@ html, body, button, input, textarea, select, h1, h2, h3, h4, h5, h6, p, span, di
 .animate-pulse-ring {
   animation: pulse-ring 2.5s infinite ease-in-out;
 }
+
+/* Continuous Marquee Animation */
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 24s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
 
 /* Mobile customer shell: prevent horizontal scroll drift and give a stable
    dynamic-viewport-aware min-height so fixed chrome (header/bottom nav) can't

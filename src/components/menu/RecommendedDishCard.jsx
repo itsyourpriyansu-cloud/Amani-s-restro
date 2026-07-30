@@ -50,13 +50,13 @@ const RecommendedDishCard = ({ dish, onCustomize, isDragging = false }) => {
       role="button"
       tabIndex={0}
       onKeyDown={(e) => e.key === 'Enter' && handleCardClick()}
-      className={`w-[215px] sm:w-[225px] shrink-0 bg-white rounded-[18px] border border-[#EADFD6] shadow-2xs hover:shadow-md transition-all cursor-pointer overflow-hidden flex flex-col select-none group ${
+      className={`w-[215px] sm:w-[225px] shrink-0 bg-surface rounded-[18px] border border-outline-variant shadow-2xs hover:shadow-md transition-all cursor-pointer overflow-hidden flex flex-col select-none group ${
         !isAvailable ? 'opacity-75' : ''
       }`}
       style={{ scrollSnapAlign: 'start' }}
     >
       {/* Food Image */}
-      <div className="relative w-full h-[118px] overflow-hidden bg-[#FFF7EE]">
+      <div className="relative w-full h-[118px] overflow-hidden bg-surface-container">
         <ResponsiveImage
           src={dish.image}
           alt={dish.name}
@@ -65,8 +65,8 @@ const RecommendedDishCard = ({ dish, onCustomize, isDragging = false }) => {
           className="w-full h-full group-hover:scale-105 transition-transform duration-300 pointer-events-none"
         />
         {dish.bestseller && (
-          <span className="absolute top-2 left-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#A30F3B] text-white text-[10.5px] font-bold shadow-xs">
-            <Sparkles className="w-3 h-3 text-[#F47712]" aria-hidden="true" />
+          <span className="absolute top-2 left-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary text-on-primary text-[10.5px] font-bold shadow-xs">
+            <Sparkles className="w-3 h-3 text-highlight" aria-hidden="true" />
             Recommended
           </span>
         )}
@@ -82,26 +82,26 @@ const RecommendedDishCard = ({ dish, onCustomize, isDragging = false }) => {
           </div>
 
           {/* Dish Name */}
-          <h3 className="font-bold text-[#211917] text-[14px] leading-snug line-clamp-2 min-h-[40px]">
+          <h3 className="font-bold text-on-surface text-[14px] leading-snug line-clamp-2 min-h-[40px]">
             {dish.name}
           </h3>
         </div>
 
         {/* Price & Action */}
-        <div className="pt-2 border-t border-[#F0E7E0] mt-1 flex items-center justify-between">
-          <PriceTag price={dish.price} priceDisplay={dish.priceDisplay} className="text-[15px] text-[#A30F3B]" />
+        <div className="pt-2 border-t border-outline-variant mt-1 flex items-center justify-between">
+          <PriceTag price={dish.price} priceDisplay={dish.priceDisplay} className="text-[15px] text-primary font-extrabold" />
 
           <button
             type="button"
             onClick={handlePrimaryAction}
             disabled={!isAvailable || !isOrderable}
-            className="h-9 px-3 rounded-xl bg-[#F47712] hover:bg-[#DB5F05] text-white text-[12px] font-bold transition-all active:scale-95 flex items-center gap-1 shadow-2xs whitespace-nowrap cursor-pointer"
+            className="h-8 px-3 rounded-xl bg-primary hover:brightness-90 text-on-primary text-[12px] font-bold transition-all active:scale-95 flex items-center gap-1 shadow-xs whitespace-nowrap cursor-pointer"
             aria-label={`${actionLabel} ${dish.name}`}
           >
             <span>{actionLabel}</span>
-            {dish.customizationAvailable && <ChevronRight className="w-3 h-3" />}
+            {dish.customizationAvailable && <ChevronRight className="w-3.5 h-3.5 stroke-[2.5]" />}
             {quantityInCart > 0 && !dish.customizationAvailable && (
-              <span className="bg-[#7E0D2F] text-white px-1.5 py-0.2 rounded-full text-[10px] ml-0.5">
+              <span className="bg-on-primary/20 text-on-primary px-1.5 py-0.2 rounded-full text-[10px] ml-0.5 font-extrabold">
                 {quantityInCart}
               </span>
             )}

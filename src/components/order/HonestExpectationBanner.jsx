@@ -11,40 +11,40 @@ const HonestExpectationBanner = ({ kitchenLoad, estimatedRange, isCompact = fals
     switch (kitchenLoad.status) {
       case 'BUSY':
         return {
-          bg: 'bg-amber-100 border-amber-300',
-          text: 'text-amber-950',
-          iconBg: 'bg-amber-200/70',
-          tagBg: 'bg-amber-200/80',
+          bg: 'bg-warning/15 border-warning/40',
+          text: 'text-on-background',
+          iconBg: 'bg-warning/25',
+          tagBg: 'bg-warning/30',
           icon: 'schedule',
           label: 'Kitchen is currently busy',
           statusTag: 'Busy',
         };
       case 'VERY_BUSY':
         return {
-          bg: 'bg-orange-100 border-orange-300',
-          text: 'text-orange-950',
-          iconBg: 'bg-orange-200/70',
-          tagBg: 'bg-orange-200/80',
+          bg: 'bg-error/15 border-error/40',
+          text: 'text-on-background',
+          iconBg: 'bg-error/25',
+          tagBg: 'bg-error/30',
           icon: 'warning',
           label: 'Longer preparation times are expected',
           statusTag: 'Very Busy',
         };
       case 'PAUSED':
         return {
-          bg: 'bg-rose-100 border-rose-300',
-          text: 'text-rose-950',
-          iconBg: 'bg-rose-200/70',
-          tagBg: 'bg-rose-200/80',
+          bg: 'bg-error/25 border-error/60',
+          text: 'text-on-background',
+          iconBg: 'bg-error/35',
+          tagBg: 'bg-error/40',
           icon: 'pause_circle',
           label: 'New food orders are temporarily paused',
           statusTag: 'Paused',
         };
       default:
         return {
-          bg: 'bg-emerald-100 border-emerald-300',
-          text: 'text-emerald-950',
-          iconBg: 'bg-emerald-200/70',
-          tagBg: 'bg-emerald-200/80',
+          bg: 'bg-success/15 border-success/40',
+          text: 'text-on-background',
+          iconBg: 'bg-success/25',
+          tagBg: 'bg-success/30',
           icon: 'check_circle',
           label: 'Kitchen running normally',
           statusTag: 'Normal',

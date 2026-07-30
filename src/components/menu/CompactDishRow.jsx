@@ -38,7 +38,7 @@ const CompactDishRow = ({ dish, onCustomize }) => {
     ? 'Sold Out'
     : dish.customizationAvailable
     ? 'Customize'
-    : 'Add';
+    : 'ADD';
 
   return (
     <div
@@ -46,38 +46,38 @@ const CompactDishRow = ({ dish, onCustomize }) => {
       role="button"
       tabIndex={0}
       onKeyDown={(e) => e.key === 'Enter' && handleCardClick()}
-      className={`bg-white rounded-[16px] border border-[#EADFD6] shadow-2xs hover:shadow-sm transition-all p-3 flex items-center justify-between gap-3 cursor-pointer select-none ${
-        !isAvailable ? 'opacity-75' : ''
+      className={`bg-surface rounded-[16px] border border-outline-variant shadow-2xs hover:shadow-sm transition-all p-3 flex items-center justify-between gap-3 cursor-pointer select-none ${
+        !isAvailable ? 'opacity-70' : ''
       }`}
     >
       {/* Left info */}
       <div className="flex-1 min-w-0 pr-1">
         <div className="flex items-center gap-2">
           <FoodTypeBadge foodType={dish.foodType} />
-          <h3 className="font-bold text-[#211917] text-[14.5px] truncate">{dish.name}</h3>
+          <h3 className="font-bold text-on-surface text-[14.5px] truncate">{dish.name}</h3>
         </div>
       </div>
 
       {/* Right price & action */}
       <div className="flex items-center gap-3 shrink-0">
-        <PriceTag price={dish.price} priceDisplay={dish.priceDisplay} className="text-[15px] text-[#A30F3B]" />
+        <PriceTag price={dish.price} priceDisplay={dish.priceDisplay} className="text-[15px] text-primary" />
 
         <button
           type="button"
           onClick={handlePrimaryAction}
           disabled={!isAvailable || !isOrderable}
-          className={`h-9 px-3 rounded-xl text-[12px] font-bold transition-all flex items-center gap-1 cursor-pointer whitespace-nowrap ${
+          className={`h-8 px-3 rounded-xl text-[12px] font-bold transition-all flex items-center gap-1 cursor-pointer whitespace-nowrap ${
             !isAvailable || !isOrderable
-              ? 'bg-[#FFF7EE] text-[#95867E] border border-[#EADFD6]'
-              : 'bg-[#F47712] hover:bg-[#DB5F05] text-white active:scale-95 shadow-2xs'
+              ? 'bg-surface-container text-on-surface-variant border border-outline-variant'
+              : 'bg-primary hover:brightness-90 text-on-primary active:scale-95 shadow-xs'
           }`}
           aria-label={`${actionLabel} ${dish.name}`}
         >
-          {!dish.customizationAvailable && <Plus className="w-3.5 h-3.5" />}
           <span>{actionLabel}</span>
-          {dish.customizationAvailable && <ChevronRight className="w-3.5 h-3.5" />}
+          {!dish.customizationAvailable && <Plus className="w-3.5 h-3.5 stroke-[2.5]" />}
+          {dish.customizationAvailable && <ChevronRight className="w-3.5 h-3.5 stroke-[2.5]" />}
           {quantityInCart > 0 && !dish.customizationAvailable && (
-            <span className="bg-[#7E0D2F] text-white px-1.5 py-0.2 rounded-full text-[10px] ml-0.5">
+            <span className="bg-on-primary/20 text-on-primary px-1.5 py-0.2 rounded-full text-[10px] ml-0.5 font-extrabold">
               {quantityInCart}
             </span>
           )}
@@ -88,3 +88,4 @@ const CompactDishRow = ({ dish, onCustomize }) => {
 };
 
 export default CompactDishRow;
+

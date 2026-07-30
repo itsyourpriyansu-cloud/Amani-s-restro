@@ -1,32 +1,73 @@
 import React from 'react';
-import { Clock } from 'lucide-react';
+import { Clock, Flame, ShieldCheck, Sparkles } from 'lucide-react';
 
 /**
- * Slim sticky status strip that pairs with TopAppBar's table chip to form
- * one compact header block — kitchen ETA only, table info lives in TopAppBar
- * so it is never shown twice.
+ * Compact marquee status strip that attaches directly to TopAppBar.
+ * Features infinite marquee scrolling text displaying live Kitchen ETA, preparation status,
+ * and brand trust assurances.
  */
 const CompactKitchenStatus = ({ kitchenLoad }) => {
-  if (!kitchenLoad) return null;
-
-  const prepTime = kitchenLoad.averagePreparationMinutes || 20;
+  const prepTime = kitchenLoad?.averagePreparationMinutes || 20;
   const estimatedRange = `${prepTime}–${prepTime + 5} min`;
-  const isBusy = kitchenLoad.status === 'BUSY' || kitchenLoad.status === 'VERY_BUSY';
+  const isBusy = kitchenLoad?.status === 'BUSY' || kitchenLoad?.status === 'VERY_BUSY';
+
+  const marqueeItems = (
+    <div className="flex items-center gap-6 shrink-0">
+      {/* Item 1: Kitchen ETA */}
+      <div className="flex items-center gap-1.5">
+        <span
+          className={`w-1.5 h-1.5 rounded-full shrink-0 ${isBusy ? 'bg-warning animate-pulse' : 'bg-success'}`}
+          aria-hidden="true"
+        />
+        <Clock className="w-3.5 h-3.5 text-on-surface-variant" aria-hidden="true" />
+        <span>
+          Kitchen ETA <strong className="text-on-surface font-extrabold">{estimatedRange}</strong>
+          {isBusy && <span className="text-warning font-bold ml-1">· Busy Queue</span>}
+        </span>
+      </div>
+
+      <span className="text-outline-variant">·</span>
+
+      {/* Item 2: Fresh Preparation */}
+      <div className="flex items-center gap-1.5">
+        <Flame className="w-3.5 h-3.5 text-primary" aria-hidden="true" />
+        <span>Authentic Stone-Ground Spices & Fresh Preparation</span>
+      </div>
+
+      <span className="text-outline-variant">·</span>
+
+      {/* Item 3: Verified Quality */}
+      <div className="flex items-center gap-1.5">
+        <ShieldCheck className="w-3.5 h-3.5 text-success" aria-hidden="true" />
+        <span>100% Quality & Hygiene Standards</span>
+      </div>
+
+      <span className="text-outline-variant">·</span>
+
+      {/* Item 4: Live Kitchen */}
+      <div className="flex items-center gap-1.5">
+        <Sparkles className="w-3.5 h-3.5 text-highlight" aria-hidden="true" />
+        <span>Freshly Cooked On Order</span>
+      </div>
+
+      <span className="text-outline-variant">·</span>
+    </div>
+  );
 
   return (
     <div
-      className="sticky z-30 w-full h-9 px-4 flex items-center justify-center gap-1.5 text-[12px] bg-white/95 backdrop-blur-md border-b border-[#EADFD6]"
-      style={{ top: 'calc(58px + env(safe-area-inset-top))' }}
+      className="w-full h-7 bg-surface backdrop-blur-md border-b border-outline-variant/60 flex items-center overflow-hidden relative select-none text-[11.5px] font-medium text-on-surface-variant"
+      title="Live Kitchen Status & Standards"
     >
-      <span
-        className={`w-1.5 h-1.5 rounded-full shrink-0 ${isBusy ? 'bg-[#F47712]' : 'bg-[#238653]'}`}
-        aria-hidden="true"
-      />
-      <Clock className="w-3.5 h-3.5 text-[#95867E] shrink-0" aria-hidden="true" />
-      <span className="text-[#6F5F58] truncate">
-        Kitchen ETA <span className="font-bold text-[#211917]">{estimatedRange}</span>
-        {isBusy && <span className="text-[#B56B08] font-semibold"> · Busy</span>}
-      </span>
+      {/* Left/Right Subtle Fade Masks */}
+      <div className="absolute left-0 top-0 bottom-0 w-5 bg-gradient-to-r from-surface to-transparent z-10 pointer-events-none" />
+      <div className="absolute right-0 top-0 bottom-0 w-5 bg-gradient-to-l from-surface to-transparent z-10 pointer-events-none" />
+
+      {/* Infinite Marquee Track (Repeated twice for seamless loop) */}
+      <div className="animate-marquee flex items-center">
+        {marqueeItems}
+        {marqueeItems}
+      </div>
     </div>
   );
 };

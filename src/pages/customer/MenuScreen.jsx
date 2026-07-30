@@ -1,21 +1,22 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
+import { Utensils, X } from 'lucide-react';
 import { menuService } from '../../services/menuService';
 import TopAppBar from '../../components/layout/TopAppBar';
 import BottomNavBar from '../../components/layout/BottomNavBar';
 import SearchBar from '../../components/menu/SearchBar';
+import OfferBanner from '../../components/menu/OfferBanner';
 import FoodCard from '../../components/menu/FoodCard';
 import CompactDishRow from '../../components/menu/CompactDishRow';
 import StickyCartBar from '../../components/menu/StickyCartBar';
 import CustomizationModal from '../../components/menu/CustomizationModal';
+import CategoryBottomSheet from '../../components/menu/CategoryBottomSheet';
 import RestaurantTrustProfileModal from '../../components/trust/RestaurantTrustProfileModal';
 import CustomerPreferencesModal from '../../components/preferences/CustomerPreferencesModal';
-import CompactKitchenStatus from '../../components/menu/CompactKitchenStatus';
-import VisualCategoryRail from '../../components/menu/VisualCategoryRail';
 import DietaryFilterRail, { QUICK_FILTERS } from '../../components/menu/DietaryFilterRail';
 import RecommendedDishRail from '../../components/menu/RecommendedDishRail';
 import MenuSectionHeader from '../../components/menu/MenuSectionHeader';
-import { MenuSkeletonList, CategorySkeletonRow } from '../../components/common/LoadingSkeleton';
+import { MenuSkeletonList } from '../../components/common/LoadingSkeleton';
 import EmptyState from '../../components/common/EmptyState';
 import ErrorState from '../../components/common/ErrorState';
 import Icon from '../../components/common/Icon';
@@ -40,6 +41,7 @@ const MenuScreen = () => {
 
   const [isTrustOpen, setIsTrustOpen] = useState(false);
   const [isPrefsOpen, setIsPrefsOpen] = useState(false);
+  const [isCategorySheetOpen, setIsCategorySheetOpen] = useState(false);
 
   const favouritesRef = useRef(null);
 
@@ -95,6 +97,17 @@ const MenuScreen = () => {
   const handleSelectCategory = (categoryId) => {
     setSelectedCategory(categoryId);
     setActiveFilters([]);
+
+    // Smoothly scroll to the requested category section anchor
+    setTimeout(() => {
+      const el = document.getElementById(`category-${categoryId}`);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        const fullMenuEl = document.getElementById('full-menu-section');
+        if (fullMenuEl) fullMenuEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 150);
   };
 
   const visibleDishes = dishes.filter((d) =>
@@ -135,6 +148,7 @@ const MenuScreen = () => {
     <>
       <TopAppBar
         variant="brand"
+        kitchenLoad={kitchenLoad}
         onOpenTrustProfile={() => setIsTrustOpen(true)}
         onOpenPreferences={() => setIsPrefsOpen(true)}
       />
@@ -142,15 +156,13 @@ const MenuScreen = () => {
       <main
         className="customer-page flex-1 max-w-[640px] mx-auto w-full"
         style={{
-          paddingTop: 'calc(60px + env(safe-area-inset-top) + 8px)',
+          paddingTop: 'calc(84px + env(safe-area-inset-top) + 6px)',
           paddingBottom: contentPaddingBottom,
         }}
       >
-        {/* 1. Compact sticky status strip — pairs with TopAppBar's single table chip */}
-        <CompactKitchenStatus kitchenLoad={kitchenLoad} />
-
-        {/* 2. Prominent search */}
-        <section className="px-4 mt-5 mb-6">
+        {/* 2. Offer Banner + Prominent search */}
+        <section className="px-4 mt-4 mb-6 flex flex-col gap-3.5">
+          <OfferBanner />
           <SearchBar
             value={searchQuery}
             onChange={setSearchQuery}
@@ -158,17 +170,6 @@ const MenuScreen = () => {
             autoFocus={Boolean(location.state?.focusSearch)}
           />
         </section>
-
-        {/* 3. Horizontally scrollable category tabs */}
-        {categories.length === 0 && isLoading ? (
-          <CategorySkeletonRow />
-        ) : (
-          <VisualCategoryRail
-            categories={categories}
-            selectedCategory={selectedCategory}
-            onSelectCategory={handleSelectCategory}
-          />
-        )}
 
         {/* 4. High-value quick filters + "More filters" bottom sheet */}
         <DietaryFilterRail
@@ -199,7 +200,7 @@ const MenuScreen = () => {
           />
         </div>
 
-        {/* 6b. Simplified dish cards: name, short tags, price, strong CTA */}
+        {/* 6b. Dish cards grouped by category or filtered */}
         {isLoading ? (
           <div className="px-4">
             <MenuSkeletonList count={5} />
@@ -222,15 +223,49 @@ const MenuScreen = () => {
               }}
             />
           </div>
+        ) : selectedCategory === 'all' && !searchQuery ? (
+          <section className="px-4 space-y-6">
+            {[
+              { id: 'starters', name: 'Starters' },
+              { id: 'meals', name: 'Meals' },
+              { id: 'biryanis', name: 'Biryanis' },
+              { id: 'rotis_breads', name: 'Breads' },
+              { id: 'desserts', name: 'Desserts' },
+              { id: 'drinks', name: 'Cooldrinks' },
+            ].map((section) => {
+              const sectionDishes = visibleDishes.filter((d) => d.category === section.id);
+              if (sectionDishes.length === 0) return null;
+
+              return (
+                <div key={section.id} id={`category-${section.id}`} className="scroll-mt-24 pt-1">
+                  <div className="flex items-center justify-between mb-3.5 px-1 border-b border-outline-variant/30 pb-2">
+                    <h3 className="font-extrabold text-base text-on-surface flex items-center gap-2">
+                      <span>{section.name}</span>
+                      <span className="text-[11px] font-bold text-on-surface-variant bg-surface-container px-2.5 py-0.5 rounded-full">
+                        {sectionDishes.length}
+                      </span>
+                    </h3>
+                  </div>
+                  <div className="flex flex-col gap-3.5">
+                    {sectionDishes.map((dish) => {
+                      const isSimpleItem = dish.category === 'rotis_breads' || dish.category === 'drinks';
+                      if (isSimpleItem) {
+                        return <CompactDishRow key={dish.id} dish={dish} onCustomize={handleOpenCustomize} />;
+                      }
+                      return <FoodCard key={dish.id} dish={dish} onCustomize={handleOpenCustomize} />;
+                    })}
+                  </div>
+                </div>
+              );
+            })}
+          </section>
         ) : (
-          <section className="px-4 flex flex-col gap-3.5">
+          <section id={`category-${selectedCategory}`} className="scroll-mt-24 px-4 flex flex-col gap-3.5">
             {visibleDishes.map((dish) => {
-              // Compact row variant for simple breads or drinks to provide visual variety
               const isSimpleItem = dish.category === 'rotis_breads' || dish.category === 'drinks';
               if (isSimpleItem && !searchQuery) {
                 return <CompactDishRow key={dish.id} dish={dish} onCustomize={handleOpenCustomize} />;
               }
-
               return <FoodCard key={dish.id} dish={dish} onCustomize={handleOpenCustomize} />;
             })}
           </section>
@@ -256,6 +291,52 @@ const MenuScreen = () => {
         onRequestAssistance={(type) => addAssistanceRequest(tableNumber, type)}
       />
       <CustomerPreferencesModal isOpen={isPrefsOpen} onClose={() => setIsPrefsOpen(false)} />
+
+      {/* Category Bottom Sheet Panel */}
+      <CategoryBottomSheet
+        isOpen={isCategorySheetOpen}
+        onClose={() => setIsCategorySheetOpen(false)}
+        categories={categories}
+        selectedCategory={selectedCategory}
+        onSelectCategory={handleSelectCategory}
+        dishes={dishes}
+      />
+
+      {/* Floating Zomato-Style Menu / Close FAB (matching reference image 1 & 2) */}
+      {!isCustomizationOpen && (
+        <div
+          className={`fixed right-4 pointer-events-auto transition-all duration-200 ${
+            isCategorySheetOpen ? 'z-50' : 'z-40'
+          }`}
+          style={{
+            bottom: totals.itemCount > 0
+              ? 'calc(170px + env(safe-area-inset-bottom))'
+              : 'calc(94px + env(safe-area-inset-bottom))',
+          }}
+        >
+          {isCategorySheetOpen ? (
+            <button
+              type="button"
+              onClick={() => setIsCategorySheetOpen(false)}
+              aria-label="Close menu categories"
+              className="flex items-center gap-1.5 px-4 py-2.5 rounded-[16px] bg-[#2B2B36] text-white shadow-[0_8px_24px_rgba(0,0,0,0.35)] border border-white/10 hover:bg-[#343542] active:scale-95 transition-all duration-150 cursor-pointer"
+            >
+              <X className="w-4 h-4 text-white" />
+              <span className="text-sm font-bold text-white tracking-wide">Close</span>
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={() => setIsCategorySheetOpen(true)}
+              aria-label="Open menu categories"
+              className="flex items-center gap-2 px-4 py-2.5 rounded-[16px] bg-[#2B2B36] text-white shadow-[0_8px_24px_rgba(0,0,0,0.35)] border border-white/10 hover:bg-[#343542] active:scale-95 transition-all duration-150 cursor-pointer"
+            >
+              <Utensils className="w-4 h-4 text-white" />
+              <span className="text-sm font-bold text-white tracking-wide">Menu</span>
+            </button>
+          )}
+        </div>
+      )}
 
       {!isCustomizationOpen && <StickyCartBar />}
       {!isCustomizationOpen && <BottomNavBar />}

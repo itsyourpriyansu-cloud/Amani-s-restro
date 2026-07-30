@@ -31,36 +31,6 @@ import {
   PackageCheck
 } from 'lucide-react';
 
-const dishDetailsTheme = {
-  background: '#FFFDF9',
-  surface: '#FFFFFF',
-  surfaceWarm: '#FFF8F1',
-
-  maroon: '#A30F3B',
-  maroonDark: '#7E0D2F',
-  maroonSoft: '#FBECEF',
-
-  orange: '#F47712',
-  orangeDark: '#DB5F05',
-  orangeSoft: '#FFF0E3',
-
-  amber: '#B96B08',
-  amberSoft: '#FFF5E3',
-
-  green: '#238653',
-  greenSoft: '#EAF7EF',
-
-  red: '#C93650',
-  redSoft: '#FDECEF',
-
-  textPrimary: '#211917',
-  textSecondary: '#6E5F58',
-  textMuted: '#93847D',
-
-  border: '#EADFD6',
-  divider: '#EFE6DF',
-};
-
 /**
  * Returns exact items/components included in the serving for customer UX clarity.
  */
@@ -209,7 +179,7 @@ const FoodDetailsScreen = () => {
   );
 
   return (
-    <div className="min-h-screen bg-[#FFFDF9] flex flex-col font-sans selection:bg-[#FFF0E3] selection:text-[#A30F3B]">
+    <div className="min-h-screen bg-background flex flex-col font-sans selection:bg-error-container selection:text-primary">
       <main className="flex-1 pb-36 max-w-2xl mx-auto w-full relative">
         {/* 1. Hero Food Photography / Video Section */}
         <section className="relative w-full h-[40vh] sm:h-[46vh] min-h-[260px] max-h-[420px] bg-stone-900 overflow-hidden">
@@ -244,33 +214,33 @@ const FoodDetailsScreen = () => {
             <button
               onClick={() => navigate(-1)}
               aria-label="Go back"
-              className="w-10 h-10 flex items-center justify-center rounded-full bg-white/85 backdrop-blur-md hover:bg-white active:scale-95 transition-all shadow-md border border-white/40 text-[#211917]"
+              className="w-10 h-10 flex items-center justify-center rounded-full bg-surface/85 backdrop-blur-md hover:bg-surface active:scale-95 transition-all shadow-md border border-outline-variant/40 text-on-surface"
             >
-              <ArrowLeft className="w-5 h-5 text-[#211917]" />
+              <ArrowLeft className="w-5 h-5 text-on-surface" />
             </button>
             <button
               onClick={() => setIsFavourite((v) => !v)}
               aria-label={isFavourite ? 'Remove from favourites' : 'Add to favourites'}
               aria-pressed={isFavourite}
-              className="w-10 h-10 flex items-center justify-center rounded-full bg-white/85 backdrop-blur-md hover:bg-white active:scale-95 transition-all shadow-md border border-white/40 text-[#211917]"
+              className="w-10 h-10 flex items-center justify-center rounded-full bg-surface/85 backdrop-blur-md hover:bg-surface active:scale-95 transition-all shadow-md border border-outline-variant/40 text-on-surface"
             >
-              <Heart className={`w-5 h-5 transition-colors ${isFavourite ? 'fill-[#C93650] text-[#C93650]' : 'text-[#211917]'}`} />
+              <Heart className={`w-5 h-5 transition-colors ${isFavourite ? 'fill-primary text-primary' : 'text-on-surface'}`} />
             </button>
           </div>
         </section>
 
         {/* 2. Main Content Card with Smooth Overlap */}
-        <article className="-mt-6 rounded-t-3xl relative z-10 bg-[#FFFFFF] px-5 pt-6 pb-6 shadow-sm border-t border-[#EADFD6] space-y-6">
+        <article className="-mt-6 rounded-t-3xl relative z-10 bg-surface px-5 pt-6 pb-6 shadow-sm border-t border-outline-variant space-y-6">
           {/* Header Title, Portion Badge & Price Block */}
           <div>
             <div className="flex items-center justify-between gap-3 mb-2">
-              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-[#FFF8F1] border border-[#FBECEF] text-[#A30F3B] text-[11px] font-bold tracking-wide uppercase">
+              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-surface-container-low border border-primary-container text-primary text-[11px] font-bold tracking-wide uppercase">
                 {dish.portionLabel || 'Regular'}
               </span>
 
               {/* Availability Tag */}
-              <span className={`inline-flex items-center gap-1.5 text-xs font-bold ${isAvailable ? 'text-[#238653]' : 'text-[#C93650]'}`}>
-                <span className={`w-2 h-2 rounded-full ${isAvailable ? 'bg-[#238653] animate-pulse' : 'bg-[#C93650]'}`} />
+              <span className={`inline-flex items-center gap-1.5 text-xs font-bold ${isAvailable ? 'text-success' : 'text-primary'}`}>
+                <span className={`w-2 h-2 rounded-full ${isAvailable ? 'bg-success animate-pulse' : 'bg-primary'}`} />
                 {dish.availabilityStatus === 'AVAILABLE'
                   ? 'Available Now'
                   : dish.availabilityStatus === 'LIMITED_AVAILABILITY'
@@ -280,10 +250,10 @@ const FoodDetailsScreen = () => {
             </div>
 
             <div className="flex items-start justify-between gap-4">
-              <h1 className="text-2xl sm:text-3xl font-black text-[#211917] tracking-tight leading-tight flex-1">
+              <h1 className="text-2xl sm:text-3xl font-black text-on-surface tracking-tight leading-tight flex-1">
                 {dish.name}
               </h1>
-              <div className="text-2xl sm:text-3xl font-black text-[#A30F3B] whitespace-nowrap pt-0.5">
+              <div className="text-2xl sm:text-3xl font-black text-primary whitespace-nowrap pt-0.5">
                 {dish.priceDisplay || formatMenuPrice(dish.price)}
               </div>
             </div>
@@ -293,16 +263,16 @@ const FoodDetailsScreen = () => {
           <div className="flex flex-wrap items-center gap-2 pt-1 pb-1">
             {/* Dietary Badge */}
             {dish.foodType === 'VEGETARIAN' ? (
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EAF7EF] border border-[#238653]/30 text-[#238653] text-xs font-bold">
-                <span className="w-2.5 h-2.5 border-2 border-[#238653] p-0.5 flex items-center justify-center rounded-sm">
-                  <span className="w-1.5 h-1.5 bg-[#238653] rounded-full" />
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-success/10 border border-success/30 text-success text-xs font-bold">
+                <span className="w-2.5 h-2.5 border-2 border-success p-0.5 flex items-center justify-center rounded-sm">
+                  <span className="w-1.5 h-1.5 bg-success rounded-full" />
                 </span>
                 Vegetarian
               </span>
             ) : (
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FDECEF] border border-[#C93650]/30 text-[#C93650] text-xs font-bold">
-                <span className="w-2.5 h-2.5 border-2 border-[#C93650] p-0.5 flex items-center justify-center rounded-sm">
-                  <span className="w-1.5 h-1.5 bg-[#C93650] rounded-full" />
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary-container border border-primary/30 text-primary text-xs font-bold">
+                <span className="w-2.5 h-2.5 border-2 border-primary p-0.5 flex items-center justify-center rounded-sm">
+                  <span className="w-1.5 h-1.5 bg-primary rounded-full" />
                 </span>
                 Non-Vegetarian
               </span>
@@ -310,36 +280,36 @@ const FoodDetailsScreen = () => {
 
             {/* Spice Level */}
             {dish.spiceLevel && (
-              <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#FFF0E3] border border-[#F47712]/30 text-[#DB5F05] text-xs font-bold">
-                <Flame className="w-3.5 h-3.5 text-[#F47712]" />
+              <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-error-container border border-error/30 text-error text-xs font-bold">
+                <Flame className="w-3.5 h-3.5 text-error" />
                 {dish.spiceLevel === 'MEDIUM' ? 'Medium Spice' : dish.spiceLevel === 'SPICY' ? 'Spicy' : 'Mild'}
               </span>
             )}
 
             {/* Prep Time Estimate */}
-            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#FFF5E3] border border-[#B96B08]/30 text-[#B96B08] text-xs font-bold">
-              <Clock className="w-3.5 h-3.5 text-[#B96B08]" />
+            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-highlight/10 border border-highlight/30 text-highlight text-xs font-bold">
+              <Clock className="w-3.5 h-3.5 text-highlight" />
               {prepTimeMin}–{prepTimeMin + 5} min prep
             </span>
 
             {/* Portion / Serves */}
-            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#FFF8F1] border border-[#EADFD6] text-[#6E5F58] text-xs font-medium">
-              <Utensils className="w-3.5 h-3.5 text-[#93847D]" />
+            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-surface-container-low border border-outline-variant text-on-surface-variant text-xs font-medium">
+              <Utensils className="w-3.5 h-3.5 text-on-surface-variant" />
               Serves {dish.serves || '1 person'}
             </span>
           </div>
 
           {/* Mangamma Favourite Highlight Card */}
           {dish.bestseller && (
-            <div className="p-3.5 rounded-2xl bg-[#FFF8F1] border border-[#FBECEF] flex items-start gap-3 shadow-xs">
-              <div className="p-2 rounded-xl bg-[#FBECEF] text-[#A30F3B] flex-shrink-0 mt-0.5">
+            <div className="p-3.5 rounded-2xl bg-surface-container-low border border-primary-container flex items-start gap-3 shadow-xs">
+              <div className="p-2 rounded-xl bg-primary-container text-primary flex-shrink-0 mt-0.5">
                 <Sparkles className="w-4 h-4" />
               </div>
               <div>
-                <span className="text-xs font-bold text-[#A30F3B] uppercase tracking-wider block">
+                <span className="text-xs font-bold text-primary uppercase tracking-wider block">
                   Mangamma Favourite
                 </span>
-                <p className="text-xs text-[#6E5F58] font-medium leading-relaxed mt-0.5">
+                <p className="text-xs text-on-surface-variant font-medium leading-relaxed mt-0.5">
                   {dish.bestsellerReason || 'Our most-loved biryani upgrade'}
                 </p>
               </div>
@@ -351,22 +321,22 @@ const FoodDetailsScreen = () => {
             const inclusions = getDishInclusions(dish);
             if (!inclusions || inclusions.length === 0) return null;
             return (
-              <div className="rounded-2xl border border-[#EADFD6] bg-[#FFF8F1] p-4 space-y-3 shadow-xs">
+              <div className="rounded-2xl border border-outline-variant bg-surface-container-low p-4 space-y-3 shadow-xs">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
-                    <div className="p-2 rounded-xl bg-[#A30F3B] text-white">
+                    <div className="p-2 rounded-xl bg-primary text-on-primary">
                       <PackageCheck className="w-4 h-4" />
                     </div>
                     <div>
-                      <h3 className="font-bold text-[#211917] text-xs uppercase tracking-wider">
+                      <h3 className="font-bold text-on-surface text-xs uppercase tracking-wider">
                         What's Included With This Order
                       </h3>
-                      <p className="text-[11px] text-[#93847D] mt-0.5">
+                      <p className="text-[11px] text-on-surface-variant mt-0.5">
                         Everything served in your portion
                       </p>
                     </div>
                   </div>
-                  <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-[#EAF7EF] text-[#238653] border border-[#238653]/30">
+                  <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-success/10 text-success border border-success/30">
                     Complete Meal
                   </span>
                 </div>
@@ -375,14 +345,14 @@ const FoodDetailsScreen = () => {
                   {inclusions.map((item, idx) => (
                     <div
                       key={idx}
-                      className="flex items-start gap-2.5 p-2.5 rounded-xl bg-[#FFFFFF] border border-[#EFE6DF] shadow-2xs hover:border-[#F47712]/30 transition-colors"
+                      className="flex items-start gap-2.5 p-2.5 rounded-xl bg-surface border border-outline-variant shadow-2xs hover:border-error/30 transition-colors"
                     >
                       <span className="text-lg leading-none mt-0.5 flex-shrink-0">{item.icon}</span>
                       <div className="min-w-0 flex-1">
-                        <span className="font-bold text-xs text-[#211917] block truncate">
+                        <span className="font-bold text-xs text-on-surface block truncate">
                           {item.name}
                         </span>
-                        <span className="text-[11px] text-[#6E5F58] leading-tight block">
+                        <span className="text-[11px] text-on-surface-variant leading-tight block">
                           {item.detail}
                         </span>
                       </div>
@@ -395,12 +365,12 @@ const FoodDetailsScreen = () => {
 
           {/* Kitchen Volume / Long Preparation Alert */}
           {isDelayedDish && (
-            <div className="p-4 rounded-2xl bg-[#FFF5E3] border border-[#B96B08]/30 text-[#211917] space-y-1">
-              <div className="flex items-center gap-2 font-bold text-xs uppercase tracking-wider text-[#B96B08]">
-                <AlertTriangle className="w-4 h-4 text-[#B96B08]" />
+            <div className="p-4 rounded-2xl bg-highlight/10 border border-highlight/30 text-on-surface space-y-1">
+              <div className="flex items-center gap-2 font-bold text-xs uppercase tracking-wider text-highlight">
+                <AlertTriangle className="w-4 h-4 text-highlight" />
                 <span>Longer preparation time</span>
               </div>
-              <p className="text-xs leading-relaxed text-[#6E5F58]">
+              <p className="text-xs leading-relaxed text-on-surface-variant">
                 This item currently takes approximately <strong>{prepTimeMin}–{prepTimeMin + 5} minutes</strong> due to kitchen volume. Other items in your order may be ready earlier.
               </p>
             </div>
@@ -408,7 +378,7 @@ const FoodDetailsScreen = () => {
 
           {/* Appetizing Dish Description */}
           <div className="py-1">
-            <p className="text-[#342722] text-sm leading-relaxed font-normal">
+            <p className="text-on-surface text-sm leading-relaxed font-normal">
               {dish.shortDescription || dish.description}
             </p>
           </div>
@@ -417,13 +387,13 @@ const FoodDetailsScreen = () => {
           {(dish.jainAvailable || dish.veganAvailable) && (
             <div className="flex flex-wrap items-center gap-2 pt-1">
               {dish.jainAvailable && (
-                <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#EAF7EF] border border-[#238653]/25 text-[#238653] text-xs font-medium">
+                <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-success/10 border border-success/25 text-success text-xs font-medium">
                   <CheckCircle2 className="w-3.5 h-3.5" />
                   Jain option available on request
                 </span>
               )}
               {dish.veganAvailable && (
-                <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#EAF7EF] border border-[#238653]/25 text-[#238653] text-xs font-medium">
+                <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-success/10 border border-success/25 text-success text-xs font-medium">
                   <Leaf className="w-3.5 h-3.5" />
                   Vegan customizable
                 </span>
@@ -431,55 +401,55 @@ const FoodDetailsScreen = () => {
             </div>
           )}
 
-          <div className="border-t border-[#EFE6DF] pt-4 space-y-3">
+          <div className="border-t border-outline-variant pt-4 space-y-3">
             {/* Progressive Disclosure 1: Allergens & Safety Policy Accordion */}
-            <div className="rounded-2xl border border-[#EADFD6] bg-[#FFFFFF] overflow-hidden transition-all shadow-xs">
+            <div className="rounded-2xl border border-outline-variant bg-surface overflow-hidden transition-all shadow-xs">
               <button
                 type="button"
                 onClick={() => setIsAllergyExpanded((v) => !v)}
-                className="w-full p-4 flex items-center justify-between text-left hover:bg-[#FFF8F1] transition-colors"
+                className="w-full p-4 flex items-center justify-between text-left hover:bg-surface-container-low transition-colors"
               >
                 <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-xl bg-[#FBECEF] text-[#A30F3B]">
+                  <div className="p-2 rounded-xl bg-primary-container text-primary">
                     <ShieldAlert className="w-4 h-4" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-[#211917] text-xs uppercase tracking-wider">
+                    <h3 className="font-bold text-on-surface text-xs uppercase tracking-wider">
                       Allergens & Kitchen Safety Policy
                     </h3>
-                    <p className="text-xs text-[#93847D] mt-0.5">
+                    <p className="text-xs text-on-surface-variant mt-0.5">
                       {dish.glutenStatus || 'Gluten-Free Recipe'} • {dish.allergens?.length > 0 ? dish.allergens.join(', ') : 'No Allergens Listed'}
                     </p>
                   </div>
                 </div>
                 {isAllergyExpanded ? (
-                  <ChevronDown className="w-4 h-4 text-[#A30F3B] transform rotate-180 transition-transform" />
+                  <ChevronDown className="w-4 h-4 text-primary transform rotate-180 transition-transform" />
                 ) : (
-                  <ChevronRight className="w-4 h-4 text-[#93847D]" />
+                  <ChevronRight className="w-4 h-4 text-on-surface-variant" />
                 )}
               </button>
 
               {isAllergyExpanded && (
-                <div className="px-4 pb-4 pt-1 border-t border-[#EFE6DF] bg-[#FFF8F1]/50 space-y-3 text-xs">
-                  <div className="flex flex-col gap-1 text-[#6E5F58] pt-2">
+                <div className="px-4 pb-4 pt-1 border-t border-outline-variant bg-surface-container-low/50 space-y-3 text-xs">
+                  <div className="flex flex-col gap-1 text-on-surface-variant pt-2">
                     <p><strong>Gluten Status:</strong> {dish.glutenStatus || 'Gluten-Free Recipe'}</p>
                     <p><strong>Allergens Present:</strong> {dish.allergens?.length > 0 ? dish.allergens.join(', ') : 'None listed'}</p>
                   </div>
-                  <div className="p-3 bg-[#FFFFFF] rounded-xl text-[#6E5F58] border border-[#EADFD6] leading-relaxed">
+                  <div className="p-3 bg-surface rounded-xl text-on-surface-variant border border-outline-variant leading-relaxed">
                     Allergy requests are reviewed by the kitchen before the order is accepted. Cross-contact may still be possible in a shared commercial kitchen.
                   </div>
                   <div className="flex items-center justify-between pt-1">
                     <button
                       type="button"
                       onClick={() => setIsTrustOpen(true)}
-                      className="text-xs font-bold text-[#A30F3B] hover:underline"
+                      className="text-xs font-bold text-primary hover:underline"
                     >
                       Read Kitchen Policy
                     </button>
                     <button
                       type="button"
                       onClick={() => addAssistanceRequest(tableNumber, 'Allergy assistance')}
-                      className="text-xs font-bold text-[#A30F3B] hover:underline"
+                      className="text-xs font-bold text-primary hover:underline"
                     >
                       Speak to staff about an allergy
                     </button>
@@ -492,46 +462,46 @@ const FoodDetailsScreen = () => {
             <button
               type="button"
               onClick={() => setShowStoryModal(true)}
-              className="w-full p-4 rounded-2xl border border-[#EADFD6] bg-[#FFF8F1] hover:bg-[#FBECEF]/60 text-[#211917] font-bold text-xs flex items-center justify-between transition-colors shadow-xs"
+              className="w-full p-4 rounded-2xl border border-outline-variant bg-surface-container-low hover:bg-primary-container/60 text-on-surface font-bold text-xs flex items-center justify-between transition-colors shadow-xs"
             >
               <div className="flex items-center gap-3">
-                <div className="p-2 rounded-xl bg-[#FBECEF] text-[#A30F3B]">
+                <div className="p-2 rounded-xl bg-primary-container text-primary">
                   <BookOpen className="w-4 h-4" />
                 </div>
                 <div className="text-left">
-                  <span className="block font-bold text-[#211917]">Story of this dish</span>
-                  <span className="text-[11px] font-normal text-[#93847D]">Discover the traditional heritage & secret spices</span>
+                  <span className="block font-bold text-on-surface">Story of this dish</span>
+                  <span className="text-[11px] font-normal text-on-surface-variant">Discover the traditional heritage & secret spices</span>
                 </div>
               </div>
-              <ChevronRight className="w-4 h-4 text-[#A30F3B]" />
+              <ChevronRight className="w-4 h-4 text-primary" />
             </button>
           </div>
 
           {/* Recommended Pairings Section */}
           {dish.recommendedPairings && dish.recommendedPairings.length > 0 && (
-            <div className="pt-2 border-t border-[#EFE6DF]">
-              <h3 className="font-bold text-[#93847D] text-xs uppercase tracking-wider mb-3">
+            <div className="pt-2 border-t border-outline-variant">
+              <h3 className="font-bold text-on-surface-variant text-xs uppercase tracking-wider mb-3">
                 Pairs well with
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {dish.recommendedPairings.map((pairing) => (
                   <div
                     key={pairing.itemId || pairing.name}
-                    className="flex items-center justify-between p-3 rounded-2xl border border-[#EADFD6] bg-[#FFFFFF] shadow-xs hover:border-[#F47712]/40 transition-colors"
+                    className="flex items-center justify-between p-3 rounded-2xl border border-outline-variant bg-surface shadow-xs hover:border-error/40 transition-colors"
                   >
                     <div className="flex items-center gap-3">
                       {pairing.image && (
-                        <img src={pairing.image} alt={pairing.name} className="w-12 h-12 object-cover rounded-xl border border-[#EFE6DF]" />
+                        <img src={pairing.image} alt={pairing.name} className="w-12 h-12 object-cover rounded-xl border border-outline-variant" />
                       )}
                       <div>
-                        <h4 className="font-bold text-xs text-[#211917]">{pairing.name}</h4>
-                        <span className="text-xs text-[#A30F3B] font-bold">{formatMenuPrice(pairing.price)}</span>
+                        <h4 className="font-bold text-xs text-on-surface">{pairing.name}</h4>
+                        <span className="text-xs text-primary font-bold">{formatMenuPrice(pairing.price)}</span>
                       </div>
                     </div>
                     <button
                       type="button"
                       onClick={() => handleAddPairing(pairing)}
-                      className="px-3 py-1.5 rounded-xl bg-[#FFF0E3] hover:bg-[#F47712] text-[#F47712] hover:text-white font-bold text-xs flex items-center gap-1 transition-all"
+                      className="px-3 py-1.5 rounded-xl bg-error-container hover:bg-error text-error hover:text-on-error font-bold text-xs flex items-center gap-1 transition-all"
                     >
                       <Plus className="w-3.5 h-3.5" />
                       <span>Add</span>
@@ -543,7 +513,7 @@ const FoodDetailsScreen = () => {
           )}
 
           {!isOrderable && (
-            <div className="p-3 rounded-xl bg-[#FFF5E3] border border-[#B96B08]/30 text-xs text-[#B96B08]">
+            <div className="p-3 rounded-xl bg-highlight/10 border border-highlight/30 text-xs text-highlight">
               This item is priced at MRP and isn't orderable through the app — please ask your server.
             </div>
           )}
@@ -562,28 +532,28 @@ const FoodDetailsScreen = () => {
       {/* Sticky Call-To-Action Footer */}
       {!isCustomizationOpen && (
         <footer
-          className="fixed bottom-0 left-0 right-0 z-40 bg-[#FFFFFF] border-t border-[#EFE6DF] px-4 pt-3 shadow-[0_-4px_20px_rgba(0,0,0,0.06)]"
+          className="fixed bottom-0 left-0 right-0 z-40 bg-surface border-t border-outline-variant px-4 pt-3 shadow-[0_-4px_20px_rgba(0,0,0,0.06)]"
           style={{ paddingBottom: 'calc(12px + env(safe-area-inset-bottom))' }}
         >
           <div className="max-w-2xl mx-auto flex items-center justify-between gap-4">
             <div>
-              <span className="text-[10px] text-[#93847D] uppercase font-bold tracking-wider block">
+              <span className="text-[10px] text-on-surface-variant uppercase font-bold tracking-wider block">
                 Total Price
               </span>
-              <div className="text-xl sm:text-2xl font-black text-[#211917]">
+              <div className="text-xl sm:text-2xl font-black text-on-surface">
                 {dish.priceDisplay || formatMenuPrice(dish.price)}
               </div>
             </div>
 
             {!isOrderable ? (
-              <button disabled className="flex-1 py-3.5 px-6 bg-[#EADFD6] text-[#93847D] font-bold rounded-xl text-sm cursor-not-allowed">
+              <button disabled className="flex-1 py-3.5 px-6 bg-surface-container text-on-surface-variant font-bold rounded-xl text-sm cursor-not-allowed">
                 Ask Your Server
               </button>
             ) : dish.customizationAvailable ? (
               <button
                 onClick={() => setIsCustomizationOpen(true)}
                 disabled={!isAvailable}
-                className="flex-1 py-3.5 px-6 bg-[#F47712] hover:bg-[#DB5F05] active:scale-[0.98] disabled:bg-[#EADFD6] disabled:text-[#93847D] text-white font-bold rounded-xl transition-all shadow-md shadow-[#F47712]/20 flex items-center justify-center gap-2 text-sm"
+                className="flex-1 py-3.5 px-6 bg-error hover:brightness-90 active:scale-[0.98] disabled:bg-surface-container disabled:text-on-surface-variant text-on-error font-bold rounded-xl transition-all shadow-md shadow-error/20 flex items-center justify-center gap-2 text-sm"
               >
                 <span>Customize & Add</span>
                 <ChevronRight className="w-4 h-4" />
@@ -592,7 +562,7 @@ const FoodDetailsScreen = () => {
               <button
                 onClick={handleDirectAddToCart}
                 disabled={!isAvailable}
-                className="flex-1 py-3.5 px-6 bg-[#F47712] hover:bg-[#DB5F05] active:scale-[0.98] disabled:bg-[#EADFD6] disabled:text-[#93847D] text-white font-bold rounded-xl transition-all shadow-md shadow-[#F47712]/20 flex items-center justify-center gap-2 text-sm"
+                className="flex-1 py-3.5 px-6 bg-error hover:brightness-90 active:scale-[0.98] disabled:bg-surface-container disabled:text-on-surface-variant text-on-error font-bold rounded-xl transition-all shadow-md shadow-error/20 flex items-center justify-center gap-2 text-sm"
               >
                 <span>Add to Order</span>
               </button>

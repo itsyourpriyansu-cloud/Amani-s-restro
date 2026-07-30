@@ -101,16 +101,16 @@ const ReportStatusScreen = () => {
   if (!currentIssue) {
     return (
       <>
-        <header className="sticky top-0 z-40 bg-surface shadow-sm flex items-center justify-between px-4 h-16 border-b border-outline-variant/20">
+        <header className="sticky top-0 z-40 bg-surface shadow-sm flex items-center justify-between gap-2 px-4 min-h-16 py-2.5 border-b border-outline-variant/20">
           <button
             onClick={() => navigate('/order-tracking')}
             aria-label="Go back"
-            className="w-11 h-11 flex items-center justify-center rounded-full hover:bg-surface-variant/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+            className="w-11 h-11 shrink-0 flex items-center justify-center rounded-full hover:bg-surface-variant/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
           >
             <Icon name="arrow_back" className="text-on-surface" />
           </button>
-          <h1 className="text-lg font-bold text-primary italic">Service Recovery</h1>
-          <div className="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-bold">
+          <h1 className="text-[15px] sm:text-lg font-bold text-primary leading-tight text-center truncate">Service Recovery</h1>
+          <div className="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-bold shrink-0 whitespace-nowrap">
             Table {tableNumber}
           </div>
         </header>
@@ -157,16 +157,16 @@ const ReportStatusScreen = () => {
 
   return (
     <>
-      <header className="sticky top-0 z-40 bg-surface shadow-sm flex items-center justify-between px-4 h-16 border-b border-outline-variant/20">
+      <header className="sticky top-0 z-40 bg-surface shadow-sm flex items-center justify-between gap-2 px-4 min-h-16 py-2.5 border-b border-outline-variant/20">
         <button
           onClick={() => navigate('/order-tracking')}
           aria-label="Go back"
-          className="w-11 h-11 flex items-center justify-center rounded-full hover:bg-surface-variant/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+          className="w-11 h-11 shrink-0 flex items-center justify-center rounded-full hover:bg-surface-variant/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
         >
           <Icon name="arrow_back" className="text-on-surface" />
         </button>
-        <h1 className="text-lg font-bold text-primary italic">Issue Status &amp; Recovery</h1>
-        <div className="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-bold">
+        <h1 className="text-[15px] sm:text-lg font-bold text-primary leading-tight text-center truncate">Issue Status &amp; Recovery</h1>
+        <div className="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-bold shrink-0 whitespace-nowrap">
           Table {tableNumber}
         </div>
       </header>
@@ -267,7 +267,7 @@ const ReportStatusScreen = () => {
                     <div
                       className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 transition-colors ${
                         isDone
-                          ? 'bg-success text-white'
+                          ? 'bg-success text-on-success'
                           : isActive
                           ? 'bg-primary text-on-primary ring-4 ring-primary/20'
                           : 'bg-surface-container-high text-on-surface-variant/50 border border-outline-variant/30'
@@ -317,7 +317,7 @@ const ReportStatusScreen = () => {
             <div className="flex flex-col gap-2.5 pt-1">
               <button
                 onClick={() => handleResolutionChoice(true)}
-                className="min-h-12 py-3 bg-success hover:brightness-95 text-white font-bold rounded-xl shadow-floating transition-all active:scale-[0.99] text-sm flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-success focus-visible:ring-offset-2"
+                className="min-h-12 py-3 bg-success hover:brightness-95 text-on-success font-bold rounded-xl shadow-floating transition-all active:scale-[0.99] text-sm flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-success focus-visible:ring-offset-2"
               >
                 <CheckCircle2 className="w-5 h-5" />
                 Yes, issue resolved
@@ -379,7 +379,7 @@ const ReportStatusScreen = () => {
                   aria-label={`Rate ${star} star${star === 1 ? '' : 's'}`}
                   aria-pressed={star <= feedbackRating}
                   className={`w-11 h-11 rounded-full flex items-center justify-center text-xl transition-transform active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${
-                    star <= feedbackRating ? 'bg-amber-500/20 text-amber-500 font-bold' : 'bg-surface-container text-on-surface-variant/40'
+                    star <= feedbackRating ? 'bg-highlight/20 text-highlight font-bold' : 'bg-surface-container text-on-surface-variant/40'
                   }`}
                 >
                   ★
