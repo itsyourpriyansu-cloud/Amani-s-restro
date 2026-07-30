@@ -1,0 +1,266 @@
+import React, { useState, useEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
+import { menuService } from '../../services/menuService';
+import TopAppBar from '../../components/layout/TopAppBar';
+import BottomNavBar from '../../components/layout/BottomNavBar';
+import SearchBar from '../../components/menu/SearchBar';
+import FoodCard from '../../components/menu/FoodCard';
+import CompactDishRow from '../../components/menu/CompactDishRow';
+import StickyCartBar from '../../components/menu/StickyCartBar';
+import CustomizationModal from '../../components/menu/CustomizationModal';
+import RestaurantTrustProfileModal from '../../components/trust/RestaurantTrustProfileModal';
+import CustomerPreferencesModal from '../../components/preferences/CustomerPreferencesModal';
+import CompactKitchenStatus from '../../components/menu/CompactKitchenStatus';
+import VisualCategoryRail from '../../components/menu/VisualCategoryRail';
+import DietaryFilterRail, { QUICK_FILTERS } from '../../components/menu/DietaryFilterRail';
+import RecommendedDishRail from '../../components/menu/RecommendedDishRail';
+import MenuSectionHeader from '../../components/menu/MenuSectionHeader';
+import { MenuSkeletonList, CategorySkeletonRow } from '../../components/common/LoadingSkeleton';
+import EmptyState from '../../components/common/EmptyState';
+import ErrorState from '../../components/common/ErrorState';
+import Icon from '../../components/common/Icon';
+import { DISHES, FAVOURITE_DISH_IDS } from '../../utils/mockData';
+import { useCart } from '../../context/CartContext';
+import { useOrder } from '../../context/OrderContext';
+import { useTable } from '../../context/TableContext';
+import { useToast } from '../../context/ToastContext';
+
+const MenuScreen = () => {
+  const location = useLocation();
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(location.state?.category || 'all');
+  const [searchQuery, setSearchQuery] = useState(location.state?.initialSearchQuery || '');
+  const [activeFilters, setActiveFilters] = useState(location.state?.activeFilters || []);
+  const [dishes, setDishes] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const [customizingDish, setCustomizingDish] = useState(null);
+  const [isCustomizationOpen, setIsCustomizationOpen] = useState(false);
+
+  const [isTrustOpen, setIsTrustOpen] = useState(false);
+  const [isPrefsOpen, setIsPrefsOpen] = useState(false);
+
+  const favouritesRef = useRef(null);
+
+  const { addToCart, totals } = useCart();
+  const { tableNumber } = useTable();
+  const { kitchenLoad, addAssistanceRequest } = useOrder();
+  const { showToast } = useToast();
+
+  useEffect(() => {
+    const loadCategories = async () => {
+      try {
+        const res = await menuService.getCategories();
+        setCategories(res.data || []);
+      } catch (err) {
+        console.error('Error loading categories', err);
+      }
+    };
+    loadCategories();
+  }, []);
+
+  const fetchMenuData = async () => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const res = await menuService.getMenu(selectedCategory, searchQuery);
+      setDishes(res.data || []);
+    } catch (err) {
+      setError('Failed to load menu dishes. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      fetchMenuData();
+    }, 250);
+    return () => clearTimeout(timer);
+  }, [selectedCategory, searchQuery]);
+
+  useEffect(() => {
+    if (location.state?.focus === 'favourites' && favouritesRef.current) {
+      setTimeout(() => favouritesRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 300);
+    }
+  }, [location.state]);
+
+  const toggleFilter = (id) => {
+    setActiveFilters((prev) => (prev.includes(id) ? prev.filter((f) => f !== id) : [...prev, id]));
+  };
+
+  const resetFilters = () => setActiveFilters([]);
+
+  const handleSelectCategory = (categoryId) => {
+    setSelectedCategory(categoryId);
+    setActiveFilters([]);
+  };
+
+  const visibleDishes = dishes.filter((d) =>
+    activeFilters.every((fid) => QUICK_FILTERS.find((f) => f.id === fid)?.test(d))
+  );
+
+  const favouriteDishes = FAVOURITE_DISH_IDS.map((id) => DISHES.find((d) => d.id === id)).filter(Boolean);
+
+  const handleOpenCustomize = (dish) => {
+    if (dish.availabilityStatus === 'SOLD_OUT') {
+      showToast(`${dish.name} is currently sold out`, 'warning');
+      return;
+    }
+    if (dish.orderableInApp === false) {
+      showToast(`${dish.name} is priced at MRP — please ask your server`, 'info');
+      return;
+    }
+    setCustomizingDish(dish);
+    setIsCustomizationOpen(true);
+  };
+
+  const handleAddToCartFromModal = (payload) => {
+    const { dish, quantity, formattedModifiers, allergyAlert, specialInstruction, selectedOptions, makeVegan, jainPreparation } = payload;
+    addToCart(dish, formattedModifiers, specialInstruction, quantity, { selectedOptions, makeVegan, jainPreparation, allergyAlert });
+    showToast(`Added customized ${dish.name} (x${quantity}) to cart`, 'success');
+  };
+
+  const showCuratedRecommendations = selectedCategory === 'all' && !searchQuery && activeFilters.length === 0;
+
+  const selectedCategoryObj = categories.find((c) => c.id === selectedCategory) || { id: 'all', name: 'Full Menu' };
+
+  // Bottom padding dynamic clearance so floating nav & cart never obscure content
+  const contentPaddingBottom = totals.itemCount > 0
+    ? 'calc(200px + env(safe-area-inset-bottom))'
+    : 'calc(120px + env(safe-area-inset-bottom))';
+
+  return (
+    <>
+      <TopAppBar
+        variant="brand"
+        onOpenTrustProfile={() => setIsTrustOpen(true)}
+        onOpenPreferences={() => setIsPrefsOpen(true)}
+      />
+
+      <main
+        className="customer-page flex-1 max-w-[640px] mx-auto w-full"
+        style={{
+          paddingTop: 'calc(60px + env(safe-area-inset-top) + 8px)',
+          paddingBottom: contentPaddingBottom,
+        }}
+      >
+        {/* 1. Compact sticky status strip — pairs with TopAppBar's single table chip */}
+        <CompactKitchenStatus kitchenLoad={kitchenLoad} />
+
+        {/* 2. Prominent search */}
+        <section className="px-4 mt-5 mb-6">
+          <SearchBar
+            value={searchQuery}
+            onChange={setSearchQuery}
+            onClear={() => setSearchQuery('')}
+            autoFocus={Boolean(location.state?.focusSearch)}
+          />
+        </section>
+
+        {/* 3. Horizontally scrollable category tabs */}
+        {categories.length === 0 && isLoading ? (
+          <CategorySkeletonRow />
+        ) : (
+          <VisualCategoryRail
+            categories={categories}
+            selectedCategory={selectedCategory}
+            onSelectCategory={handleSelectCategory}
+          />
+        )}
+
+        {/* 4. High-value quick filters + "More filters" bottom sheet */}
+        <DietaryFilterRail
+          activeFilters={activeFilters}
+          onToggleFilter={toggleFilter}
+          onResetFilters={resetFilters}
+        />
+
+        {/* 5. Recommended — compact single row, skipped once the user is searching/filtering */}
+        {showCuratedRecommendations && favouriteDishes.length > 0 && (
+          <RecommendedDishRail
+            recommendedDishes={favouriteDishes}
+            onCustomize={handleOpenCustomize}
+            onViewAll={() => {
+              const el = document.getElementById('full-menu-section');
+              if (el) el.scrollIntoView({ behavior: 'smooth' });
+            }}
+            favouritesRef={favouritesRef}
+          />
+        )}
+
+        {/* 6. Selected Category Heading */}
+        <div id="full-menu-section">
+          <MenuSectionHeader
+            selectedCategoryObj={selectedCategoryObj}
+            dishCount={visibleDishes.length}
+            onOpenTrustProfile={() => setIsTrustOpen(true)}
+          />
+        </div>
+
+        {/* 6b. Simplified dish cards: name, short tags, price, strong CTA */}
+        {isLoading ? (
+          <div className="px-4">
+            <MenuSkeletonList count={5} />
+          </div>
+        ) : error ? (
+          <div className="px-4">
+            <ErrorState message={error} onRetry={fetchMenuData} />
+          </div>
+        ) : visibleDishes.length === 0 ? (
+          <div className="px-4">
+            <EmptyState
+              icon={() => <Icon name="tune" className="text-4xl" />}
+              title="No dishes found"
+              description={`No dishes match "${searchQuery || selectedCategoryObj.name}". Try clearing search or filters.`}
+              actionLabel="Clear Filters"
+              onAction={() => {
+                setSelectedCategory('all');
+                setSearchQuery('');
+                setActiveFilters([]);
+              }}
+            />
+          </div>
+        ) : (
+          <section className="px-4 flex flex-col gap-3.5">
+            {visibleDishes.map((dish) => {
+              // Compact row variant for simple breads or drinks to provide visual variety
+              const isSimpleItem = dish.category === 'rotis_breads' || dish.category === 'drinks';
+              if (isSimpleItem && !searchQuery) {
+                return <CompactDishRow key={dish.id} dish={dish} onCustomize={handleOpenCustomize} />;
+              }
+
+              return <FoodCard key={dish.id} dish={dish} onCustomize={handleOpenCustomize} />;
+            })}
+          </section>
+        )}
+      </main>
+
+      {/* Modals & Floating Bars */}
+      {customizingDish && (
+        <CustomizationModal
+          isOpen={isCustomizationOpen}
+          onClose={() => {
+            setIsCustomizationOpen(false);
+            setCustomizingDish(null);
+          }}
+          dish={customizingDish}
+          onAddToCart={handleAddToCartFromModal}
+        />
+      )}
+
+      <RestaurantTrustProfileModal
+        isOpen={isTrustOpen}
+        onClose={() => setIsTrustOpen(false)}
+        onRequestAssistance={(type) => addAssistanceRequest(tableNumber, type)}
+      />
+      <CustomerPreferencesModal isOpen={isPrefsOpen} onClose={() => setIsPrefsOpen(false)} />
+
+      {!isCustomizationOpen && <StickyCartBar />}
+      {!isCustomizationOpen && <BottomNavBar />}
+    </>
+  );
+};
+
+export default MenuScreen;
