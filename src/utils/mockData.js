@@ -9,7 +9,7 @@ export const RESTAURANT_INFO = {
   address: 'Address on file — update required',
   gstin: '36ABCDE1234F1Z5',
   fssai: '12345678901234',
-  logo: null,
+  logo: '/logo.png',
   heroImage: '/mangamma_hero_banner.png',
   taxRate: 0.05,
 };

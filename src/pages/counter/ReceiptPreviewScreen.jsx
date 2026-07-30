@@ -82,7 +82,11 @@ const ReceiptPreviewScreen = () => {
             {/* Receipt Header */}
             <div className="text-center mb-6 border-b border-dashed border-on-surface-variant/40 pb-4">
               <div className="flex justify-center mb-2">
-                <UtensilsCrossed className="w-8 h-8 text-primary" />
+                <img
+                  src={RESTAURANT_INFO.logo || '/logo.png'}
+                  alt={RESTAURANT_INFO.name}
+                  className="w-12 h-12 rounded-full object-cover border border-stone-200"
+                />
               </div>
               <h2 className="text-xl font-bold uppercase tracking-wider">{RESTAURANT_INFO.name}</h2>
               <p className="text-xs text-stone-600 mt-0.5">{RESTAURANT_INFO.address || RESTAURANT_INFO.location}</p>

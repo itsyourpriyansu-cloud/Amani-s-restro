@@ -14,7 +14,10 @@ const ReportSubmittedScreen = () => {
         <button onClick={() => navigate('/order-tracking')} className="text-primary active:scale-95 transition-transform" aria-label="Go back">
           <Icon name="arrow_back" />
         </button>
-        <h1 className="text-xl font-bold text-primary">Mangamma Ruchulu</h1>
+        <div className="flex items-center gap-2">
+          <img src={RESTAURANT_INFO.logo || '/logo.png'} alt="Mangamma Ruchulu" className="w-8 h-8 rounded-full object-cover shrink-0" />
+          <h1 className="text-xl font-bold text-primary">Mangamma Ruchulu</h1>
+        </div>
         <span className="text-sm font-semibold text-primary">Table {tableNumber}</span>
       </header>
 

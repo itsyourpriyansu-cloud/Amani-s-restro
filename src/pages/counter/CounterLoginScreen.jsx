@@ -31,10 +31,12 @@ const CounterLoginScreen = () => {
 
       <div className="relative z-10 w-full max-w-[480px]">
         {/* Brand Header */}
-        <div className="flex flex-col items-center mb-8">
-          <div className="w-24 h-24 mb-6 rounded-full bg-primary flex items-center justify-center shadow-lg text-on-primary">
-            <Store className="w-10 h-10" />
-          </div>
+        <div className="flex flex-col items-center mb-6">
+          <img
+            src={RESTAURANT_INFO.logo || '/logo.png'}
+            alt={RESTAURANT_INFO.name}
+            className="w-20 h-20 rounded-full object-cover shadow-lg border-2 border-primary/20"
+          />
         </div>
 
         {/* Login Card */}

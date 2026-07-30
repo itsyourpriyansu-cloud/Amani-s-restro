@@ -145,9 +145,11 @@ const PortalGatewayScreen = () => {
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-amber-500 to-amber-700 text-stone-950 flex items-center justify-center font-serif font-bold text-xl shadow-lg ring-2 ring-amber-400/30">
-              <Store className="w-5 h-5 text-white" />
-            </div>
+            <img
+              src="/logo.png"
+              alt="Mangamma Ruchulu Logo"
+              className="w-11 h-11 rounded-full object-cover shadow-lg ring-2 ring-amber-400/30 shrink-0"
+            />
 
             <div>
               <h1 className="text-lg font-serif font-bold tracking-wide text-white">

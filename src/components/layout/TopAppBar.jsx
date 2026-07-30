@@ -23,7 +23,7 @@ const TopAppBar = ({
   transparent = false,
   onOpenTrustProfile,
   onOpenPreferences,
-  logoSrc,
+  logoSrc = RESTAURANT_INFO.logo || '/logo.png',
   kitchenLoad,
   showKitchenStatus = true,
 }) => {

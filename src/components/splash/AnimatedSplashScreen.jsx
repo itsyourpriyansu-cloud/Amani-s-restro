@@ -218,16 +218,18 @@ const AnimatedSplashScreen = ({ onComplete, autoDismiss = true }) => {
               initial={{ scale: 0, opacity: 0, rotate: -20 }}
               animate={{ scale: 1, opacity: 1, rotate: 0 }}
               transition={{ duration: 0.9, delay: 1.5, ease: [0.34, 1.56, 0.64, 1] }}
-              className="relative w-16 h-16 rounded-full bg-gradient-to-br from-primary to-maroon-950 border-2 border-highlight flex items-center justify-center shadow-[0_0_35px_rgba(201,149,61,0.5)] mb-4"
+              className="relative w-20 h-20 rounded-full border-2 border-highlight overflow-hidden shadow-[0_0_35px_rgba(201,149,61,0.5)] mb-4"
             >
-              <span className="text-2xl font-bold text-highlight font-telugu drop-shadow">
-                మ
-              </span>
+              <img
+                src="/logo.png"
+                alt="Mangamma Ruchulu Brand Logo"
+                className="w-full h-full object-cover"
+              />
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: [0, 1, 0], scale: [0.8, 1.4, 1.85] }}
                 transition={{ duration: 1.4, delay: 2.4, repeat: Infinity, repeatDelay: 1.5 }}
-                className="absolute inset-0 rounded-full border border-highlight"
+                className="absolute inset-0 rounded-full border border-highlight pointer-events-none"
               />
             </motion.div>
 

@@ -45,9 +45,11 @@ const CounterLayout = ({ children, activeTab, setActiveTab }) => {
               <span className="hidden sm:inline">Portal</span>
             </button>
 
-            <div className="w-10 h-10 rounded-2xl bg-amber-600 text-white flex items-center justify-center shadow-md">
-              <Store className="w-5 h-5" />
-            </div>
+            <img
+              src="/logo.png"
+              alt="Mangamma Ruchulu"
+              className="w-10 h-10 rounded-full object-cover shadow-md border border-stone-300 shrink-0"
+            />
 
             <div>
               <div className="flex items-center gap-2">

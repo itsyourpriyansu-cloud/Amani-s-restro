@@ -7,6 +7,7 @@ export const restaurantConfig = {
   parentCompany: 'Lakshya Foodways',
   parentCompanyLabel: 'A Unit of Lakshya Foodways',
   establishedYear: 2014,
+  logo: '/logo.png',
 
   tagline: 'A Journey of Tradition. A Legacy of Flavour.',
 

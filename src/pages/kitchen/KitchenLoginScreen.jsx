@@ -12,6 +12,7 @@ import {
   ShieldCheck
 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { RESTAURANT_INFO } from '../../utils/mockData';
 
 const STAFF_PRESETS = [
   {
@@ -114,9 +115,11 @@ const KitchenLoginScreen = ({ onLoginSuccess }) => {
 
         {/* Brand Header */}
         <header className="flex flex-col items-center text-center gap-2">
-          <div className="w-16 h-16 rounded-full bg-primary-container/10 flex items-center justify-center mb-1">
-            <UtensilsCrossed className="w-8 h-8 text-primary" />
-          </div>
+          <img
+            src={RESTAURANT_INFO.logo || '/logo.png'}
+            alt={RESTAURANT_INFO.name}
+            className="w-16 h-16 rounded-full object-cover shadow-md mb-1 border border-outline-variant/30"
+          />
           <h1 className="font-headline-lg text-headline-lg text-on-surface tracking-tight">
             Mangamma Ruchulu
           </h1>

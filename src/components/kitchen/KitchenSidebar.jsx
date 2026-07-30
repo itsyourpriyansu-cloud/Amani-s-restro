@@ -62,17 +62,26 @@ const KitchenSidebar = ({
 
       {/* Brand Header */}
       {!isCollapsed ? (
-        <div className="mb-6 px-2">
-          <h1 className="text-lg font-extrabold text-[#A30F3B] tracking-tight leading-snug">
-            {RESTAURANT_INFO.name}
-          </h1>
-          <p className="text-xs text-gray-500 font-medium">Kitchen Display System</p>
+        <div className="mb-6 px-2 flex items-center gap-3">
+          <img
+            src={RESTAURANT_INFO.logo || '/logo.png'}
+            alt={RESTAURANT_INFO.name}
+            className="w-10 h-10 rounded-full object-cover shrink-0 shadow-xs border border-gray-200"
+          />
+          <div>
+            <h1 className="text-base font-extrabold text-[#A30F3B] tracking-tight leading-snug">
+              {RESTAURANT_INFO.name}
+            </h1>
+            <p className="text-xs text-gray-500 font-medium">Kitchen Display System</p>
+          </div>
         </div>
       ) : (
         <div className="mb-6 text-center">
-          <div className="w-9 h-9 mx-auto rounded-2xl bg-[#A30F3B] text-white flex items-center justify-center font-black text-sm shadow-xs">
-            MR
-          </div>
+          <img
+            src={RESTAURANT_INFO.logo || '/logo.png'}
+            alt={RESTAURANT_INFO.name}
+            className="w-9 h-9 mx-auto rounded-full object-cover shadow-xs border border-gray-200"
+          />
         </div>
       )}
 

@@ -97,9 +97,11 @@ const RestaurantTrustProfileModal = ({ isOpen, onClose, onRequestAssistance }) =
         {/* Header — compact, no gradient, no competing badge */}
         <div className="px-4 sm:px-5 py-3 flex items-center justify-between gap-3 border-b border-outline-variant/60 shrink-0">
           <div className="flex items-center gap-2.5 min-w-0">
-            <span className="w-9 h-9 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0" aria-hidden="true">
-              <ShieldCheck className="w-[18px] h-[18px]" />
-            </span>
+            <img
+              src="/logo.png"
+              alt="Mangamma Ruchulu Logo"
+              className="w-9 h-9 rounded-full object-cover shrink-0 border border-outline-variant/40"
+            />
             <div className="min-w-0">
               <h3 id="trust-profile-title" className="text-[17px] font-semibold text-on-surface leading-tight truncate">
                 {profile.restaurantName}

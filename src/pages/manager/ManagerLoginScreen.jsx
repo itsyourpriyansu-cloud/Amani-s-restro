@@ -76,6 +76,11 @@ const ManagerLoginScreen = () => {
 
           {/* Brand Header */}
           <div className="flex flex-col items-center mb-8">
+            <img
+              src={RESTAURANT_INFO.logo || '/logo.png'}
+              alt={RESTAURANT_INFO.name}
+              className="w-16 h-16 rounded-full object-cover mb-3 shadow-md border border-outline-variant/40"
+            />
             <span className="text-2xl font-bold text-primary tracking-tight mb-1.5">{RESTAURANT_INFO.name}</span>
             <div className="h-1 w-12 bg-secondary-fixed-dim rounded-full" />
           </div>
