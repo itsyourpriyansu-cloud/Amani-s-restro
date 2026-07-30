@@ -17,17 +17,18 @@ const StickyCartBar = () => {
   const totalAmount = totals.totalPayable || totals.grandTotal || 0;
   const singleCartLine = cartItems.length === 1 ? cartItems[0] : null;
   const singleCartLineId = singleCartLine?.cartItemId || singleCartLine?.id;
-  const shouldRemove = singleCartLine?.quantity === 1;
+  const canReduceSingleLine = singleCartLine?.quantity > 1;
 
-  const handleReduceOrRemove = () => {
+  const handleReduceQuantity = () => {
     if (!singleCartLine || !singleCartLineId) return;
-
-    if (shouldRemove) {
-      removeFromCart(singleCartLineId);
-      return;
-    }
+    if (!canReduceSingleLine) return;
 
     updateQuantity(singleCartLineId, singleCartLine.quantity - 1);
+  };
+
+  const handleRemoveItem = () => {
+    if (!singleCartLineId) return;
+    removeFromCart(singleCartLineId);
   };
 
   return (
@@ -37,26 +38,36 @@ const StickyCartBar = () => {
     >
       <div className="pointer-events-auto mx-auto flex min-h-[68px] max-w-[520px] items-center gap-2 rounded-[18px] border border-primary bg-primary p-2.5 text-on-primary shadow-xl">
         {singleCartLine ? (
-          <button
-            type="button"
-            onClick={handleReduceOrRemove}
-            className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-on-primary/15 text-on-primary transition-colors hover:bg-on-primary/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-on-primary focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
-            aria-label={
-              shouldRemove
-                ? `Remove ${singleCartLine.name} from cart`
-                : `Reduce ${singleCartLine.name} quantity to ${singleCartLine.quantity - 1}`
-            }
-            title={shouldRemove ? 'Remove item' : 'Reduce quantity'}
-          >
-            {shouldRemove ? (
-              <X className="h-5 w-5" aria-hidden="true" />
-            ) : (
-              <Minus className="h-5 w-5" aria-hidden="true" />
+          <div className="flex shrink-0 items-center gap-1">
+            {canReduceSingleLine && (
+              <button
+                type="button"
+                onClick={handleReduceQuantity}
+                className="relative flex h-11 w-11 items-center justify-center rounded-xl bg-on-primary/15 text-on-primary transition-colors hover:bg-on-primary/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-on-primary focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
+                aria-label={`Reduce ${singleCartLine.name} quantity to ${singleCartLine.quantity - 1}`}
+                title="Reduce quantity"
+              >
+                <Minus className="h-5 w-5" aria-hidden="true" />
+                <span className="absolute -right-1.5 -top-1.5 flex h-5 min-w-5 items-center justify-center rounded-full border-2 border-primary bg-error px-1 text-[10px] font-extrabold text-on-error">
+                  {singleCartLine.quantity}
+                </span>
+              </button>
             )}
-            <span className="absolute -right-1.5 -top-1.5 flex h-5 min-w-5 items-center justify-center rounded-full border-2 border-primary bg-error px-1 text-[10px] font-extrabold text-on-error">
-              {singleCartLine.quantity}
-            </span>
-          </button>
+            <button
+              type="button"
+              onClick={handleRemoveItem}
+              className="relative flex h-11 w-11 items-center justify-center rounded-xl bg-on-primary/15 text-on-primary transition-colors hover:bg-on-primary/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-on-primary focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
+              aria-label={`Remove ${singleCartLine.name} from cart`}
+              title="Remove item"
+            >
+              <X className="h-5 w-5" aria-hidden="true" />
+              {!canReduceSingleLine && (
+                <span className="absolute -right-1.5 -top-1.5 flex h-5 min-w-5 items-center justify-center rounded-full border-2 border-primary bg-error px-1 text-[10px] font-extrabold text-on-error">
+                  {singleCartLine.quantity}
+                </span>
+              )}
+            </button>
+          </div>
         ) : (
           <div className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-on-primary/15">
             <ShoppingBag className="h-5 w-5 text-on-primary" aria-hidden="true" />
