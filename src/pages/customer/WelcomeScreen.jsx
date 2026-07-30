@@ -107,23 +107,7 @@ const KitchenStatusStrip = ({ statusMeta, etaLow }) => (
   </motion.div>
 );
 
-/* ─────────────────────────────────────────────
-   Sub-component: SearchBarShortcut
-   Search shortcut button leading into the menu page.
-───────────────────────────────────────────── */
-const SearchBarShortcut = ({ onSearchClick }) => (
-  <div className="px-4 mt-5">
-    <button
-      type="button"
-      onClick={onSearchClick}
-      className="relative w-full h-[46px] rounded-[14px] bg-white border border-[#EADFD6] flex items-center pl-11 pr-4 text-left text-[13.5px] text-[#95867E] shadow-2xs hover:bg-[#FFF7EE] active:bg-[#FFF7EE] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A30F3B] focus-visible:ring-offset-2 cursor-pointer"
-      aria-label="Search the menu"
-    >
-      <Search className="absolute left-3.5 w-[18px] h-[18px] text-[#95867E]" aria-hidden="true" />
-      Search dishes, curries or biryanis
-    </button>
-  </div>
-);
+
 
 /* ─────────────────────────────────────────────
    Sub-component: RestaurantTrustFooter
@@ -248,22 +232,19 @@ const WelcomeScreen = () => {
             {/* Kitchen status strip (overlaps hero by ~18px) — table number lives only in the header chip */}
             <KitchenStatusStrip statusMeta={statusMeta} etaLow={etaLow} />
 
-            {/* Primary CTA — dominant orange button */}
+            {/* Primary CTA — eye-catchy brand button */}
             <motion.button
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.35, delay: 0.3 }}
               whileTap={{ scale: 0.985 }}
               onClick={() => navigate('/menu')}
-              className="mx-4 mt-5 flex items-center justify-center gap-2 bg-[#F47712] hover:bg-[#DB5F05] active:bg-[#DB5F05] text-white font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A30F3B] focus-visible:ring-offset-2 group cursor-pointer"
+              className="mx-4 mt-5 flex items-center justify-center gap-2 bg-gradient-to-r from-[#E86D00] via-[#F47712] to-[#D96000] hover:brightness-105 active:scale-[0.985] text-white font-bold transition-all shadow-[0_4px_16px_rgba(244,119,18,0.25)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A30F3B] focus-visible:ring-offset-2 group cursor-pointer"
               style={{ height: '54px', borderRadius: '14px', fontSize: '16px' }}
             >
-              Browse Menu
+              <span>Explore Authentic Flavours</span>
               <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1 group-active:translate-x-1" aria-hidden="true" />
             </motion.button>
-
-            {/* ── Search shortcut ── */}
-            <SearchBarShortcut onSearchClick={() => navigate('/menu', { state: { focusSearch: true } })} />
 
             {/* ── Top Categories section (Replaces full menu list on home screen) ── */}
             <div ref={popularSectionRef}>

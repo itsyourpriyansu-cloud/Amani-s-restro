@@ -86,36 +86,9 @@ const TopCategoriesSection = () => {
 
   return (
     <section 
-      aria-labelledby="top-categories-heading"
-      className="w-full px-4 mt-6 mb-4 flex flex-col max-w-[640px] mx-auto font-sans"
+      aria-label="Top categories"
+      className="w-full px-4 mt-5 mb-4 flex flex-col max-w-[640px] mx-auto font-sans"
     >
-      {/* Microcopy Header Row */}
-      <div className="flex items-end justify-between gap-3 mb-4">
-        <div>
-          <div className="flex items-center gap-2">
-            <span className="w-1.5 h-4 rounded-full bg-[#A30F3B]" aria-hidden="true" />
-            <h2 
-              id="top-categories-heading"
-              className="font-bold text-[#211917] text-[20px] md:text-[22px] tracking-tight leading-tight"
-            >
-              Top Categories
-            </h2>
-          </div>
-          <p className="text-[#705F58] text-[13px] md:text-[14px] mt-0.5 ml-3.5 font-medium">
-            Start with our most loved picks
-          </p>
-        </div>
-
-        <button
-          type="button"
-          onClick={() => navigate('/menu')}
-          className="flex items-center gap-1 text-[#A30F3B] font-bold text-[13px] hover:text-[#7E0D2F] hover:underline underline-offset-4 transition-colors cursor-pointer shrink-0"
-        >
-          View all
-          <ArrowRight className="w-4 h-4" aria-hidden="true" />
-        </button>
-      </div>
-
       {/* 2x2 Grid Layout — perfectly proportioned card architecture */}
       <div className="grid grid-cols-2 gap-3.5 sm:gap-4">
         {BASE_CATEGORIES.map((cat, index) => {
@@ -134,15 +107,11 @@ const TopCategoriesSection = () => {
               onKeyDown={(e) => e.key === 'Enter' && handleCategoryClick(cat.id)}
               className={`group relative overflow-hidden rounded-[26px] p-4 flex flex-col justify-between border ${cat.bgColor} ${cat.borderColor} ${cat.hoverBorder} shadow-[0_4px_16px_rgba(0,0,0,0.03)] hover:shadow-[0_14px_30px_rgba(163,15,59,0.09)] transition-all duration-300 cursor-pointer min-h-[195px] sm:min-h-[210px]`}
             >
-              {/* Settled Top Tags Bar: Single-line badge on left + subtle item count on right */}
-              <div className="w-full flex items-center justify-between gap-2 z-10">
+              {/* Settled Top Tag Badge */}
+              <div className="w-full flex items-center justify-start gap-2 z-10">
                 <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10.5px] font-bold tracking-tight whitespace-nowrap shadow-2xs ${cat.badgeBg}`}>
                   <BadgeIcon className="w-3 h-3 shrink-0" aria-hidden="true" />
                   <span>{cat.badge}</span>
-                </span>
-
-                <span className="text-[11px] font-bold text-[#8C7A72]/80 whitespace-nowrap shrink-0">
-                  {cat.itemCount}
                 </span>
               </div>
 
@@ -178,20 +147,6 @@ const TopCategoriesSection = () => {
             </motion.div>
           );
         })}
-      </div>
-
-      {/* Under-section CTA */}
-      <div className="mt-5 flex justify-center">
-        <motion.button
-          whileHover={{ scale: 1.015 }}
-          whileTap={{ scale: 0.98 }}
-          type="button"
-          onClick={() => navigate('/menu')}
-          className="w-full sm:w-auto px-6 h-[48px] rounded-[14px] bg-gradient-to-r from-[#A30F3B] to-[#7E0D2F] hover:from-[#8C0C32] hover:to-[#680925] text-white font-bold text-[14px] shadow-sm flex items-center justify-center gap-2.5 transition-all cursor-pointer border border-[#D4AF37]/30"
-        >
-          <span>View full menu</span>
-          <ArrowRight className="w-4 h-4" aria-hidden="true" />
-        </motion.button>
       </div>
     </section>
   );
