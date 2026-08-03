@@ -63,9 +63,11 @@ const TopAppBar = ({
 
   const handleLogoClick = (e) => {
     e.stopPropagation();
-    setIsCircling(true);
-    setTimeout(() => setIsCircling(false), 900);
+    navigate('/');
+  };
 
+  const handleTableClick = (e) => {
+    e.stopPropagation();
     if (onOpenTrustProfile) {
       onOpenTrustProfile();
     } else {
@@ -112,7 +114,8 @@ const TopAppBar = ({
                   type="button"
                   onClick={handleLogoClick}
                   className="flex items-center justify-start cursor-pointer focus:outline-none"
-                  aria-label="View restaurant details"
+                  aria-label="Go to home page"
+                  title="Go to home page"
                 >
                   <img
                     src={logoSrc || '/Amanis Logo Final.svg'}
@@ -144,13 +147,16 @@ const TopAppBar = ({
                   <Icon name={rightIcon} className="text-sm" />
                 </button>
               )}
-              <div
-                className="flex h-8 shrink-0 select-none items-center gap-1.5 rounded-full border border-outline-variant/70 bg-surface-container-low px-3 text-[12px] font-medium text-on-surface-variant"
-                aria-label={tableNumber ? `Your table: ${tableNumber}` : 'Table number unavailable'}
+              <button
+                type="button"
+                onClick={handleTableClick}
+                className="flex h-8 shrink-0 select-none items-center gap-1.5 rounded-full border border-outline-variant/70 bg-surface-container-low px-3 text-[12px] font-semibold text-on-surface-variant hover:bg-surface-container hover:border-primary/40 active:scale-95 transition-all cursor-pointer"
+                aria-label={tableNumber ? `Your table: ${tableNumber}. Click to view kitchen details.` : 'Table details'}
+                title="Click for Kitchen Details & Transparency"
               >
                 <span className="w-1.5 h-1.5 rounded-full bg-secondary shrink-0" aria-hidden="true" />
                 <span>{formattedTableNumber}</span>
-              </div>
+              </button>
             </div>
           </div>
         </header>
@@ -182,8 +188,8 @@ const TopAppBar = ({
               type="button"
               onClick={handleLogoClick}
               className="flex items-center justify-start cursor-pointer focus:outline-none"
-              aria-label="View restaurant details"
-              title="Click for Hotel & Chef details"
+              aria-label="Go to home page"
+              title="Go to home page"
             >
               {logoSrc && !logoFailed ? (
                 <img
@@ -206,13 +212,16 @@ const TopAppBar = ({
 
           {/* Right action control — Table chip */}
           <div className="flex items-center shrink-0">
-            <div
-              className="h-8 px-3 rounded-full bg-surface-container-low/90 text-on-surface-variant text-[12.5px] font-semibold border border-outline-variant/60 flex items-center gap-2 shrink-0 select-none"
-              aria-label={`Your table: ${tableNumber}`}
+            <button
+              type="button"
+              onClick={handleTableClick}
+              className="h-8 px-3 rounded-full bg-surface-container-low/90 hover:bg-surface-container text-on-surface-variant text-[12.5px] font-semibold border border-outline-variant/60 hover:border-primary/40 flex items-center gap-2 shrink-0 select-none cursor-pointer active:scale-95 transition-all"
+              aria-label={`Your table: ${tableNumber}. Click to view kitchen details.`}
+              title="Click for Kitchen Details & Transparency"
             >
               <span className="w-2 h-2 rounded-full bg-secondary shrink-0" aria-hidden="true" />
               <span>{formattedTableNumber}</span>
-            </div>
+            </button>
           </div>
         </div>
 

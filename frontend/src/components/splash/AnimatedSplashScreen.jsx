@@ -46,10 +46,14 @@ const AnimatedSplashScreen = ({ onComplete }) => {
     // Keep splash screen visible for ~1.8s so the branding & animation are clearly experienced
     const timer = setTimeout(dismissSplash, 1800);
 
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
     return () => {
       isMounted = false;
       clearTimeout(timer);
       clearInterval(progressInterval);
+      document.body.style.overflow = originalOverflow;
     };
   }, []);
 
