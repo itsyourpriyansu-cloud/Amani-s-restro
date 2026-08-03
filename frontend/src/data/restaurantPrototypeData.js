@@ -153,7 +153,7 @@ export const INITIAL_PROTOTYPE_EMPLOYEES = [
     name: 'Rahul Sharma',
     role: 'Waiter',
     phone: '+91 98401 11223',
-    email: 'rahul.s@mangammaruchulu.in',
+    email: 'rahul.s@amanisrestro.in',
     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80',
     shift: 'Morning Shift (09:00 - 18:00)',
     status: 'On Shift',
@@ -168,7 +168,7 @@ export const INITIAL_PROTOTYPE_EMPLOYEES = [
     name: 'Ananya Reddy',
     role: 'Shift Manager',
     phone: '+91 98402 22334',
-    email: 'ananya.r@mangammaruchulu.in',
+    email: 'ananya.r@amanisrestro.in',
     avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=200&q=80',
     shift: 'Morning Shift (09:00 - 18:00)',
     status: 'On Shift',
@@ -183,7 +183,7 @@ export const INITIAL_PROTOTYPE_EMPLOYEES = [
     name: 'Imran Khan',
     role: 'Counter Staff',
     phone: '+91 98403 33445',
-    email: 'imran.k@mangammaruchulu.in',
+    email: 'imran.k@amanisrestro.in',
     avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80',
     shift: 'Full Shift (08:30 - 17:30)',
     status: 'On Shift',
@@ -198,7 +198,7 @@ export const INITIAL_PROTOTYPE_EMPLOYEES = [
     name: 'Sneha Patel',
     role: 'Kitchen Staff',
     phone: '+91 98404 44556',
-    email: 'sneha.p@mangammaruchulu.in',
+    email: 'sneha.p@amanisrestro.in',
     avatar: 'https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=200&q=80',
     shift: 'Mid Shift (10:00 - 19:00)',
     status: 'On Shift',
@@ -213,7 +213,7 @@ export const INITIAL_PROTOTYPE_EMPLOYEES = [
     name: 'Chef Arjun Rao',
     role: 'Head Chef',
     phone: '+91 98405 55667',
-    email: 'arjun.r@mangammaruchulu.in',
+    email: 'arjun.r@amanisrestro.in',
     avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&q=80',
     shift: 'Full Day',
     status: 'On Shift',
@@ -991,8 +991,8 @@ export const SIGNATURE_DISH_STORIES = {
       origin: 'A regional Andhra classic, Chicken Dum Biryani is layered rice and spiced chicken sealed and slow-cooked over a low flame for deep, even flavour.',
       chefNote: 'Best enjoyed immediately while the dum seal is freshly opened at the table.',
       ingredientStory: 'Long-grain rice and hand-ground biryani masala prepared in controlled morning batches, dum-cooked to order in heavy-bottomed handis.',
-      suggestedStoryTemplate: 'Trying the signature Chicken Dum Biryani at Mangamma Ruchulu.',
-      restaurantTag: '@MangammaRuchulu',
+      suggestedStoryTemplate: "Trying the signature Chicken Dum Biryani at Amani's Kitchen.",
+      restaurantTag: '@AmanisKitchen',
       locationLabel: 'Hyderabad, Telangana'
     }
   },
@@ -1004,8 +1004,8 @@ export const SIGNATURE_DISH_STORIES = {
       origin: 'A vibrant Andhra-style preparation featuring layered spices, slow-cooked tender mutton, and fragrant long-grain rice.',
       chefNote: 'Steeped for 4 hours to lock rich aromatic essential oils into every grain.',
       ingredientStory: 'Tender mutton and hand-pounded whole spices sourced daily, cooked in brass handis.',
-      suggestedStoryTemplate: 'Experiencing authentic Mutton Dum Biryani at Mangamma Ruchulu.',
-      restaurantTag: '@MangammaRuchulu',
+      suggestedStoryTemplate: "Experiencing authentic Mutton Dum Biryani at Amani's Kitchen.",
+      restaurantTag: '@AmanisKitchen',
       locationLabel: 'Hyderabad, Telangana'
     }
   },
@@ -1017,8 +1017,8 @@ export const SIGNATURE_DISH_STORIES = {
       origin: 'A traditional Andhra banana-leaf meal featuring six balanced flavors: sweet, sour, salty, bitter, pungent, and astringent.',
       chefNote: 'Served on fresh banana leaves with stone-ground chutney and warm rasam.',
       ingredientStory: 'Organic lentils, fresh farm vegetables, and morning-ground sambar powder.',
-      suggestedStoryTemplate: 'Enjoying the traditional Aritaku Bojanam (Veg) feast at Mangamma Ruchulu.',
-      restaurantTag: '@MangammaRuchulu',
+      suggestedStoryTemplate: "Enjoying the traditional Aritaku Bojanam (Veg) feast at Amani's Kitchen.",
+      restaurantTag: '@AmanisKitchen',
       locationLabel: 'Hyderabad, Telangana'
     }
   },
@@ -1030,8 +1030,8 @@ export const SIGNATURE_DISH_STORIES = {
       origin: 'A rich, slow-cooked dessert of grated carrot simmered in milk and finished with ghee and nuts.',
       chefNote: 'Finished with a generous garnish of roasted cashews while still warm.',
       ingredientStory: 'Fresh carrots grated daily and simmered slowly with pure reduced milk.',
-      suggestedStoryTemplate: 'Ending the meal with Carrot Halwa at Mangamma Ruchulu.',
-      restaurantTag: '@MangammaRuchulu',
+      suggestedStoryTemplate: "Ending the meal with Carrot Halwa at Amani's Kitchen.",
+      restaurantTag: '@AmanisKitchen',
       locationLabel: 'Hyderabad, Telangana'
     }
   }
@@ -1104,7 +1104,7 @@ export const INITIAL_PROTOTYPE_UGC = [
     dishName: 'Chicken Dum Biryani',
     mediaType: 'PHOTO',
     mediaPreview: 'https://images.unsplash.com/photo-1668236543090-82eba5ee5976?auto=format&fit=crop&w=600&q=80',
-    captionText: 'Trying the signature Chicken Dum Biryani at Mangamma Ruchulu!',
+    captionText: "Trying the signature Chicken Dum Biryani at Amani's Kitchen!",
     socialHandle: '@priya_foodie',
     permissions: {
       submittedForParticipation: true,

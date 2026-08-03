@@ -1,7 +1,7 @@
 import React from 'react';
 
 /**
- * Clean, lightweight SVG category illustrations for Mangamma Ruchulu.
+ * Clean, lightweight SVG category illustrations for Amani's Kitchen.
  * Palette: Maroon (#7A1F24), Chilli (#A93F1D), Leaf Green (#4B651F),
  * Warm Cream (#F7F1E5), Copper (#985D2E), Charcoal (#2A241F).
  * All graphics are resolution-independent 1:1 SVG vectors.

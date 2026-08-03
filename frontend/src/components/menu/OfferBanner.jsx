@@ -32,7 +32,7 @@ const OFFERS = [
     id: 'percent20',
     title: '20% OFF Biryanis',
     subtitle: 'Slow-cooked Dum Biryanis & Pulaos',
-    code: 'MANGAMMA20',
+    code: 'AMANI20',
     minOrder: 'NO MIN ORDER',
     badgeText: 'TOP SELLER',
     ctaText: 'Order Biryani',

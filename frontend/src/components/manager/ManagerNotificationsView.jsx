@@ -30,7 +30,7 @@ const ManagerNotificationsView = () => {
   const [readIds, setReadIds] = useState(() => new Set());
 
   const storedDishes = useMemo(() => {
-    const saved = localStorage.getItem('mangamma_menu_dishes');
+    const saved = localStorage.getItem('amani_menu_dishes');
     return saved ? JSON.parse(saved) : DISHES;
   }, []);
 

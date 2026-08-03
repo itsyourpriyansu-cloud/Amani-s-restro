@@ -169,7 +169,7 @@ const ManagerEmployeeView = () => {
         id: `staff-${Date.now()}`,
         name: formData.name,
         role: formData.role,
-        email: formData.email || `${formData.name.toLowerCase().replace(/\s+/g, '.')}@mangammaruchulu.in`,
+        email: formData.email || `${formData.name.toLowerCase().replace(/\s+/g, '.')}@amanisrestro.in`,
         phone: formData.phone,
         avatar: formData.avatar || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80',
         shift: formData.shift,

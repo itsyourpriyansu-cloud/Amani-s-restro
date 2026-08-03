@@ -1,5 +1,5 @@
 /**
- * Curated real-photography stock library for Mangamma Ruchulu.
+ * Curated real-photography stock library for Amani's Kitchen.
  * Every URL is verified (HTTP 200, image/jpeg) — see src/data/imageCredits.js for source pages.
  * Contains high-definition food photography for every item in the restaurant menu.
  */

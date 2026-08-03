@@ -122,7 +122,7 @@ const ManagerProfileView = () => {
                 <label className="text-xs text-on-surface-variant font-semibold">Email Address</label>
                 <div className="flex items-center gap-3 p-3 bg-surface-container-low rounded-xl border border-outline-variant">
                   <Mail className="w-4 h-4 text-primary" />
-                  <span className="text-sm text-on-surface">sundaram.p@mangammaruchulu.in</span>
+                  <span className="text-sm text-on-surface">sundaram.p@amanisrestro.in</span>
                 </div>
               </div>
               <div className="space-y-1.5">

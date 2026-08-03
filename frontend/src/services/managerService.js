@@ -6,17 +6,17 @@ import { formatDateTime } from '../utils/formatters';
 export { dashboardMockData };
 
 // Storage Keys
-const EMPLOYEES_STORAGE_KEY = 'mangamma_employees';
-const SETTINGS_STORAGE_KEY = 'mangamma_manager_settings';
-const RESERVATIONS_STORAGE_KEY = 'mangamma_reservations';
-const AUDIT_LOG_STORAGE_KEY = 'mangamma_audit_logs';
+const EMPLOYEES_STORAGE_KEY = 'amani_employees';
+const SETTINGS_STORAGE_KEY = 'amani_manager_settings';
+const RESERVATIONS_STORAGE_KEY = 'amani_reservations';
+const AUDIT_LOG_STORAGE_KEY = 'amani_audit_logs';
 
 export const INITIAL_EMPLOYEES = [
   {
     id: 'staff-1',
     name: 'Rahul Sharma',
     role: 'Waiter',
-    email: 'rahul.s@mangammaruchulu.in',
+    email: 'rahul.s@amanisrestro.in',
     phone: '+91 98401 11223',
     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80',
     shift: 'Morning Shift (09:00 - 18:00)',
@@ -31,7 +31,7 @@ export const INITIAL_EMPLOYEES = [
     id: 'staff-2',
     name: 'Ananya Reddy',
     role: 'Waiter',
-    email: 'ananya.r@mangammaruchulu.in',
+    email: 'ananya.r@amanisrestro.in',
     phone: '+91 98402 22334',
     avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=200&q=80',
     shift: 'Morning Shift (09:00 - 18:00)',
@@ -46,7 +46,7 @@ export const INITIAL_EMPLOYEES = [
     id: 'staff-3',
     name: 'Imran Khan',
     role: 'Counter',
-    email: 'imran.k@mangammaruchulu.in',
+    email: 'imran.k@amanisrestro.in',
     phone: '+91 98403 33445',
     avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80',
     shift: 'Shift A (08:30 - 17:30)',
@@ -61,7 +61,7 @@ export const INITIAL_EMPLOYEES = [
     id: 'staff-4',
     name: 'Sneha Patel',
     role: 'Kitchen Staff',
-    email: 'sneha.p@mangammaruchulu.in',
+    email: 'sneha.p@amanisrestro.in',
     phone: '+91 98404 44556',
     avatar: 'https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=200&q=80',
     shift: 'Mid Shift (10:00 - 19:00)',
@@ -76,7 +76,7 @@ export const INITIAL_EMPLOYEES = [
     id: 'staff-5',
     name: 'Priya Nair',
     role: 'Head Chef',
-    email: 'priya.n@mangammaruchulu.in',
+    email: 'priya.n@amanisrestro.in',
     phone: '+91 98405 55667',
     avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&q=80',
     shift: 'Off Today',
@@ -95,7 +95,7 @@ export const INITIAL_SETTINGS = {
   established: RESTAURANT_INFO.established,
   address: RESTAURANT_INFO.address,
   phone: "+91 (80) 4123-8888",
-  email: "contact@mangammaruchulu.in",
+  email: "contact@amanisrestro.in",
   country: restaurantConfig.countryName,
   countryCode: restaurantConfig.countryCode,
   currency: restaurantConfig.currencySymbol,
@@ -128,7 +128,8 @@ export const INITIAL_SETTINGS = {
     saturday: "07:00 AM - 11:30 PM",
     sunday: "07:00 AM - 10:30 PM"
   },
-  receiptHeader: "Dhanyavadamulu / Thank you for dining at Mangamma Ruchulu!",
+  receiptHeader: "Dhanyavadamulu / Thank you for dining at Amani's Kitchen!",
+  receiptFooter: "Please visit us again! A Journey of Tradition. A Legacy of Flavour.",
   receiptFooter: "Please visit us again! A Journey of Tradition. A Legacy of Flavour.",
   autoPrintReceipt: true,
   lowStockAlertThreshold: 5,

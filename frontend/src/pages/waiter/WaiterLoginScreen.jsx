@@ -135,7 +135,7 @@ const WaiterLoginScreen = () => {
           <span className="w-1 h-1 bg-outline-variant rounded-full" />
           <a href="#" onClick={(e) => e.preventDefault()} className="text-[11px] text-on-surface-variant hover:text-primary transition-colors">IT Status</a>
         </div>
-        <p className="text-[10px] text-outline tracking-wide text-center">System Version 4.2.1 • Mangamma Ruchulu Restaurant Group</p>
+        <p className="text-[10px] text-outline tracking-wide text-center">System Version 4.2.1 • Amani's Kitchen Restaurant Group</p>
       </footer>
     </div>
   );

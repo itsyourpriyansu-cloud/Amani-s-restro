@@ -38,7 +38,7 @@ const CartScreen = () => {
     setSpecialOrderNotes,
     totals,
   } = useCart();
-  const { placeOrder, kitchenLoad } = useOrder();
+  const { placeOrder, kitchenLoad, activeOrder } = useOrder();
   const { showToast } = useToast();
 
   const [promoCodeInput, setPromoCodeInput] = useState('');
@@ -171,11 +171,28 @@ const CartScreen = () => {
         </section>
 
         {/* Card: kitchen status */}
-        <section className="mb-6">
+        <section className="mb-6 space-y-3">
           <HonestExpectationBanner
             kitchenLoad={kitchenLoad}
             estimatedRange={`${kitchenLoad?.averagePreparationMinutes || 20}–${(kitchenLoad?.averagePreparationMinutes || 20) + 5} mins`}
           />
+
+          {/* Active Unpaid Order Banner */}
+          {activeOrder && (!activeOrder.isPaid && activeOrder.status !== 'PAID') && Array.isArray(activeOrder.items) && activeOrder.items.length > 0 && (
+            <div className="p-3.5 rounded-2xl bg-[#87351F]/8 border border-[#87351F]/20 flex items-center gap-3 text-[#24130E]">
+              <div className="w-9 h-9 rounded-xl bg-[#87351F]/15 flex items-center justify-center shrink-0 text-[#87351F]">
+                <Icon name="receipt_long" className="text-lg" />
+              </div>
+              <div className="text-xs">
+                <span className="font-bold block text-[#87351F]">
+                  Active Table Bill ({formatMenuPrice(activeOrder.totals?.totalPayable || activeOrder.totalPayable || 0)})
+                </span>
+                <span className="text-[#786B65]">
+                  You have an unpaid running bill for Table {tableNumber}. New items will be added to your table’s bill.
+                </span>
+              </div>
+            </div>
+          )}
         </section>
 
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6">

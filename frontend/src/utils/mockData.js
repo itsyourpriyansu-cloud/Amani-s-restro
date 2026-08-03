@@ -254,7 +254,7 @@ const DISH_SOURCE = [
   ['soup-sweet-corn-chicken', 'Chicken Sweet Corn Soup', 119, 'nonveg_soups', NONVEG, 'MILD', 'Mildly sweet soup with shredded chicken and sweet corn.', {}],
   ['soup-manchow-chicken', 'Chicken Manchow Soup', 119, 'nonveg_soups', NONVEG, 'SPICY', 'Indo-Chinese style spiced chicken soup topped with crispy noodles.', {}],
   ['soup-hot-sour-chicken', 'Chicken Hot and Sour Soup', 119, 'nonveg_soups', NONVEG, 'SPICY', 'Tangy and peppery chicken soup in the Indo-Chinese style.', {}],
-  ['soup-mgm-special', 'MGM Special Soup', 119, 'nonveg_soups', NONVEG, 'MEDIUM', "Mangamma Ruchulu's own house-special chicken soup.", {}],
+  ['soup-amani-special', 'Amani Special Soup', 119, 'nonveg_soups', NONVEG, 'MEDIUM', "Amani's Kitchen's own house-special chicken soup.", {}],
 
   // NON-VEG STARTERS
   ['starter-crispy-fried-chicken', 'Crispy Fried Chicken', 351, 'nonveg_starters', NONVEG, 'SPICY', 'Deep-fried chicken pieces finished crisp and spiced.', {}],
@@ -413,7 +413,7 @@ const DISH_SOURCE = [
 
 export const DISHES = DISH_SOURCE.map(buildDish);
 
-// Six items curated for the "Mangamma Favourites" section (see spec §14).
+// Six items curated for the "Amani's Favourites" section (see spec §14).
 export const FAVOURITE_DISH_IDS = [
   'meals-aritaku-veg',
   'meals-aritaku-nonveg',

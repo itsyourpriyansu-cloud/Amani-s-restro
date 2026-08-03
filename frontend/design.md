@@ -2,8 +2,8 @@
 
 > **Restaurant Management System (RMS) Progressive Web App**
 > Customer self-order PWA + Kitchen Display System + Waiter App + Counter POS + Manager Dashboard.
-> This document is the single source of truth for restyling `rms/frontend` from its current
-> placeholder brand ("Mangamma Ruchulu") to **Amani's Kitchen**. It translates the brand system in
+> This document is the single source of truth for styling `rms/frontend`
+> to **Amani's Kitchen**. It translates the brand system in
 > `design.md` (the Amani's Kitchen marketing-site spec) into this app's actual token architecture,
 > component library, and five role-based surfaces — it does not describe a marketing site.
 
@@ -57,19 +57,19 @@ already uses for the customer-app override in `src/index.css`.
 | **Cuisine** | Authentic South Indian — traditional, heirloom, modern touch |
 | **Established** | 2024 |
 | **Voice** | Warm, generous, heritage-rooted, premium yet approachable |
-| **Logo** | Replaces `mangamma_logo.png` / current `/logo.png` placeholder — see [§10](#10-assets-to-replace) |
+| **Logo** | Replaces logo placeholders — see [§10](#10-assets-to-replace) |
 
 App-specific identity fields not covered by the source doc (needed by `RESTAURANT_INFO` in
 `src/utils/mockData.js`):
 
-| Field | Current (placeholder) | New |
+| Field | Previous | New |
 |---|---|---|
-| `name` | `Mangamma Ruchulu` | `Amani's Kitchen` |
-| `nativeName` | `మంగమ్మ రుచులు` (Telugu) | Drop, unless the product still needs a regional-script wordmark — confirm with product before removing `--font-telugu` / `.font-telugu` (see [§5](#5-typography)) |
+| `name` | `Amani's Kitchen` | `Amani's Kitchen` |
+| `nativeName` | Telugu | Drop, unless the product still needs a regional-script wordmark — confirm with product before removing `--font-telugu` / `.font-telugu` (see [§5](#5-typography)) |
 | `tagline` | "A journey of tradition, served with flavour." | "A Taste of the South, Made With Heart." |
 | `established` | `2014` | `2024` |
 | `location` / `address` | "Address on file" | 142 Heritage Way, Charleston, SC · Gourmet Dining Quarter |
-| `heroImage` | `/mangamma_hero_banner.png` | New Amani's Kitchen hero asset |
+| `heroImage` | `/amani_hero_banner.png` | New Amani's Kitchen hero asset |
 
 Brand voice guidance for UI copy (empty states, toasts, onboarding, receipts): warm and specific
 rather than generic-corporate. E.g. prefer "Your table's biryani is on its way" over "Order status:
@@ -115,7 +115,7 @@ brand intensity higher than the operational apps.
 
 ### 4.1 Core brand scale (raw utilities: `bg-maroon-800`, `text-saffron-600`, …)
 
-| Token | Old (Mangamma) | New (Amani's Kitchen) | Notes |
+| Token | Old | New (Amani's Kitchen) | Notes |
 |---|---|---|---|
 | `--color-maroon-950` | `#4A0718` | `#42180C` | primary-dark |
 | `--color-maroon-900` | `#6E0D25` | `#5B2314` | primary-hover |
@@ -335,7 +335,7 @@ component names.
 | `menu/FoodCard.jsx` | Menu Discovery Card | Keep current horizontal image-left/content-right dense layout (this app's real estate is a phone screen, not a desktop grid) — only the token colors change |
 | `menu/RecommendedDishCard.jsx` + `RecommendedDishRail.jsx` | Signature Dish Card / carousel | Closest structural match to design.md's `.signature-card` — this is where Playfair Display dish names and the "Chef's Pick"-style badge treatment belong |
 | `common/Modal.jsx`, `menu/CategoryBottomSheet.jsx`, `menu/CustomizationModal.jsx`, `retention/CouponClaimBottomSheet.jsx` | Mobile Menu (Bottom Sheet) | Already implements slide-up sheet with rounded top corners and backdrop blur — matches design.md's bottom-sheet spec closely; retint backdrop to `rgba(28,19,16,0.4)` per design.md's overlay color, apply the staggered item entrance from §7 |
-| `layout/TopAppBar.jsx` | Site Header | Already has sticky auto-hide-on-scroll behavior; brand wordmark currently reads `RESTAURANT_INFO.name` and hardcodes `alt="Mangamma Ruchulu Brand Logo"` — both need updating (see §12). Apply Playfair Display to the wordmark span (`text-primary` already correct) |
+| `layout/TopAppBar.jsx` | Site Header | Already has sticky auto-hide-on-scroll behavior; brand wordmark reads `RESTAURANT_INFO.name` and displays brand logo. Apply Playfair Display to the wordmark span (`text-primary` already correct) |
 | `layout/BottomNavBar.jsx` | — (no direct equivalent; this app is a PWA, not a marketing site) | Already uses `bg-primary-container text-primary` for the active pill — correct M3 pattern, inherits new tokens automatically. Keep glass/blur treatment (`backdropFilter: blur(16px)`), matches design.md's header blur language |
 | `common/Toast.jsx` | — | Retint success/warning/error variants from §4.3, no structural change |
 | `common/BillingSummary.jsx` | — (closest: pricing rows in Menu Discovery) | Use Plus Jakarta Sans throughout; reserve Playfair Display strictly for the grand-total figure to give the receipt a premium moment, matching design.md's "Prices: Playfair Display, weight 700, color-primary" rule |
@@ -366,10 +366,10 @@ Playfair Display **only** inside `[data-app="customer"]`.
 
 | Current file | Used in | Action |
 |---|---|---|
-| `public/mangamma_logo.png`, `public/logo.png` | Favicon, `TopAppBar` logo, header | Replace with Amani's Kitchen logo mark |
-| `public/mangamma_hero_banner.png` | `RESTAURANT_INFO.heroImage`, welcome/hero screens | Replace with Amani's Kitchen hero photography |
+| `public/logo.png` | Favicon, `TopAppBar` logo, header | Replace with Amani's Kitchen logo mark |
+| `public/hero_banner.png` | `RESTAURANT_INFO.heroImage`, welcome/hero screens | Replace with Amani's Kitchen hero photography |
 | `src/assets/logo.png` | Bundled logo reference | Replace |
-| `src/assets/banners/mangamma_hero_banner.png`, `express_menu_banner.png`, `special_combos_banner.png` | Promo banners across menu/home screens | Replace with on-brand photography (warm, heritage-rooted per §2 voice) |
+| `src/assets/banners/express_menu_banner.png`, `special_combos_banner.png` | Promo banners across menu/home screens | Replace with on-brand photography |
 | `src/assets/categories/*.png` (biryani, curries, drinks, meals) | `VisualCategoryRail`, category icons | Can likely be kept if photography style matches; re-shoot only if visually inconsistent with new hero imagery |
 | Google Fonts `<link>` in `index.html` | Currently loads Inter + Noto Sans Telugu + Material Symbols | Add Playfair Display + Plus Jakarta Sans; drop Inter once the hard-coded font-family CSS rule (§5.1) is removed; keep Noto Sans Telugu only if regional script stays in scope |
 
@@ -412,8 +412,7 @@ In implementation order:
    Plus Jakarta Sans; retint `boxShadow` values per §6.
 4. **`src/utils/mockData.js`** — update `RESTAURANT_INFO` per §2's table (name, tagline, established,
    address, logo, heroImage; resolve `nativeName`/Telugu question with product first).
-5. **`src/components/layout/TopAppBar.jsx`** — update hardcoded `alt="Mangamma Ruchulu Brand Logo"`
-   string; confirm wordmark renders `RESTAURANT_INFO.name` (already dynamic, just needs step 4 done).
+5. **`src/components/layout/TopAppBar.jsx`** — update brand logo alt string; confirm wordmark renders `RESTAURANT_INFO.name` (already dynamic, just needs step 4 done).
 6. **Assets** — replace files listed in §10.
 7. **`RecommendedDishCard.jsx` / `RecommendedDishRail.jsx`** — apply Playfair Display to dish name
    per §5.2 and §8's signature-card mapping.

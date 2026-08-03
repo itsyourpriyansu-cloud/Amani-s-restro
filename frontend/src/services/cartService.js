@@ -16,7 +16,7 @@ export const cartService = {
   async applyPromoCode(code) {
     try {
       const validPromos = {
-        'MANGAMMA10': { discountPercent: 10, code: 'MANGAMMA10', description: '10% off your order' },
+        'AMANI10': { discountPercent: 10, code: 'AMANI10', description: '10% off your order' },
         'BIRYANI10': { discountPercent: 10, code: 'BIRYANI10', description: '10% off Biryanis' },
         'WELCOME20': { discountPercent: 20, code: 'WELCOME20', description: '20% Welcome Feast Discount' }
       };

@@ -28,8 +28,8 @@ const CategoryIcon = ({ icon, className = 'w-3.5 h-3.5 inline' }) => {
   return icon ? <span>{icon}</span> : null;
 };
 
-const DISHES_STORAGE_KEY = 'mangamma_menu_dishes';
-const CATEGORIES_STORAGE_KEY = 'mangamma_menu_categories';
+const DISHES_STORAGE_KEY = 'amani_menu_dishes';
+const CATEGORIES_STORAGE_KEY = 'amani_menu_categories';
 
 const DEFAULT_DISH_FORM = {
   name: '',

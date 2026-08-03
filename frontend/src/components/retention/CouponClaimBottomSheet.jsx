@@ -139,7 +139,7 @@ const CouponClaimBottomSheet = ({
         {step === 'FORM' && (
           <>
             <p className="text-xs text-on-surface-variant">
-              Enter your name and WhatsApp number below. We'll prepare a message for you to send to Mangamma Ruchulu.
+              Enter your name and WhatsApp number below. We'll prepare a message for you to send to Amani's Kitchen.
             </p>
 
             <div className="p-3 bg-primary/5 rounded-xl border border-primary/20 text-xs text-on-surface">
@@ -187,7 +187,7 @@ const CouponClaimBottomSheet = ({
               />
               <div className="text-xs">
                 <span className="font-semibold text-on-surface">
-                  I agree to share my first name, WhatsApp number, invoice reference, and milestone eligibility with Mangamma Ruchulu to process this coupon request.
+                  I agree to share my first name, WhatsApp number, invoice reference, and milestone eligibility with Amani's Kitchen to process this coupon request.
                 </span>
                 <p className="text-[11px] text-on-surface-variant mt-1">
                   This information will be used to review and fulfil this coupon request.
@@ -226,7 +226,7 @@ const CouponClaimBottomSheet = ({
               />
               <div className="text-xs">
                 <span className="font-semibold text-on-surface">
-                  Send me occasional Mangamma Ruchulu offers and food-event updates on WhatsApp.
+                  Send me occasional Amani's Kitchen offers and food-event updates on WhatsApp.
                 </span>
                 <p className="text-[11px] text-on-surface-variant mt-1">
                   Optional. You can claim the coupon without agreeing to promotional messages.
@@ -323,7 +323,7 @@ const CouponClaimBottomSheet = ({
             <div className="p-4 bg-success/10 rounded-2xl border border-success/30 space-y-1.5 text-xs text-on-background">
               <div className="font-bold text-sm text-success">Coupon Request Recorded</div>
               <p className="text-on-background/90">
-                Your request has been recorded in this prototype. Mangamma Ruchulu will review the WhatsApp message and update the coupon status.
+                Your request has been recorded in this prototype. Amani's Kitchen will review the WhatsApp message and update the coupon status.
               </p>
               <p className="font-mono font-semibold pt-1">Request ID: {requestId}</p>
               <p className="font-semibold">Status: Awaiting Restaurant Review</p>

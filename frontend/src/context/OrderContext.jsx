@@ -965,23 +965,88 @@ export const OrderProvider = ({ children }) => {
 
   // Handle customer placing a new order -> add to active order & push to kitchen KDS
   const placeOrder = (orderData) => {
-    const fullOrder = {
-      ...orderData,
-      status: 'received',
-      stageIndex: 0, // 0: Received, 1: Preparing, 2: Ready, 3: Served
-      createdAt: new Date().toISOString(),
-      isPaid: false,
-      items: (orderData.items || []).map((it, idx) => ({
+    // Check if there is an existing unpaid active order for this table
+    const hasUnpaidOrder = activeOrder && (!activeOrder.isPaid && activeOrder.status !== 'PAID') && Array.isArray(activeOrder.items) && activeOrder.items.length > 0;
+
+    let combinedItems = [];
+    let combinedSubtotal = 0;
+    let combinedDiscount = 0;
+    let combinedPackaging = 0;
+
+    const formattedNewItems = (orderData.items || []).map((it, idx) => ({
+      ...it,
+      id: it.id || `item-${Date.now()}-${idx}`,
+      readinessStatus: 'PREPARING',
+      addedAt: new Date().toISOString(),
+    }));
+
+    if (hasUnpaidOrder) {
+      // Retain previous order items (old order data)
+      const existingItems = activeOrder.items.map(it => ({
         ...it,
-        id: it.id || `item-${Date.now()}-${idx}`,
-        readinessStatus: 'PREPARING'
-      }))
+        readinessStatus: it.readinessStatus || (activeOrder.status === 'served' ? 'SERVED' : 'PREPARING')
+      }));
+      combinedItems = [...existingItems, ...formattedNewItems];
+
+      // Calculate combined totals for all items
+      combinedSubtotal = combinedItems.reduce((acc, item) => {
+        const unitPrice = item.unitPrice !== undefined ? item.unitPrice : (item.price || 0);
+        return acc + (unitPrice * item.quantity);
+      }, 0);
+
+      combinedDiscount = (activeOrder.totals?.discountAmount || activeOrder.discount || 0) + (orderData.totals?.discountAmount || orderData.discount || 0);
+      combinedPackaging = (activeOrder.totals?.packagingCharge || activeOrder.packagingCharge || 0) + (orderData.totals?.packagingCharge || orderData.packagingCharge || 0);
+    } else {
+      combinedItems = formattedNewItems;
+      combinedSubtotal = orderData.totals?.subtotal || orderData.subtotal || combinedItems.reduce((acc, item) => {
+        const unitPrice = item.unitPrice !== undefined ? item.unitPrice : (item.price || 0);
+        return acc + (unitPrice * item.quantity);
+      }, 0);
+      combinedDiscount = orderData.totals?.discountAmount || orderData.discount || 0;
+      combinedPackaging = orderData.totals?.packagingCharge || orderData.packagingCharge || 0;
+    }
+
+    const gstRate = (restaurantConfig?.taxStructure?.totalRate || 5) / 100;
+    const combinedGst = Math.round((combinedSubtotal - combinedDiscount) * gstRate * 100) / 100;
+    const combinedCgst = Math.round((combinedGst / 2) * 100) / 100;
+    const combinedSgst = Math.round((combinedGst / 2) * 100) / 100;
+    const combinedTotalPayable = Math.max(0, combinedSubtotal - combinedDiscount + combinedPackaging + combinedGst);
+
+    const fullOrder = {
+      ...(hasUnpaidOrder ? activeOrder : orderData),
+      orderId: hasUnpaidOrder ? activeOrder.orderId : (orderData.orderId || `ORD-${Math.floor(1000 + Math.random() * 9000)}`),
+      invoiceId: hasUnpaidOrder ? (activeOrder.invoiceId || `#INV-${activeOrder.orderId}`) : (orderData.invoiceId || `#INV-${orderData.orderId || '1329'}`),
+      tableNumber: orderData.tableNumber || activeOrder?.tableNumber || '05',
+      status: hasUnpaidOrder ? (activeOrder.status === 'served' ? 'preparing' : activeOrder.status) : 'received',
+      stageIndex: hasUnpaidOrder ? (activeOrder.stageIndex === 3 ? 1 : activeOrder.stageIndex) : 0,
+      createdAt: hasUnpaidOrder ? activeOrder.createdAt : new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      isPaid: false,
+      items: combinedItems,
+      subtotal: combinedSubtotal,
+      discount: combinedDiscount,
+      packagingCharge: combinedPackaging,
+      gst: combinedGst,
+      cgst: combinedCgst,
+      sgst: combinedSgst,
+      totalPayable: combinedTotalPayable,
+      grandTotal: combinedTotalPayable,
+      totals: {
+        subtotal: combinedSubtotal,
+        discountAmount: combinedDiscount,
+        packagingCharge: combinedPackaging,
+        gst: combinedGst,
+        cgst: combinedCgst,
+        sgst: combinedSgst,
+        tipAmount: activeOrder?.totals?.tipAmount || 0,
+        totalPayable: combinedTotalPayable,
+      }
     };
 
     setActiveOrder(fullOrder);
     setStoredOrder(fullOrder);
 
-    // Convert customer items into kitchen ticket items format
+    // Convert customer items into kitchen ticket items format for newly added items
     const kitchenTicketItems = (orderData.items || []).map((item, idx) => {
       let station = 'Main Kitchen Station';
       if (item.category === 'biryanis') station = 'Biryani & Rice Station';
@@ -1002,8 +1067,8 @@ export const OrderProvider = ({ children }) => {
     });
 
     const newKitchenOrder = {
-      orderId: orderData.orderId || `ORD-${Math.floor(1000 + Math.random() * 9000)}`,
-      tableNumber: orderData.tableNumber || '05',
+      orderId: `ORD-${Math.floor(1000 + Math.random() * 9000)}`,
+      tableNumber: orderData.tableNumber || activeOrder?.tableNumber || '05',
       serverName: 'Table QR',
       guestCount: orderData.guestCount || 2,
       status: 'received',
@@ -1018,8 +1083,8 @@ export const OrderProvider = ({ children }) => {
 
     // Update waiter floor plan table status to 'cooking'
     updateWaiterTableStatus(orderData.tableNumber || '05', 'cooking', {
-      activeOrderId: newKitchenOrder.orderId,
-      totalBill: orderData.totals?.grandTotal || 0,
+      activeOrderId: fullOrder.orderId,
+      totalBill: combinedTotalPayable,
     });
 
     playKitchenChime();

@@ -6,7 +6,7 @@ import { formatInvoiceAmount } from '../../utils/formatters';
 export const AVAILABLE_OFFERS = [
   {
     id: 'offer-1',
-    code: 'MANGAMMA10',
+    code: 'AMANI10',
     title: '10% OFF on All Orders',
     description: 'Get 10% instant discount on order subtotal above ₹199',
     discountPercent: 10,

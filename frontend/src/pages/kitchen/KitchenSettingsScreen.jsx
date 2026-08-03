@@ -166,7 +166,7 @@ const KitchenSettingsScreen = ({ staffAuth, onLogoutStaff }) => {
           Logout Session
         </button>
         <p className="text-center mt-3 text-on-surface-variant text-[10px] uppercase tracking-widest">
-          Mangamma Ruchulu KDS v2.4.0
+          Amani's Kitchen KDS v2.4.0
         </p>
       </section>
     </div>

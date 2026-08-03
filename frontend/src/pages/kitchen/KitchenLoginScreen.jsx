@@ -246,7 +246,7 @@ const KitchenLoginScreen = ({ onLoginSuccess }) => {
           <div className="flex items-center gap-3 text-[11px] text-on-surface-variant opacity-70">
             <span>KDS Version 2.4.0</span>
             <span className="w-1 h-1 rounded-full bg-outline-variant" />
-            <span>Mangamma Ruchulu Management</span>
+            <span>Amani's Kitchen Management</span>
           </div>
           <button
             onClick={() => navigate('/menu')}

@@ -20,7 +20,7 @@ const SignatureDishStoryModal = ({ isOpen, onClose, dish }) => {
 
   // Prepared Social Template State
   const [templateText, setTemplateText] = useState(
-    socialStory?.suggestedStoryTemplate || `Trying the signature ${dish?.name || 'Chicken Dum Biryani'} at Mangamma Ruchulu.`
+    socialStory?.suggestedStoryTemplate || `Trying the signature ${dish?.name || 'Chicken Dum Biryani'} at Amani's Kitchen.`
   );
   const [includeTag, setIncludeTag] = useState(true);
   const [includeLocation, setIncludeLocation] = useState(true);
@@ -74,7 +74,7 @@ const SignatureDishStoryModal = ({ isOpen, onClose, dish }) => {
       mediaType: uploadedMediaPreview ? 'CUSTOMER_MEDIA' : 'STORY_TEMPLATE',
       mediaPreview: uploadedMediaPreview || dish?.image || 'https://images.unsplash.com/photo-1668236543090-82eba5ee5976?auto=format&fit=crop&w=600&q=80',
       captionText: templateText,
-      restaurantTag: includeTag ? (socialStory?.restaurantTag || '@MangammaRuchulu') : null,
+      restaurantTag: includeTag ? (socialStory?.restaurantTag || '@AmanisKitchen') : null,
       locationLabel: includeLocation ? (socialStory?.locationLabel || 'Hyderabad, Telangana') : null,
       socialHandle: optionalHandle ? `@${optionalHandle.replace('@', '')}` : null,
       permissions,
@@ -212,7 +212,7 @@ const SignatureDishStoryModal = ({ isOpen, onClose, dish }) => {
                     onChange={(e) => setIncludeTag(e.target.checked)}
                     className="accent-primary"
                   />
-                  <span>Tag {socialStory?.restaurantTag || '@MangammaRuchulu'}</span>
+                  <span>Tag {socialStory?.restaurantTag || '@AmanisKitchen'}</span>
                 </label>
                 <label className="flex items-center gap-1.5 cursor-pointer">
                   <input

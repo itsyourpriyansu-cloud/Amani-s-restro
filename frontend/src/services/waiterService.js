@@ -3,7 +3,7 @@ export const WAITER_PROFILE = {
   employeeId: 'STF-2024',
   name: 'Ananya Reddy',
   role: 'Senior Waiter & Terrace Lead',
-  badge: 'MANGAMMA RUCHULU LEAD',
+  badge: "AMANI'S KITCHEN LEAD",
   avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=300&q=80',
   onDuty: true,
   assignedSection: 'Main Dining Hall & Courtyard',

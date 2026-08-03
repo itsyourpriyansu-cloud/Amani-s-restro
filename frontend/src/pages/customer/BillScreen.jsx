@@ -258,9 +258,24 @@ const BillScreen = () => {
 
                     {/* Item Information */}
                     <div className="flex-1 min-w-0">
-                      <h3 className="text-[14.5px] sm:text-[15.5px] font-bold text-[#24130E] leading-snug line-clamp-2">
-                        {item.name}
-                      </h3>
+                      <div className="flex items-center flex-wrap gap-1.5">
+                        <h3 className="text-[14.5px] sm:text-[15.5px] font-bold text-[#24130E] leading-snug line-clamp-2">
+                          {item.name}
+                        </h3>
+
+                        {/* Unobtrusive Item Status Chip */}
+                        {(item.readinessStatus === 'SERVED' || item.status === 'served') && (
+                          <span className="inline-flex items-center gap-1 text-[10.5px] font-bold text-[#237A4B] bg-[#237A4B]/10 px-2 py-0.5 rounded-md border border-[#237A4B]/20 shrink-0">
+                            <CheckCircle2 className="w-3 h-3 text-[#237A4B]" />
+                            Served
+                          </span>
+                        )}
+                        {(item.readinessStatus === 'PREPARING' || item.status === 'preparing') && (
+                          <span className="inline-flex items-center gap-1 text-[10.5px] font-bold text-[#D97706] bg-[#D97706]/10 px-2 py-0.5 rounded-md border border-[#D97706]/20 shrink-0">
+                            Preparing
+                          </span>
+                        )}
+                      </div>
 
                       <p className="text-[12.5px] text-[#786B65] mt-0.5 font-medium [font-variant-numeric:tabular-nums]">
                         {formatInvoiceAmount(unitPrice)} each

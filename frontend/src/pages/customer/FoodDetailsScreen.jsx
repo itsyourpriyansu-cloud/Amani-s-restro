@@ -449,7 +449,7 @@ const FoodDetailsScreen = () => {
           {/* Compact, responsive decision metadata */}
           <MealMetadataGroup dish={dish} prepTimeMin={prepTimeMin} />
 
-          {/* Mangamma Favourite Highlight Card */}
+          {/* Amani's Favourite Highlight Card */}
           {dish.bestseller && (
             <div className="p-3.5 rounded-2xl bg-surface-container-low border border-primary-container flex items-start gap-3 shadow-xs">
               <div className="p-2 rounded-xl bg-primary-container text-primary flex-shrink-0 mt-0.5">
@@ -457,7 +457,7 @@ const FoodDetailsScreen = () => {
               </div>
               <div>
                 <span className="text-xs font-bold text-primary uppercase tracking-wider block">
-                  Mangamma Favourite
+                  Amani's Favourite
                 </span>
                 <p className="text-xs text-on-surface-variant font-medium leading-relaxed mt-0.5">
                   {dish.bestsellerReason || 'Our most-loved biryani upgrade'}
