@@ -54,7 +54,7 @@ const CompactDishRow = ({ dish, onCustomize }) => {
       <div className="flex-1 min-w-0 pr-1">
         <div className="flex items-center gap-2">
           <FoodTypeBadge foodType={dish.foodType} />
-          <h3 className="font-bold text-on-surface text-[14.5px] truncate">{dish.name}</h3>
+          <h3 className="font-sans font-bold text-on-surface text-[14.5px] truncate">{dish.name}</h3>
         </div>
       </div>
 

@@ -217,7 +217,7 @@ const BillingSummary = ({
           <span className="text-xs uppercase tracking-wider text-on-surface font-bold block">Total Payable</span>
           <span className="text-[11px] text-on-surface-variant/70">Inclusive of all taxes</span>
         </div>
-        <motion.span key={totalPayable} initial={{ scale: 0.95 }} animate={{ scale: 1 }} className="text-3xl md:text-4xl font-extrabold text-primary [font-variant-numeric:tabular-nums]">
+        <motion.span key={totalPayable} initial={{ scale: 0.95 }} animate={{ scale: 1 }} className="font-serif text-3xl md:text-4xl font-bold text-primary [font-variant-numeric:tabular-nums]">
           {formatInvoiceAmount(totalPayable)}
         </motion.span>
       </div>

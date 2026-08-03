@@ -38,16 +38,13 @@ const CounterSidebar = () => {
         <span>Back to Portal</span>
       </button>
 
-      <div className="mb-8 px-2 flex items-center gap-3">
+      <div className="mb-6 px-2 flex flex-col gap-1">
         <img
           src={RESTAURANT_INFO.logo || '/Amanis Logo Final.svg'}
           alt={RESTAURANT_INFO.name}
-          className="w-10 h-10 rounded-full object-contain p-0.5 shrink-0 shadow-xs border border-outline-variant/40"
+          className="h-[52px] w-auto max-w-[200px] object-contain shrink-0"
         />
-        <div>
-          <h1 className="text-xl font-bold text-primary tracking-tight">{RESTAURANT_INFO.name}</h1>
-          <p className="text-xs text-on-surface-variant opacity-70">Counter Management System</p>
-        </div>
+        <p className="text-xs text-on-surface-variant opacity-70">Counter Management System</p>
       </div>
 
       <nav className="flex-1 space-y-1">

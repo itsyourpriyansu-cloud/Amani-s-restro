@@ -77,7 +77,7 @@ const TopAppBar = ({
     ? `Table ${String(tableNumber).padStart(2, '0')}`
     : 'Table';
 
-  /* ── Non-Menu Pages (Narrowed header: Back button + Table chip only, no logo/wordmark, no marquee) ── */
+  /* ── Non-Menu Pages ── */
   if (!isMenuPage) {
     return (
       <>
@@ -91,25 +91,45 @@ const TopAppBar = ({
           }`}
           style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
         >
-          {/* Narrowed Navigation Row — 50px height */}
+          {/* Navigation Row */}
           <div className="mx-auto flex h-16 w-full max-w-[640px] items-center justify-between gap-3 px-4">
-            {/* Back button */}
-            <button
-              type="button"
-              onClick={onBack || (() => navigate('/'))}
-              className="flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-full bg-surface-container-low text-on-surface-variant transition-[background-color,transform] duration-150 hover:bg-surface-container active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-              aria-label="Go back"
-              title="Go back"
-            >
-              <ArrowLeft className="h-5 w-5 text-on-surface-variant" />
-            </button>
+            {/* Left: Back button (if explicitly requested on sub-page) or Left-aligned Logo */}
+            {showBackButton || onBack ? (
+              <div className="flex items-center shrink-0">
+                <button
+                  type="button"
+                  onClick={onBack || (() => navigate('/'))}
+                  className="flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full bg-surface-container-low text-on-surface-variant transition-[background-color,transform] duration-150 hover:bg-surface-container active:scale-95 border border-outline-variant/60"
+                  aria-label="Go back"
+                  title="Go back"
+                >
+                  <ArrowLeft className="h-5 w-5 text-on-surface-variant" />
+                </button>
+              </div>
+            ) : (
+              <div className="flex items-center justify-start shrink-0">
+                <button
+                  type="button"
+                  onClick={handleLogoClick}
+                  className="flex items-center justify-start cursor-pointer focus:outline-none"
+                  aria-label="View restaurant details"
+                >
+                  <img
+                    src={logoSrc || '/Amanis Logo Final.svg'}
+                    alt="Amani's Kitchen Brand Logo"
+                    className="h-[42px] sm:h-[46px] w-auto max-w-[200px] sm:max-w-[230px] object-contain transition-transform duration-200 hover:scale-105"
+                  />
+                </button>
+              </div>
+            )}
 
-            {/* Optional page title in center if passed */}
-            {title ? (
-              <span className="font-bold text-[14.5px] sm:text-[15px] tracking-tight text-on-surface truncate text-center max-w-[55%]">
+            {/* Center: Title if passed */}
+            {title && (
+              <span className="font-bold text-[14.5px] sm:text-[15px] tracking-tight text-on-surface truncate text-center max-w-[55%] flex-1">
                 {title}
               </span>
-            ) : (
+            )}
+            {!title && (showBackButton || onBack) && (
               <span className="flex-1" />
             )}
 
@@ -154,103 +174,34 @@ const TopAppBar = ({
           paddingTop: 'env(safe-area-inset-top, 0px)',
         }}
       >
-        {/* Main Navigation Row — 64px height */}
+        {/* Main Navigation Row — 64px height, left-aligned logo */}
         <div className="max-w-[640px] mx-auto w-full h-[64px] flex items-center justify-between px-4 gap-3">
-          {/* Back button */}
-          {canGoBack && (
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                if (onBack) {
-                  onBack();
-                } else {
-                  navigate('/');
-                }
-              }}
-              className="w-9 h-9 rounded-full bg-surface-container-low hover:bg-surface-container active:scale-95 text-on-surface-variant flex items-center justify-center transition-all border border-outline-variant/60 shrink-0 cursor-pointer"
-              aria-label="Go to Home Screen"
-              title="Go to Home Screen"
-            >
-              <ArrowLeft className="w-4.5 h-4.5 text-on-surface-variant" />
-            </button>
-          )}
-
-          {/* Brand identity container: logo icon + 10-12px gap + wordmark */}
-          <div className="flex items-center gap-3 min-w-0 flex-1">
+          {/* Left: Un-circled Brand Logo perfectly aligned on the left */}
+          <div className="flex items-center min-w-0 flex-1 justify-start">
             <button
               type="button"
               onClick={handleLogoClick}
-              className="relative flex items-center justify-center shrink-0 cursor-pointer focus:outline-none"
-              aria-label="View restaurant and chef details"
+              className="flex items-center justify-start cursor-pointer focus:outline-none"
+              aria-label="View restaurant details"
               title="Click for Hotel & Chef details"
             >
-              <svg
-                className={`absolute -inset-1.5 w-[52px] h-[52px] pointer-events-none transition-opacity duration-300 ${
-                  isCircling ? 'opacity-100 animate-spin' : 'opacity-0'
-                }`}
-                viewBox="0 0 52 52"
-                fill="none"
-              >
-                <circle
-                  cx="26"
-                  cy="26"
-                  r="23"
-                  stroke="url(#logo-gold-gradient)"
-                  strokeWidth="2.5"
-                  strokeDasharray="40 85"
-                  strokeLinecap="round"
-                />
-                <defs>
-                  <linearGradient id="logo-gold-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#E3C583" />
-                    <stop offset="50%" stopColor="#C9953D" />
-                    <stop offset="100%" stopColor="#985D2E" />
-                  </linearGradient>
-                </defs>
-              </svg>
-
               {logoSrc && !logoFailed ? (
                 <img
                   src={logoSrc || '/Amanis Logo Final.svg'}
                   alt="Amani's Kitchen Brand Logo"
-                  aria-hidden="true"
                   onError={() => setLogoFailed(true)}
-                  className={`shrink-0 w-10.5 h-10.5 rounded-full object-contain p-0.5 transition-all duration-300 ${
-                    isCircling
-                      ? 'scale-110 ring-2 ring-highlight border border-highlight/70 shadow-[0_0_12px_rgba(201,149,61,0.5)]'
-                      : 'hover:scale-105 ring-1 ring-outline-variant/40'
-                  }`}
+                  className="h-[44px] sm:h-[48px] w-auto max-w-[210px] sm:max-w-[240px] object-contain transition-transform duration-200 hover:scale-105"
                 />
               ) : (
                 <div
-                  className={`shrink-0 w-10.5 h-10.5 rounded-full bg-primary text-on-primary flex items-center justify-center transition-all duration-300 ${
-                    isCircling
-                      ? 'scale-110 ring-2 ring-highlight border border-highlight/70 shadow-[0_0_12px_rgba(201,149,61,0.5)]'
-                      : 'hover:scale-105 shadow-xs'
-                  }`}
+                  className="px-3 py-1.5 rounded-lg bg-primary text-on-primary flex items-center gap-2"
                   aria-hidden="true"
                 >
                   <UtensilsCrossed className="w-5 h-5 text-on-primary" />
+                  <span className="font-bold text-sm">Amani's</span>
                 </div>
               )}
             </button>
-
-            {/* Wordmark */}
-            <div
-              className="flex flex-col min-w-0 cursor-pointer group/title"
-              onClick={(e) => {
-                e.stopPropagation();
-                navigate('/');
-              }}
-              role="button"
-              tabIndex={0}
-              title="Go to Home Screen"
-            >
-              <span className="font-serif text-[18px] sm:text-[20px] leading-tight font-bold text-primary tracking-tight truncate group-hover/title:opacity-90 transition-all">
-                {RESTAURANT_INFO.name}
-              </span>
-            </div>
           </div>
 
           {/* Right action control — Table chip */}

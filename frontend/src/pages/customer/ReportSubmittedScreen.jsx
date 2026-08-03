@@ -10,13 +10,12 @@ const ReportSubmittedScreen = () => {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 bg-surface shadow-sm h-14 flex items-center px-4 justify-between">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-surface shadow-sm h-14 flex items-center px-4 justify-between relative">
         <button onClick={() => navigate('/order-tracking')} className="text-primary active:scale-95 transition-transform" aria-label="Go back">
           <Icon name="arrow_back" />
         </button>
-        <div className="flex items-center gap-2">
-          <img src={RESTAURANT_INFO.logo || '/Amanis Logo Final.svg'} alt="Amani's Kitchen" className="w-8 h-8 rounded-full object-contain p-0.5 shrink-0" />
-          <h1 className="text-xl font-bold font-serif text-primary">Amani's Kitchen</h1>
+        <div className="absolute left-1/2 -translate-x-1/2 flex items-center justify-center">
+          <img src={RESTAURANT_INFO.logo || '/Amanis Logo Final.svg'} alt="Amani's Kitchen" className="h-10 w-auto max-w-[180px] object-contain shrink-0" />
         </div>
         <span className="text-sm font-semibold text-primary">Table {tableNumber}</span>
       </header>

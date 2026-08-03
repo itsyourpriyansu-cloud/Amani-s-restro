@@ -94,7 +94,7 @@ const FoodCard = ({ dish, onCustomize, variant = 'compact' }) => {
           </div>
 
           {/* Dish Title: Bold, legible 2-line clamp */}
-          <h3 className="font-bold text-on-surface text-[14.5px] sm:text-[15.5px] leading-snug line-clamp-2 group-hover:text-primary transition-colors">
+          <h3 className="font-sans font-bold text-on-surface text-[14.5px] sm:text-[15.5px] leading-snug line-clamp-2 group-hover:text-primary transition-colors">
             {dish.name}
           </h3>
         </div>

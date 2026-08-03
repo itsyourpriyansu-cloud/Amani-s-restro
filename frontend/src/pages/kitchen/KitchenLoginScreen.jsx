@@ -114,15 +114,12 @@ const KitchenLoginScreen = ({ onLoginSuccess }) => {
         </button>
 
         {/* Brand Header */}
-        <header className="flex flex-col items-center text-center gap-2">
+        <header className="flex flex-col items-center text-center gap-1">
           <img
             src={RESTAURANT_INFO.logo || '/Amanis Logo Final.svg'}
             alt={RESTAURANT_INFO.name}
-            className="w-16 h-16 rounded-full object-contain p-0.5 shadow-md mb-1 border border-outline-variant/30 bg-surface"
+            className="h-16 sm:h-[72px] w-auto max-w-[280px] object-contain mb-1"
           />
-          <h1 className="font-serif font-bold text-[24px] sm:text-[26px] text-on-surface tracking-tight">
-            Amani's Kitchen
-          </h1>
           <p className="font-body-md text-body-md text-on-surface-variant font-medium">
             Welcome Back, Kitchen Team
           </p>

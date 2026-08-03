@@ -95,17 +95,16 @@ const RestaurantHero = ({ heroImage }) => {
         className="absolute bottom-0 left-0 right-0 px-[20px] pb-[27px] flex flex-col gap-1 z-10 max-w-[85%]"
       >
         <p
-          className="font-telugu text-white font-bold leading-tight drop-shadow-xs"
+          className="font-serif italic text-white font-bold leading-tight drop-shadow-xs"
           style={{ fontSize: '28px' }}
-          lang="te"
-        >
-          {RESTAURANT_INFO.nativeName}
-        </p>
-        <p
-          className="font-sans text-white/95 font-medium leading-snug drop-shadow-xs"
-          style={{ fontSize: '15px' }}
         >
           {RESTAURANT_INFO.tagline}
+        </p>
+        <p
+          className="font-sans text-white/95 font-medium leading-snug drop-shadow-xs mt-0.5"
+          style={{ fontSize: '13px' }}
+        >
+          Since {RESTAURANT_INFO.established} &middot; Authentic South Indian Dining
         </p>
       </motion.div>
     </div>

@@ -148,13 +148,9 @@ const PortalGatewayScreen = () => {
             <img
               src="/Amanis Logo Final.svg"
               alt="Amani's Kitchen Logo"
-              className="w-11 h-11 rounded-full object-contain p-0.5 bg-white/10 shadow-lg ring-2 ring-amber-400/30 shrink-0"
+              className="h-14 w-auto max-w-[230px] object-contain shrink-0"
             />
-
-            <div>
-              <h1 className="text-lg font-serif font-bold tracking-wide text-white">
-                Amani's Kitchen
-              </h1>
+            <div className="border-l border-stone-700 pl-3">
               <p className="text-xs text-stone-400 font-mono flex items-center gap-1.5">
                 <Compass className="w-3.5 h-3.5 text-amber-400" />
                 <span>Central System Launchpad & Gateway</span>

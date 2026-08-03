@@ -62,25 +62,20 @@ const KitchenSidebar = ({
 
       {/* Brand Header */}
       {!isCollapsed ? (
-        <div className="mb-6 px-2 flex items-center gap-3">
+        <div className="mb-6 px-2 flex flex-col gap-1">
           <img
             src={RESTAURANT_INFO.logo || '/Amanis Logo Final.svg'}
             alt={RESTAURANT_INFO.name}
-            className="w-10 h-10 rounded-full object-contain p-0.5 shrink-0 shadow-xs border border-gray-200"
+            className="h-[52px] w-auto max-w-[190px] object-contain shrink-0"
           />
-          <div>
-            <h1 className="text-base font-extrabold text-primary tracking-tight leading-snug">
-              {RESTAURANT_INFO.name}
-            </h1>
-            <p className="text-xs text-gray-500 font-medium">Kitchen Display System</p>
-          </div>
+          <p className="text-xs text-gray-500 font-medium">Kitchen Display System</p>
         </div>
       ) : (
         <div className="mb-6 text-center">
           <img
             src={RESTAURANT_INFO.logo || '/Amanis Logo Final.svg'}
             alt={RESTAURANT_INFO.name}
-            className="w-9 h-9 mx-auto rounded-full object-contain p-0.5 shadow-xs border border-gray-200"
+            className="h-8 w-auto max-w-[48px] mx-auto object-contain"
           />
         </div>
       )}

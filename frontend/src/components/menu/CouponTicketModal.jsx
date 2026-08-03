@@ -68,7 +68,7 @@ const CouponTicketModal = ({ isOpen, onClose, offer, onApplyCoupon }) => {
             {offer.badgeText || 'SPECIAL OFFER'}
           </span>
 
-          <h2 className="text-xl sm:text-2xl font-extrabold leading-tight text-white">
+          <h2 className="font-serif text-xl sm:text-2xl font-bold leading-tight text-white">
             {offer.title}
           </h2>
 

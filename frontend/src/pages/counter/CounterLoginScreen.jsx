@@ -35,7 +35,7 @@ const CounterLoginScreen = () => {
           <img
             src={RESTAURANT_INFO.logo || '/Amanis Logo Final.svg'}
             alt={RESTAURANT_INFO.name}
-            className="w-20 h-20 rounded-full object-contain p-0.5 bg-surface shadow-lg border-2 border-primary/20"
+            className="h-16 sm:h-[72px] w-auto max-w-[280px] object-contain mb-2"
           />
         </div>
 

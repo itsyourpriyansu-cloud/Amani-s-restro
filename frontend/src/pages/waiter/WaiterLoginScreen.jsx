@@ -45,9 +45,8 @@ const WaiterLoginScreen = () => {
         <img
           src={RESTAURANT_INFO.logo || '/Amanis Logo Final.svg'}
           alt={RESTAURANT_INFO.name}
-          className="w-16 h-16 rounded-full object-contain p-0.5 bg-surface shadow-lg mb-3 border border-outline-variant/30"
+          className="h-16 sm:h-[72px] w-auto max-w-[280px] object-contain mb-1"
         />
-        <h1 className="font-serif text-2xl font-bold text-primary tracking-tight">Amani's Kitchen</h1>
         <p className="text-[11px] text-on-surface-variant font-mono font-semibold uppercase tracking-widest mt-1">Staff Portal</p>
       </header>
 

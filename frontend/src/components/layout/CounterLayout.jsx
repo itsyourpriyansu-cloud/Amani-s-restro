@@ -48,14 +48,11 @@ const CounterLayout = ({ children, activeTab, setActiveTab }) => {
             <img
               src="/Amanis Logo Final.svg"
               alt="Amani's Kitchen"
-              className="w-10 h-10 rounded-full object-contain p-0.5 bg-white shadow-md border border-stone-300 shrink-0"
+              className="h-12 w-auto max-w-[190px] object-contain shrink-0"
             />
 
             <div>
               <div className="flex items-center gap-2">
-                <h1 className="text-lg font-serif font-bold text-stone-900 tracking-wide">
-                  Amani's Kitchen
-                </h1>
                 <span className="px-2 py-0.5 rounded-full bg-amber-100 border border-amber-300 text-amber-900 text-[11px] font-bold uppercase font-mono">
                   Counter POS
                 </span>

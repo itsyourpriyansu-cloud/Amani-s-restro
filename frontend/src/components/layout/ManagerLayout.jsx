@@ -51,13 +51,10 @@ const ManagerLayout = ({ children, activeTab, setActiveTab }) => {
           <img
             src={RESTAURANT_INFO.logo || '/Amanis Logo Final.svg'}
             alt={RESTAURANT_INFO.name}
-            className="w-9 h-9 rounded-full object-contain p-0.5 shrink-0 border border-outline-variant/40"
+            className="h-12 w-auto max-w-[170px] object-contain shrink-0"
           />
           {!collapsed && (
-            <div className="min-w-0">
-              <h1 className="text-on-surface font-bold text-sm leading-tight truncate">{RESTAURANT_INFO.name}</h1>
-              <p className="text-on-surface-variant text-[11px] font-medium">Manager Portal</p>
-            </div>
+            <p className="text-on-surface-variant text-[11px] font-medium shrink-0">Manager Portal</p>
           )}
         </div>
 

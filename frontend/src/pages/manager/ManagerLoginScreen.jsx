@@ -79,9 +79,8 @@ const ManagerLoginScreen = () => {
             <img
               src={RESTAURANT_INFO.logo || '/Amanis Logo Final.svg'}
               alt={RESTAURANT_INFO.name}
-              className="w-16 h-16 rounded-full object-contain p-0.5 bg-surface mb-3 shadow-md border border-outline-variant/40"
+              className="h-16 sm:h-[72px] w-auto max-w-[280px] object-contain mb-3"
             />
-            <span className="font-serif text-2xl font-bold text-primary tracking-tight mb-1.5">{RESTAURANT_INFO.name}</span>
             <div className="h-1 w-12 bg-secondary-fixed-dim rounded-full" />
           </div>
 
