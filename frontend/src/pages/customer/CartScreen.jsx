@@ -13,8 +13,9 @@ import EmptyState from '../../components/common/EmptyState';
 import Icon from '../../components/common/Icon';
 import BillingSummary from '../../components/common/BillingSummary';
 import CustomizationModal from '../../components/menu/CustomizationModal';
+import AvailableOffersBottomSheet, { AVAILABLE_OFFERS } from '../../components/menu/AvailableOffersBottomSheet';
 import HonestExpectationBanner from '../../components/order/HonestExpectationBanner';
-import { AlertTriangle, Edit3, Trash2, Plus, Minus } from 'lucide-react';
+import { AlertTriangle, Edit3, Trash2, Plus, Minus, Percent, ChevronRight, Sparkles, Check } from 'lucide-react';
 
 const CartScreen = () => {
   const navigate = useNavigate();
@@ -44,9 +45,41 @@ const CartScreen = () => {
   const [isApplyingPromo, setIsApplyingPromo] = useState(false);
   const [promoError, setPromoError] = useState('');
   const [isPlacingOrder, setIsPlacingOrder] = useState(false);
+  const [isOffersSheetOpen, setIsOffersSheetOpen] = useState(false);
 
   const [editingItem, setEditingItem] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
+  const handleApplyOfferFromSheet = (offer) => {
+    const subtotal = cartItems.reduce((acc, item) => {
+      const basePrice = item.unitPrice !== undefined ? item.unitPrice : item.price;
+      return acc + (basePrice * item.quantity);
+    }, 0);
+
+    if (subtotal < offer.minOrderValue) {
+      showToast(`Add ${formatInvoiceAmount(offer.minOrderValue - subtotal)} more to unlock ${offer.code}`, 'error');
+      return;
+    }
+
+    setAppliedPromo(offer);
+    setPromoCodeInput(offer.code);
+    setPromoError('');
+    
+    let savedAmount = 0;
+    if (offer.discountPercent) {
+      savedAmount = (subtotal * offer.discountPercent) / 100;
+    } else if (offer.flatDiscount) {
+      savedAmount = offer.flatDiscount;
+    }
+
+    showToast(`Coupon "${offer.code}" applied! Saved ${formatInvoiceAmount(savedAmount)}`, 'success');
+  };
+
+  const handleRemoveAppliedOffer = () => {
+    setAppliedPromo(null);
+    setPromoCodeInput('');
+    showToast('Coupon removed from cart', 'info');
+  };
 
   const handleApplyPromo = async (e) => {
     e.preventDefault();
@@ -267,22 +300,35 @@ const CartScreen = () => {
               </div>
             </div>
 
-            {/* Card: promo code — empty / success / error states */}
-            <div className="bg-surface-container-lowest rounded-2xl p-4 border border-border shadow-card space-y-3">
+            {/* Unified Card: Offers & Discounts */}
+            <div className="bg-surface-container-lowest rounded-2xl p-4 border border-outline-variant/60 shadow-card space-y-3.5">
+              {/* Card Header */}
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <Icon name="sell" className="text-primary" />
-                  <span className="text-xs font-bold text-ink">Promo Code or Voucher</span>
+                <div className="flex items-center gap-2 text-primary font-extrabold text-xs uppercase tracking-wider">
+                  <Percent className="w-4 h-4 text-primary stroke-[2.5]" />
+                  <span>Offers & Discounts</span>
                 </div>
-                <span className="text-[10px] text-muted font-medium">Try: MANGAMMA10</span>
+                {appliedPromo && (
+                  <span className="px-2.5 py-0.5 rounded-full bg-success/15 text-success text-[11px] font-extrabold flex items-center gap-1">
+                    Coupon Active
+                  </span>
+                )}
               </div>
+
+              {/* Active Applied Promo vs Code Input */}
               {appliedPromo ? (
-                <div className="flex items-center justify-between p-3 bg-success/10 border border-success/30 rounded-xl text-xs">
+                <div className="flex items-center justify-between p-3 bg-success/8 border border-success/30 rounded-xl text-xs">
                   <div>
-                    <span className="font-bold text-success">{appliedPromo.code}</span>
-                    <p className="text-[10px] text-success">{appliedPromo.description}</p>
+                    <span className="font-extrabold text-success text-sm font-mono tracking-wider">{appliedPromo.code}</span>
+                    <p className="text-[11px] text-success font-semibold mt-0.5">{appliedPromo.description || `${appliedPromo.discountPercent}% Discount Applied`}</p>
                   </div>
-                  <button onClick={() => setAppliedPromo(null)} className="min-h-[40px] px-2 text-[11px] font-bold text-danger underline">Remove</button>
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveAppliedOffer()}
+                    className="px-3 py-1.5 rounded-lg text-xs font-bold text-error bg-error/10 hover:bg-error/20 cursor-pointer transition-colors"
+                  >
+                    Remove
+                  </button>
                 </div>
               ) : (
                 <>
@@ -294,27 +340,62 @@ const CartScreen = () => {
                         setPromoCodeInput(e.target.value);
                         if (promoError) setPromoError('');
                       }}
-                      placeholder="Enter promo code"
+                      placeholder="ENTER PROMO CODE"
                       aria-invalid={!!promoError}
-                      className={`flex-1 min-h-[44px] px-3 bg-surface-container border rounded-xl text-xs uppercase font-bold outline-none ${promoError ? 'border-danger focus:ring-2 focus:ring-danger/30' : 'border-border focus:ring-2 focus:ring-maroon-700/30'}`}
+                      className={`flex-1 min-h-[44px] px-3.5 bg-surface-container border rounded-xl text-xs uppercase font-extrabold font-mono tracking-wider outline-none ${
+                        promoError ? 'border-error focus:ring-2 focus:ring-error/30' : 'border-outline-variant focus:ring-2 focus:ring-primary/30'
+                      }`}
                     />
                     <button
                       type="submit"
                       disabled={isApplyingPromo || !promoCodeInput.trim()}
-                      className="min-h-[44px] px-4 bg-primary text-on-primary rounded-xl text-xs font-bold disabled:opacity-50 hover:brightness-90 flex items-center gap-1.5"
+                      className="min-h-[44px] px-4.5 bg-primary text-on-primary rounded-xl text-xs font-bold disabled:opacity-50 hover:brightness-90 flex items-center gap-1.5 cursor-pointer shadow-2xs active:scale-95 transition-all whitespace-nowrap"
                     >
                       {isApplyingPromo && <span className="w-3.5 h-3.5 border-2 border-on-primary/40 border-t-on-primary rounded-full animate-spin" />}
                       <span>{isApplyingPromo ? 'Applying…' : 'Apply'}</span>
                     </button>
                   </form>
                   {promoError && (
-                    <p className="flex items-center gap-1 text-[11px] font-semibold text-danger">
+                    <p className="flex items-center gap-1 text-[11px] font-semibold text-error">
                       <AlertTriangle className="w-3.5 h-3.5" />
                       {promoError}
                     </p>
                   )}
                 </>
               )}
+
+              {/* Integrated Available Offers Banner */}
+              <div
+                onClick={() => setIsOffersSheetOpen(true)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => e.key === 'Enter' && setIsOffersSheetOpen(true)}
+                className="p-3 rounded-xl bg-primary/8 border border-primary/20 hover:border-primary/40 transition-all cursor-pointer select-none group flex items-center justify-between gap-2"
+              >
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <div className="w-7 h-7 rounded-lg bg-primary text-on-primary flex items-center justify-center shrink-0 shadow-2xs group-hover:scale-105 transition-transform">
+                    <Sparkles className="w-3.5 h-3.5" />
+                  </div>
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-[12.5px] font-extrabold text-on-surface truncate">
+                        View Available Deals
+                      </span>
+                      <span className="px-1.5 py-0.2 rounded-full bg-primary/15 text-primary text-[10px] font-extrabold shrink-0">
+                        4 Offers
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-on-surface-variant truncate">
+                      Save up to 20% on your bill
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-1 text-primary text-[11.5px] font-bold shrink-0">
+                  <span>Browse</span>
+                  <ChevronRight className="w-3.5 h-3.5 stroke-[2.5]" />
+                </div>
+              </div>
             </div>
 
             <div className="md:hidden">
@@ -406,6 +487,15 @@ const CartScreen = () => {
           </span>
         </button>
       </div>
+
+      <AvailableOffersBottomSheet
+        isOpen={isOffersSheetOpen}
+        onClose={() => setIsOffersSheetOpen(false)}
+        subtotal={cartItems.reduce((acc, item) => acc + ((item.unitPrice !== undefined ? item.unitPrice : item.price) * item.quantity), 0)}
+        appliedPromo={appliedPromo}
+        onApplyOffer={handleApplyOfferFromSheet}
+        onRemoveOffer={handleRemoveAppliedOffer}
+      />
 
       <BottomNavBar />
     </>

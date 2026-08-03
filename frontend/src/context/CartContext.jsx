@@ -28,12 +28,30 @@ export const CartProvider = ({ children }) => {
       return acc + (basePrice * item.quantity);
     }, 0);
 
-    if (appliedPromo && appliedPromo.discountPercent) {
-      discountAmount = (initialSubtotal * appliedPromo.discountPercent) / 100;
+    if (appliedPromo) {
+      if (appliedPromo.discountPercent) {
+        discountAmount = (initialSubtotal * appliedPromo.discountPercent) / 100;
+      } else if (appliedPromo.flatDiscount) {
+        discountAmount = appliedPromo.flatDiscount;
+      }
     }
 
     return calculateCartTotals(cartItems, tipPercentage, discountAmount, packagingCharge, selectedTipOption === 'custom' ? customTipAmount : null);
   }, [cartItems, tipPercentage, customTipAmount, selectedTipOption, packagingCharge, appliedPromo]);
+
+  // Automatic Coupon Self-Checking / Validation on cart modification
+  useEffect(() => {
+    if (!appliedPromo || !appliedPromo.minOrderValue) return;
+
+    const subtotal = cartItems.reduce((acc, item) => {
+      const basePrice = item.unitPrice !== undefined ? item.unitPrice : item.price;
+      return acc + (basePrice * item.quantity);
+    }, 0);
+
+    if (subtotal > 0 && subtotal < appliedPromo.minOrderValue) {
+      setAppliedPromo(null);
+    }
+  }, [cartItems, appliedPromo]);
 
   // Add item to cart or increment if identical item (same dish id + same customizations + same note) exists
   const addToCart = (dish, selectedCustomizations = [], note = '', initialQuantity = 1, metadata = {}) => {
