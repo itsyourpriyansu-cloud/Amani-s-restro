@@ -1,173 +1,383 @@
-import React, { useState } from 'react';
-import { Copy, Check, X, Sparkles, Tag, ShieldCheck, Clock } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import {
+  X,
+  Sparkles,
+  Copy,
+  Check,
+  ShoppingBag,
+  Clock,
+  BadgePercent,
+  Tag,
+  Loader2,
+} from 'lucide-react';
 import { useToast } from '../../context/ToastContext';
 
 /**
- * Authentic Ticket-shaped detailed Coupon Dialog Box.
- * Features semicircular side cutouts, perforated dashed line, copy code option, floating dish image, and apply CTA.
+ * Modernized Dynamic Promotional Coupon Bottom-Sheet Modal.
+ * Dynamically adapts hero gradients, accents, coupon styling, and CTAs 
+ * to match whichever offer banner card was selected by the user.
  */
 const CouponTicketModal = ({ isOpen, onClose, offer, onApplyCoupon }) => {
   const [copied, setCopied] = useState(false);
-  const { showToast } = useToast();
+  const [isApplying, setIsApplying] = useState(false);
+  const [isApplied, setIsApplied] = useState(false);
+  const { showToast } = useToast() || {};
 
-  if (!isOpen || !offer) return null;
+  // Lock body scroll while modal is open
+  useEffect(() => {
+    if (isOpen) {
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = originalOverflow;
+      };
+    }
+  }, [isOpen]);
 
-  const handleCopy = (e) => {
+  // Handle Escape key to close modal
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        onClose?.();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
+  if (!offer) return null;
+
+  // Dynamic theme accent color matching clicked offer card
+  const themeColor = offer.accentColor || '#87351F';
+  const heroGradient = offer.gradient || 'from-[#093527] via-[#0f5441] to-[#1bb587]';
+
+  const handleCopy = async (e) => {
     e?.stopPropagation();
-    navigator.clipboard?.writeText(offer.code);
-    setCopied(true);
-    showToast?.(`Coupon code "${offer.code}" copied to clipboard!`, 'success');
-    setTimeout(() => setCopied(false), 2500);
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(offer.code);
+      } else {
+        const textArea = document.createElement('textarea');
+        textArea.value = offer.code;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+      }
+      setCopied(true);
+      showToast?.(`Coupon code "${offer.code}" copied to clipboard!`, 'success');
+      setTimeout(() => setCopied(false), 1800);
+    } catch (err) {
+      console.error('Failed to copy code:', err);
+    }
   };
 
-  const handleApply = () => {
-    handleCopy();
-    if (onApplyCoupon) {
-      onApplyCoupon(offer.code);
+  const handleApply = (e) => {
+    e?.stopPropagation();
+    if (isApplying || isApplied) return;
+
+    setIsApplying(true);
+    setTimeout(() => {
+      setIsApplying(false);
+      setIsApplied(true);
+      onApplyCoupon?.(offer.code);
+      showToast?.(`Coupon "${offer.code}" applied successfully!`, 'success');
+
+      setTimeout(() => {
+        setIsApplied(false);
+        onClose?.();
+      }, 850);
+    }, 400);
+  };
+
+  // Helper to personalize savings preview banner text
+  const getSavingsText = (currentOffer) => {
+    if (currentOffer.title?.includes('₹150')) return 'You save ₹150 on this order';
+    if (currentOffer.title?.includes('₹200')) return 'You save ₹200 on this order';
+    if (currentOffer.title?.includes('20%')) return 'Instant 20% discount applied to active bill';
+    if (currentOffer.title?.includes('FREE')) return 'Complimentary sweet box added to order';
+    return 'Instant savings applied at checkout';
+  };
+
+  // Format minimum order display text
+  const formatMinOrder = (minOrder) => {
+    if (!minOrder) return '₹599 or above';
+    if (minOrder.startsWith('ABOVE ')) {
+      return `${minOrder.replace('ABOVE ', '')} or above`;
     }
-    onClose();
+    if (minOrder === 'NO MIN ORDER') {
+      return 'No minimum order required';
+    }
+    return minOrder;
   };
 
   return (
-    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/70 backdrop-blur-md p-4 animate-in fade-in duration-200">
-      {/* Backdrop overlay click trigger */}
-      <div
-        className="absolute inset-0 cursor-pointer"
-        onClick={onClose}
-        aria-label="Close offer details"
-      />
-
-      {/* Ticket Container */}
-      <div className="relative w-full max-w-[360px] sm:max-w-[390px] bg-surface rounded-[28px] shadow-2xl animate-in zoom-in-95 slide-in-from-bottom-4 duration-250 z-10 overflow-hidden border border-outline-variant/30 my-auto">
-        
-        {/* Semicircular Ticket Notch Cutouts */}
-        <div className="absolute left-[-13px] top-[56%] -translate-y-1/2 w-6 h-6 rounded-full bg-black/70 z-30 shadow-inner" />
-        <div className="absolute right-[-13px] top-[56%] -translate-y-1/2 w-6 h-6 rounded-full bg-black/70 z-30 shadow-inner" />
-
-        {/* Top Header Banner matching clicked Offer Theme */}
-        <div className={`bg-gradient-to-r ${offer.gradient || 'from-[#4a1805] via-[#78350f] to-[#d97706]'} p-6 pt-7 text-white text-center relative overflow-hidden flex flex-col items-center justify-center min-h-[190px]`}>
-          
-          {/* Ambient Lighting Glow */}
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.22),transparent_70%)] pointer-events-none" />
-
-          {/* Close Button */}
-          <button
-            type="button"
+    <AnimatePresence mode="wait">
+      {isOpen && (
+        <div className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center p-2.5 sm:p-4 overflow-hidden select-none">
+          {/* Soft Dark Overlay */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25, ease: 'easeOut' }}
+            className="fixed inset-0 bg-[#1C100B]/58 backdrop-blur-md cursor-pointer"
             onClick={onClose}
-            aria-label="Close dialog"
-            className="absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-black/25 hover:bg-black/40 text-white flex items-center justify-center transition-colors cursor-pointer z-20 backdrop-blur-xs border border-white/10"
+            aria-label="Close offer backdrop"
+          />
+
+          {/* Modal Container */}
+          <motion.div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="coupon-offer-title"
+            aria-describedby="coupon-offer-subtitle"
+            initial={{ y: 40, opacity: 0, scale: 0.98 }}
+            animate={{ y: 0, opacity: 1, scale: 1 }}
+            exit={{ y: 45, opacity: 0, scale: 0.96 }}
+            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            className="relative w-[calc(100%-20px)] max-w-[430px] sm:max-w-[450px] bg-[#FFF8F2] rounded-[30px] shadow-[0_24px_70px_rgba(35,18,12,0.28)] z-10 overflow-hidden my-auto mb-[calc(10px+env(safe-area-inset-bottom,0px))] sm:mb-auto max-h-[min(90dvh,760px)] flex flex-col focus:outline-none border border-[#683A28]/10"
           >
-            <X className="w-4 h-4" />
-          </button>
-
-          {/* Floating Dish PNG Cutout (Imagery from clicked Banner) */}
-          {offer.image && (
-            <div className="relative w-28 h-24 mb-2 flex items-center justify-center pointer-events-none">
-              <div className="absolute w-24 h-24 rounded-full bg-white/15 blur-md" />
-              <img
-                src={offer.image}
-                alt={offer.title}
-                className="max-h-full w-auto object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.5)] transform rotate-[-2deg] scale-110"
-              />
-            </div>
-          )}
-
-          {/* Badge Tag */}
-          <span className="inline-block px-3 py-0.5 rounded-full bg-white/20 text-white text-[10px] font-extrabold uppercase tracking-widest mb-1.5 border border-white/30 backdrop-blur-xs shadow-xs">
-            {offer.badgeText || 'SPECIAL OFFER'}
-          </span>
-
-          {/* Title */}
-          <h2 className="text-2xl font-extrabold leading-tight text-white tracking-tight drop-shadow-sm">
-            {offer.title}
-          </h2>
-
-          {/* Subtitle / Footer Perk */}
-          <p className="text-xs text-white/90 font-medium mt-1 flex items-center justify-center gap-1.5 max-w-[280px]">
-            <Sparkles className="w-3.5 h-3.5 text-amber-300 shrink-0" />
-            <span className="truncate">{offer.footerText || offer.subtitle}</span>
-          </p>
-        </div>
-
-        {/* Middle Offer Terms & Benefits Details */}
-        <div className="p-5 space-y-3 bg-surface-container/40 dark:bg-zinc-900/50">
-          <div className="text-[11px] font-extrabold uppercase tracking-wider text-on-surface-variant/70 flex items-center gap-1.5">
-            <Tag className="w-3.5 h-3.5 text-primary" />
-            <span>Offer Details & Terms</span>
-          </div>
-
-          <ul className="space-y-2 text-xs text-on-surface/85 font-medium">
-            <li className="flex items-center gap-2.5">
-              <ShieldCheck className="w-4 h-4 text-success shrink-0" />
-              <span>Minimum order requirement: <strong className="text-on-surface font-extrabold">{offer.minOrder}</strong></span>
-            </li>
-            <li className="flex items-center gap-2.5">
-              <Clock className="w-4 h-4 text-amber-500 shrink-0" />
-              <span>Valid on all online & dine-in orders today</span>
-            </li>
-            <li className="flex items-center gap-2.5">
-              <Sparkles className="w-4 h-4 text-primary shrink-0" />
-              <span>Auto-applies maximum savings to your active bill</span>
-            </li>
-          </ul>
-        </div>
-
-        {/* Ticket Perforated Dashed Line Divider */}
-        <div className="relative px-6 py-1 bg-surface">
-          <div className="w-full border-b-2 border-dashed border-outline-variant/40" />
-        </div>
-
-        {/* Bottom Ticket Code & Action Section */}
-        <div className="p-5 pt-3 bg-surface space-y-3.5">
-          {/* Dotted Coupon Code Block */}
-          <div className="bg-primary/5 border-2 border-dashed border-primary/30 rounded-2xl p-3.5 flex items-center justify-between">
-            <div className="flex flex-col">
-              <span className="text-[10px] font-extrabold uppercase tracking-wider text-on-surface-variant/70">
-                COUPON CODE
-              </span>
-              <span className="text-xl font-black text-primary tracking-widest font-mono">
-                {offer.code}
-              </span>
-            </div>
-
-            {/* Copy Button */}
-            <button
-              type="button"
-              onClick={handleCopy}
-              className={`px-4 py-2 rounded-xl text-xs font-extrabold flex items-center gap-1.5 transition-all active:scale-95 cursor-pointer shadow-xs ${
-                copied
-                  ? 'bg-success text-on-success'
-                  : 'bg-primary text-on-primary hover:opacity-90'
-              }`}
+            {/* 1. HERO SECTION (Dynamic Banner Colors) */}
+            <div
+              className={`relative w-full p-5 sm:p-6 text-white overflow-hidden shrink-0 flex flex-col justify-between bg-gradient-to-r ${heroGradient}`}
+              style={{ minHeight: '210px' }}
             >
-              {copied ? (
-                <>
-                  <Check className="w-4 h-4 stroke-[3]" />
-                  <span>Copied!</span>
-                </>
-              ) : (
-                <>
-                  <Copy className="w-4 h-4" />
-                  <span>Copy Code</span>
-                </>
-              )}
-            </button>
-          </div>
+              {/* Ambient Radial Lighting Overlay */}
+              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(255,255,255,0.25),transparent_70%)] pointer-events-none" />
 
-          {/* Primary Apply CTA Button */}
-          <button
-            type="button"
-            onClick={handleApply}
-            className="w-full py-3.5 px-4 rounded-2xl bg-primary hover:opacity-95 text-on-primary font-extrabold text-sm shadow-md hover:shadow-lg active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer"
-          >
-            <Sparkles className="w-4 h-4 text-amber-300" />
-            <span>Apply Coupon to Cart</span>
-          </button>
+              {/* Subtle Motifs Overlay */}
+              <div className="absolute inset-0 opacity-10 pointer-events-none bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px]" />
+
+              {/* Close Button */}
+              <div className="absolute top-3.5 right-3.5 z-20">
+                <button
+                  type="button"
+                  onClick={onClose}
+                  aria-label="Close offer"
+                  className="w-[36px] h-[36px] rounded-full bg-black/25 hover:bg-black/45 active:scale-95 text-white flex items-center justify-center transition-all cursor-pointer border border-white/20 focus:outline-none focus:ring-2 focus:ring-white/50 backdrop-blur-xs"
+                >
+                  <X className="w-4 h-4 sm:w-5 sm:h-5" />
+                </button>
+              </div>
+
+              {/* Floating Dish PNG Visual */}
+              {offer.image && (
+                <div className="absolute right-3.5 sm:right-4 bottom-2.5 sm:bottom-3 w-[105px] h-[105px] sm:w-[120px] sm:h-[120px] pointer-events-none z-10 flex items-center justify-center">
+                  {/* Subtle Ambient Halo */}
+                  <div className="absolute w-20 h-20 rounded-full bg-white/20 blur-xl pointer-events-none" />
+
+                  {/* Floating Image */}
+                  <motion.img
+                    src={offer.image}
+                    alt={offer.imageAlt || offer.title}
+                    initial={{ scale: 0.88, rotate: -3 }}
+                    animate={{ scale: 1, rotate: 0, y: [0, -4, 0] }}
+                    transition={{
+                      y: { duration: 3.2, repeat: Infinity, ease: 'easeInOut' },
+                      default: { duration: 0.4, ease: 'easeOut' },
+                    }}
+                    className="w-full h-full object-contain drop-shadow-[0_10px_18px_rgba(0,0,0,0.45)] relative z-10"
+                  />
+                </div>
+              )}
+
+              {/* Hero Text Content */}
+              <div className="relative z-10 max-w-[63%] sm:max-w-[65%] space-y-2 pt-0.5">
+                {/* Hot Deal Badge */}
+                <motion.div
+                  initial={{ opacity: 0, y: 4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.05 }}
+                  className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/20 text-white text-[10.5px] sm:text-[11px] font-bold tracking-wider uppercase shadow-xs border border-white/30 backdrop-blur-xs"
+                >
+                  <Sparkles className="w-3 h-3 text-amber-300" />
+                  <span>{offer.badgeText || 'SPECIAL OFFER'}</span>
+                </motion.div>
+
+                {/* Primary Headline */}
+                <motion.h2
+                  id="coupon-offer-title"
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 }}
+                  className="text-2xl sm:text-[28px] font-[800] leading-tight text-white tracking-tight drop-shadow-xs whitespace-nowrap"
+                >
+                  {offer.title}
+                </motion.h2>
+
+                {/* Supporting Subtitle */}
+                <motion.p
+                  id="coupon-offer-subtitle"
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.15 }}
+                  className="text-[12.5px] sm:text-[13px] text-white/90 font-medium leading-snug flex items-start gap-1.5 pt-0.5"
+                >
+                  <BadgePercent className="w-4 h-4 text-amber-300 shrink-0 mt-0.5" />
+                  <span>{offer.footerText || offer.subtitle}</span>
+                </motion.p>
+              </div>
+            </div>
+
+            {/* SCROLLABLE BODY CONTENT */}
+            <div className="overflow-y-auto overscroll-contain flex-1 p-4 space-y-3">
+              {/* 2. OFFER DETAILS CARD */}
+              <div className="bg-white/74 rounded-[20px] p-4 border border-[#683A28]/10 shadow-xs space-y-3">
+                <h3 className="text-[13px] font-semibold text-[#24130D] flex items-center gap-1.5">
+                  <Tag className="w-4 h-4" style={{ color: themeColor }} />
+                  <span>Offer details</span>
+                </h3>
+
+                <div className="space-y-2.5 pt-0.5">
+                  {/* Benefit Row 1: Minimum order */}
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full bg-[#DFF5EC] flex items-center justify-center shrink-0">
+                      <ShoppingBag className="w-4 h-4 text-[#087A61]" />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-[12.5px] font-semibold text-[#24130D]">
+                        Minimum order
+                      </span>
+                      <span className="text-[12px] text-[#756761] font-medium">
+                        {formatMinOrder(offer.minOrder)}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Benefit Row 2: Valid today */}
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full bg-[#FEF3D6] flex items-center justify-center shrink-0">
+                      <Clock className="w-4 h-4 text-[#D97706]" />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-[12.5px] font-semibold text-[#24130D]">
+                        Valid today
+                      </span>
+                      <span className="text-[12px] text-[#756761] font-medium">
+                        Online and dine-in orders
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Benefit Row 3: Best saving applied */}
+                  <div className="flex items-center gap-3">
+                    <div
+                      className="w-8 h-8 rounded-full flex items-center justify-center shrink-0"
+                      style={{ backgroundColor: `${themeColor}15` }}
+                    >
+                      <Sparkles className="w-4 h-4" style={{ color: themeColor }} />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-[12.5px] font-semibold text-[#24130D]">
+                        Best saving applied
+                      </span>
+                      <span className="text-[12px] text-[#756761] font-medium">
+                        Automatically selects maximum eligible discount
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* 3. COUPON CODE CARD (Matching Banner Theme Color) */}
+              <div
+                className="bg-[#FFF8F2] border-[1.5px] border-dashed rounded-[18px] p-3.5 pl-4 flex items-center justify-between"
+                style={{ borderColor: `${themeColor}40` }}
+              >
+                <div className="flex flex-col">
+                  <span className="text-[11px] font-semibold text-[#756761] uppercase tracking-wider">
+                    Coupon code
+                  </span>
+                  <span
+                    className="text-[22px] font-bold tracking-[0.03em] font-mono leading-tight"
+                    style={{ color: themeColor }}
+                  >
+                    {offer.code}
+                  </span>
+                </div>
+
+                {/* Copy Button */}
+                <motion.button
+                  type="button"
+                  onClick={handleCopy}
+                  whileTap={{ scale: 0.96 }}
+                  className={`h-[42px] min-w-[96px] px-4 rounded-[13px] text-xs font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer border-none focus:outline-none focus:ring-2 ${
+                    copied
+                      ? 'bg-[#198754] text-white focus:ring-[#198754]/50'
+                      : 'text-white focus:ring-black/20'
+                  }`}
+                  style={copied ? {} : { backgroundColor: themeColor }}
+                >
+                  {copied ? (
+                    <>
+                      <Check className="w-4 h-4 stroke-[2.5]" />
+                      <span>Copied</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-4 h-4" />
+                      <span>Copy</span>
+                    </>
+                  )}
+                </motion.button>
+                <span className="sr-only" aria-live="polite">
+                  {copied ? `Coupon code ${offer.code} copied` : ''}
+                </span>
+              </div>
+            </div>
+
+            {/* 4. STICKY PRIMARY ACTION AREA */}
+            <div className="sticky bottom-0 bg-[#FFF8F2] px-4 pt-2 pb-[calc(16px+env(safe-area-inset-bottom,0px))] border-t border-[#683A28]/08 shadow-[0_-10px_20px_rgba(255,248,242,0.9)] space-y-2 mt-auto">
+              {/* Savings Summary Preview */}
+              <div className="bg-[#DFF5EC] text-[#087A61] rounded-[13px] py-2 px-3.5 flex items-center justify-center gap-2 text-[13px] font-semibold border border-[#087A61]/10">
+                <Sparkles className="w-4 h-4 shrink-0 text-[#087A61]" />
+                <span>{getSavingsText(offer)}</span>
+              </div>
+
+              {/* Primary Apply Button (Matching Banner Accent Color) */}
+              <motion.button
+                type="button"
+                onClick={handleApply}
+                disabled={isApplying}
+                whileTap={{ scale: 0.985 }}
+                className={`w-full h-[54px] rounded-[17px] font-bold text-[15px] sm:text-[16px] flex items-center justify-center gap-2 transition-all cursor-pointer border-none text-white focus:outline-none ${
+                  isApplied ? 'bg-[#198754]' : ''
+                } ${isApplying ? 'opacity-90 cursor-wait' : ''}`}
+                style={
+                  isApplied
+                    ? { boxShadow: '0 10px 24px rgba(25,135,84,0.24)' }
+                    : {
+                        backgroundColor: themeColor,
+                        boxShadow: `0 10px 24px ${themeColor}44`,
+                      }
+                }
+              >
+                {isApplying ? (
+                  <>
+                    <Loader2 className="w-5 h-5 animate-spin text-white" />
+                    <span>Applying…</span>
+                  </>
+                ) : isApplied ? (
+                  <>
+                    <Check className="w-5 h-5 stroke-[2.5] text-white" />
+                    <span>Coupon Applied</span>
+                  </>
+                ) : (
+                  <>
+                    <Sparkles className="w-4 h-4 text-amber-300" />
+                    <span>Apply Coupon</span>
+                  </>
+                )}
+              </motion.button>
+            </div>
+          </motion.div>
         </div>
-      </div>
-    </div>
+      )}
+    </AnimatePresence>
   );
 };
 
 export default CouponTicketModal;
-
