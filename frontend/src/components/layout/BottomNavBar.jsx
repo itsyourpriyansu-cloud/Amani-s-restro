@@ -20,15 +20,15 @@ const BottomNavBar = () => {
   return (
     <nav
       aria-label="Customer navigation"
-      className="fixed left-1/2 -translate-x-1/2 z-50 w-[calc(100%-20px)] sm:w-[calc(100%-32px)] max-w-[520px] rounded-[24px] p-[8px_10px] flex items-center select-none pointer-events-auto transition-all duration-200"
+      className="fixed left-1/2 -translate-x-1/2 z-50 w-[calc(100%-20px)] sm:w-[calc(100%-32px)] max-w-[520px] rounded-[24px] p-[6px_8px] flex items-center select-none pointer-events-auto transition-all duration-200"
       style={{
         bottom: 'calc(12px + env(safe-area-inset-bottom))',
-        minHeight: '70px',
-        backgroundColor: 'color-mix(in srgb, var(--color-surface) 98%, transparent)',
-        border: '1px solid color-mix(in srgb, var(--color-outline-variant) 95%, transparent)',
-        boxShadow: '0 14px 38px rgba(26, 18, 13, 0.16), 0 3px 10px rgba(26, 18, 13, 0.08)',
-        backdropFilter: 'blur(16px)',
-        WebkitBackdropFilter: 'blur(16px)',
+        minHeight: '68px',
+        backgroundColor: 'rgba(253, 251, 247, 0.94)',
+        border: '1.5px solid rgba(231, 218, 208, 0.9)',
+        boxShadow: '0 16px 40px rgba(116, 47, 28, 0.12), 0 4px 12px rgba(26, 18, 13, 0.06)',
+        backdropFilter: 'blur(20px)',
+        WebkitBackdropFilter: 'blur(20px)',
       }}
     >
       <div className="grid grid-cols-4 items-center gap-1.5 w-full h-full">
@@ -56,36 +56,42 @@ const BottomNavBar = () => {
               onClick={() => navigate(item.path)}
               aria-current={isActive ? 'page' : undefined}
               aria-label={ariaLabel}
-              className={`relative min-h-[54px] w-full rounded-[18px] flex flex-col items-center justify-center gap-[4px] py-1 transition-all duration-150 ease-out active:scale-[0.97] focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 ${
+              className={`relative min-h-[52px] w-full rounded-[18px] flex flex-col items-center justify-center gap-[3px] py-1.5 transition-all duration-200 ease-out active:scale-[0.93] focus-visible:outline-2 focus-visible:outline-[#742F1C] focus-visible:outline-offset-2 ${
                 isActive
-                  ? 'bg-primary-container text-primary border border-primary/20 shadow-xs'
-                  : 'bg-transparent text-on-surface-variant border border-transparent hover:text-on-surface hover:bg-surface-container/60'
+                  ? 'bg-[#742F1C] text-white shadow-[0_6px_18px_rgba(116,47,28,0.32)] border border-[#742F1C] active:bg-[#5B2314]'
+                  : 'bg-transparent text-[#6E5D57] hover:text-[#742F1C] hover:bg-[#742F1C]/10 active:bg-[#742F1C]/18'
               }`}
             >
               <span className="relative flex items-center justify-center">
                 <IconComponent
-                  size={22}
-                  strokeWidth={isActive ? 2.3 : 1.8}
+                  size={21}
+                  strokeWidth={isActive ? 2.4 : 1.9}
                   className="transition-colors duration-150"
                   aria-hidden="true"
                 />
                 {cartBadge > 0 && (
                   <span
-                    className="absolute -top-1.5 -right-3 min-w-[18px] h-[18px] px-[5px] rounded-full flex items-center justify-center text-[10.5px] font-bold text-on-primary leading-none shadow-sm pointer-events-none bg-primary"
+                    className={`absolute -top-1.5 -right-3 min-w-[18px] h-[18px] px-[5px] rounded-full flex items-center justify-center text-[10.5px] font-bold leading-none shadow-sm pointer-events-none ${
+                      isActive
+                        ? 'bg-[#C89552] text-[#2E1C0A] ring-2 ring-[#742F1C]'
+                        : 'bg-[#742F1C] text-white ring-2 ring-white'
+                    }`}
                   >
                     {cartBadge > 9 ? '9+' : cartBadge}
                   </span>
                 )}
                 {hasActiveOrder && cartBadge === 0 && (
                   <span
-                    className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-highlight ring-2 ring-surface animate-pulse pointer-events-none"
+                    className={`absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full ring-2 animate-pulse pointer-events-none ${
+                      isActive ? 'bg-[#C89552] ring-[#742F1C]' : 'bg-[#14383B] ring-white'
+                    }`}
                     aria-hidden="true"
                   />
                 )}
               </span>
               <span
-                className={`text-[11.5px] sm:text-[12px] leading-none tracking-tight whitespace-nowrap ${
-                  isActive ? 'text-primary font-bold' : 'text-on-surface-variant font-semibold'
+                className={`text-[11.5px] sm:text-[12px] leading-none tracking-tight whitespace-nowrap transition-colors duration-150 ${
+                  isActive ? 'text-white font-bold' : 'text-[#6E5D57] font-semibold'
                 }`}
               >
                 {item.label}

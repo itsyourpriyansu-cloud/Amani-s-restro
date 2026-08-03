@@ -128,35 +128,35 @@ const OrderTrackingScreen = () => {
 
         {/* Active Status Hero Card — status, ETA and progress unified */}
         <section
-          className="relative overflow-hidden rounded-2xl bg-surface-container-lowest p-6 shadow-soft border border-outline-variant/20 text-center"
+          className="relative overflow-hidden rounded-2xl bg-surface-container-lowest p-4 shadow-soft border border-outline-variant/20 text-center"
           aria-live="polite"
         >
-          <div className="inline-flex items-center justify-center p-4 bg-primary/10 text-primary rounded-full mb-3">
-            <Icon name="cooking" className="text-3xl" filled />
+          <div className="inline-flex items-center justify-center p-2.5 bg-primary/10 text-primary rounded-full mb-2">
+            <Icon name="cooking" className="text-xl" filled />
           </div>
-          <h1 className="text-lg font-bold text-on-surface mb-1">We're freshly preparing your order</h1>
-          <p className="text-xs text-on-surface-variant mb-5 max-w-xs mx-auto leading-relaxed">
-            Our kitchen is cooking with care. This page updates automatically, so there's nothing you need to refresh.
+          <h1 className="text-sm font-bold text-on-surface mb-0.5">Preparing your order</h1>
+          <p className="text-[11px] text-on-surface-variant/80 mb-3 max-w-xs mx-auto leading-tight">
+            Auto-updates live. No refresh needed.
           </p>
 
-          <div className="bg-surface-container-low rounded-2xl border border-outline-variant/10 px-5 py-4">
-            <span className="text-[10px] text-on-surface-variant uppercase font-bold tracking-wider block mb-1">
+          <div className="bg-surface-container-low rounded-xl border border-outline-variant/10 px-4 py-3">
+            <span className="text-[9px] text-on-surface-variant/80 uppercase font-bold tracking-wider block mb-0.5">
               Expected ready by
             </span>
-            <span className="text-3xl font-black text-primary tabular-nums block leading-tight">
+            <span className="text-2xl font-black text-primary tabular-nums block leading-tight">
               {activeOrder.estimatedReadyAt || '7:46 PM'}
             </span>
-            <span className="text-xs font-semibold text-on-surface-variant mt-1 block">
+            <span className="text-[11px] font-semibold text-on-surface-variant mt-0.5 block">
               {countdownLabel}
             </span>
 
-            <div className="mt-3.5 h-1.5 w-full rounded-full bg-surface-container-high overflow-hidden">
+            <div className="mt-2.5 h-1.5 w-full rounded-full bg-surface-container-high overflow-hidden">
               <div
                 className="h-full rounded-full bg-primary transition-all duration-700"
                 style={{ width: `${progressPercent}%` }}
               />
             </div>
-            <span className="text-[10px] text-on-surface-variant/70 font-medium mt-1.5 block">
+            <span className="text-[10px] text-on-surface-variant/70 font-medium mt-1 block">
               {STAGE_PROGRESS_LABELS[currentStageIndex]}
             </span>
           </div>

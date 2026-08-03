@@ -1,58 +1,83 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Percent, Copy, Check, ChevronRight, Sparkles, Tag, Gift, Zap } from 'lucide-react';
+import { ChevronRight, Sparkles, Tag } from 'lucide-react';
 import { useToast } from '../../context/ToastContext';
 import CouponTicketModal from './CouponTicketModal';
+
+import biryaniDish from '../../assets/categories/biryani.png';
+import curriesDish from '../../assets/categories/curries.png';
+import mealsDish from '../../assets/categories/meals.png';
+import drinksDish from '../../assets/categories/drinks.png';
 
 const OFFERS = [
   {
     id: 'flat150',
-    title: 'Flat ₹150 off',
+    title: 'Flat ₹150 OFF',
+    subtitle: 'South Thalis & Meals above ₹599',
     code: 'DELICIOUS',
     minOrder: 'ABOVE ₹599',
-    badgeText: 'HOT',
-    badgeColor: 'bg-highlight text-on-background',
-    iconBg: 'bg-gradient-to-br from-highlight to-tertiary',
-    accentColor: '#C9953D',
-    footerText: 'Free Del + Extra 10% off above ₹1999',
-    footerTag: 'one',
+    badgeText: 'HOT DEAL',
+    ctaText: 'Order Meals',
+    gradient: 'from-[#093527] via-[#0f5441] to-[#1bb587]',
+    pillBg: 'bg-black/30 hover:bg-black/40 text-white',
+    activeDotBg: 'bg-[#0f5441] dark:bg-emerald-400',
+    accentColor: '#0f5441',
+    image: mealsDish,
+    imageAlt: 'South Indian Meal Thali',
+    footerText: 'Free Delivery + Extra 10% OFF above ₹1999',
+    footerTag: 'ONE',
     footerTagBg: 'bg-error text-on-error',
   },
   {
     id: 'percent20',
-    title: '20% OFF up to ₹120',
+    title: '20% OFF Biryanis',
+    subtitle: 'Slow-cooked Dum Biryanis & Pulaos',
     code: 'MANGAMMA20',
     minOrder: 'NO MIN ORDER',
-    badgeText: 'NEW',
-    badgeColor: 'bg-success text-on-success',
-    iconBg: 'bg-gradient-to-br from-success to-secondary',
-    accentColor: '#4B651F',
+    badgeText: 'TOP SELLER',
+    ctaText: 'Order Biryani',
+    gradient: 'from-[#3b1904] via-[#6d3007] to-[#d97706]',
+    pillBg: 'bg-black/30 hover:bg-black/40 text-white',
+    activeDotBg: 'bg-[#6d3007] dark:bg-amber-400',
+    accentColor: '#6d3007',
+    image: biryaniDish,
+    imageAlt: 'Hyderabadi Dum Biryani',
     footerText: 'Instant ₹50 Cashback on UPI Payments',
     footerTag: 'PAY',
     footerTagBg: 'bg-information text-on-info',
   },
   {
     id: 'freeDessert',
-    title: 'FREE Royal Gulab Jamun',
+    title: 'FREE Gulab Jamun',
+    subtitle: 'Complimentary sweet box above ₹799',
     code: 'DESSERT',
     minOrder: 'ABOVE ₹799',
-    badgeText: 'GIFT',
-    badgeColor: 'bg-tertiary text-on-tertiary',
-    iconBg: 'bg-gradient-to-br from-tertiary to-primary',
-    accentColor: '#985D2E',
-    footerText: 'Complimentary Sweet Box with Special Meals',
+    badgeText: 'SPECIAL GIFT',
+    ctaText: 'Claim Dessert',
+    gradient: 'from-[#420315] via-[#751029] to-[#e11d48]',
+    pillBg: 'bg-black/30 hover:bg-black/40 text-white',
+    activeDotBg: 'bg-[#751029] dark:bg-rose-400',
+    accentColor: '#751029',
+    image: drinksDish,
+    imageAlt: 'Royal Sweets & Drinks',
+    footerText: 'Freshly prepared authentic homemade sweets',
     footerTag: 'FREE',
     footerTagBg: 'bg-tertiary text-on-tertiary',
   },
   {
     id: 'familyFeast',
-    title: 'Flat ₹200 OFF Combos',
+    title: 'Flat ₹200 OFF',
+    subtitle: 'Family Combos & Starters above ₹1199',
     code: 'FEAST200',
     minOrder: 'ABOVE ₹1199',
-    badgeText: 'PROMO',
-    badgeColor: 'bg-primary text-on-primary',
-    iconBg: 'bg-gradient-to-br from-primary to-maroon-950',
-    accentColor: '#7A1F24',
+    badgeText: 'FAMILY PROMO',
+    ctaText: 'Order Combos',
+    gradient: 'from-[#171542] via-[#312c7d] to-[#6366f1]',
+    pillBg: 'bg-black/30 hover:bg-black/40 text-white',
+    activeDotBg: 'bg-[#312c7d] dark:bg-indigo-400',
+    accentColor: '#312c7d',
+    image: curriesDish,
+    imageAlt: 'Andhra Curries & Starters',
     footerText: 'Priority Kitchen Prep + Free Beverage Jug',
     footerTag: 'VIP',
     footerTagBg: 'bg-highlight text-on-background',
@@ -61,8 +86,7 @@ const OFFERS = [
 
 const OfferBanner = ({ onApplyCoupon }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [direction, setDirection] = useState(1); // 1 = next (left swipe), -1 = prev (right swipe)
-  const [copiedId, setCopiedId] = useState(null);
+  const [direction, setDirection] = useState(1); // 1 = next, -1 = prev
   const [isPaused, setIsPaused] = useState(false);
   const [selectedOfferForModal, setSelectedOfferForModal] = useState(null);
   const { showToast } = useToast();
@@ -147,125 +171,100 @@ const OfferBanner = ({ onApplyCoupon }) => {
 
   return (
     <>
-      <div
-        className="w-full relative overflow-hidden select-none touch-pan-y"
-        onMouseEnter={() => setIsPaused(true)}
-        onMouseLeave={() => setIsPaused(false)}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-      >
-        {/* Main Container Card */}
+      <div className="w-full select-none touch-pan-y">
+        {/* Minimal Banner Card Container */}
         <div
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
           onClick={(e) => handleOpenTicketModal(e, currentOffer)}
-          className="bg-surface rounded-[22px] border border-outline-variant/80 shadow-[0_4px_20px_rgba(26,18,13,0.06)] overflow-hidden transition-all duration-300 hover:shadow-[0_6px_26px_rgba(26,18,13,0.1)] cursor-pointer"
+          className="relative w-full rounded-[22px] sm:rounded-[26px] overflow-hidden shadow-md cursor-pointer transition-all duration-300 hover:shadow-lg group"
         >
-          {/* Upper Offer Content Block */}
-          <div className="p-4 sm:p-4.5 relative overflow-hidden">
-            <AnimatePresence mode="wait" custom={direction}>
-              <motion.div
-                key={currentOffer.id}
-                custom={direction}
-                variants={slideVariants}
-                initial="enter"
-                animate="center"
-                exit="exit"
-                transition={{ duration: 0.28, ease: 'easeOut' }}
-                drag="x"
-                dragConstraints={{ left: 0, right: 0 }}
-                dragElastic={0.2}
-                onDragStart={() => setIsPaused(true)}
-                onDragEnd={handleDragEnd}
-                className="flex items-center justify-between gap-3"
-              >
-                {/* Left Side: Scalloped Offer Badge Icon & Text */}
-                <div className="flex items-center gap-3.5 min-w-0 flex-1">
-                  <div className="relative shrink-0 flex items-center justify-center pointer-events-none">
-                    <div
-                      className={`w-11 h-11 sm:w-12 sm:h-12 rounded-[15px] ${currentOffer.iconBg} text-surface flex items-center justify-center shadow-md transform rotate-[-3deg]`}
-                    >
-                      <Percent className="w-5 h-5 sm:w-6 sm:h-6 text-surface stroke-[2.5]" />
-                    </div>
-                    <span className="absolute -top-1.5 -right-1.5 text-[9px] font-black tracking-wider uppercase px-1.5 py-0.5 rounded-full bg-surface border border-outline-variant text-on-surface shadow-2xs">
-                      %
-                    </span>
-                  </div>
-
-                  <div className="flex flex-col min-w-0 pointer-events-none">
-                    <div className="flex items-center gap-2">
-                      <h3 className="font-extrabold text-[16px] sm:text-[17px] leading-tight text-on-surface truncate">
-                        {currentOffer.title}
-                      </h3>
-                    </div>
-
-                    <div className="flex items-center gap-1.5 mt-0.5 text-[12px] font-bold text-on-surface-variant/80 tracking-wide uppercase">
-                      <span className="text-primary font-extrabold tracking-wider">{currentOffer.code}</span>
-                      <span className="text-outline-variant font-normal">|</span>
-                      <span className="truncate">{currentOffer.minOrder}</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Right Side: Apply Button + Slide Indicators */}
-                <div className="flex flex-col items-end shrink-0 gap-2">
-                  <div className="flex items-center gap-1">
-                    <span className="text-[11.5px] font-bold text-on-surface-variant">
-                      <strong className="text-primary">{currentIndex + 1}</strong>/{OFFERS.length}
-                    </span>
-                    <div className="flex gap-1 ml-1.5">
-                      {OFFERS.map((_, idx) => (
-                        <button
-                          key={idx}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setDirection(idx > currentIndex ? 1 : -1);
-                            setCurrentIndex(idx);
-                          }}
-                          className={`h-1.5 rounded-full transition-all duration-300 ${
-                            idx === currentIndex
-                              ? 'w-4 bg-primary'
-                              : 'w-1.5 bg-outline-variant hover:bg-on-surface-variant/40'
-                          }`}
-                          aria-label={`Go to offer ${idx + 1}`}
-                        />
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Apply Button opening Ticket Dialog */}
-                  <button
-                    type="button"
-                    onClick={(e) => handleOpenTicketModal(e, currentOffer)}
-                    className="h-8 px-3.5 rounded-full text-[12px] font-extrabold flex items-center gap-1.5 transition-all active:scale-95 cursor-pointer shadow-2xs bg-primary/10 hover:bg-primary text-primary hover:text-on-primary border border-primary/20"
-                    title="View coupon details & copy code"
-                  >
-                    <Copy className="w-3.5 h-3.5" />
-                    <span>Apply</span>
-                  </button>
-                </div>
-              </motion.div>
-            </AnimatePresence>
-          </div>
-
-          {/* Dark Footer Strip Attached to Bottom */}
-          <div className="bg-on-background px-4 py-2.5 flex items-center justify-between text-surface text-[12px] font-medium border-t border-surface/10">
-            <div className="flex items-center gap-2 truncate pr-2">
-              <Sparkles className="w-3.5 h-3.5 text-highlight shrink-0 animate-pulse" />
-              <span className="truncate text-surface/90 font-medium text-[12.5px]">
-                {currentOffer.footerText}
-              </span>
-            </div>
-
-            <span
-              className={`px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider shrink-0 ${currentOffer.footerTagBg}`}
+          <AnimatePresence mode="wait" custom={direction}>
+            <motion.div
+              key={currentOffer.id}
+              custom={direction}
+              variants={slideVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{ duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.2}
+              onDragStart={() => setIsPaused(true)}
+              onDragEnd={handleDragEnd}
+              className={`w-full bg-gradient-to-r ${currentOffer.gradient} min-h-[142px] sm:min-h-[156px] px-5 py-4.5 flex items-center justify-between relative overflow-hidden`}
             >
-              {currentOffer.footerTag}
-            </span>
-          </div>
+              {/* Ambient radial lighting glow */}
+              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(255,255,255,0.18),transparent_70%)] pointer-events-none" />
+
+              {/* Minimal Left Content */}
+              <div className="flex flex-col justify-between h-full z-10 w-[62%] sm:w-[60%] relative py-0.5">
+                <div>
+                  <span className="inline-block text-[9.5px] sm:text-[10px] font-extrabold tracking-wider uppercase px-2.5 py-0.5 rounded-full bg-white/20 text-white backdrop-blur-xs w-fit mb-2 border border-white/20 shadow-2xs">
+                    {currentOffer.badgeText}
+                  </span>
+
+                  <h3 className="font-extrabold text-lg sm:text-xl text-white tracking-tight leading-tight drop-shadow-xs">
+                    {currentOffer.title}
+                  </h3>
+
+                  <p className="text-[11.5px] sm:text-[12.5px] text-white/90 font-medium leading-tight mt-1.5 truncate">
+                    {currentOffer.subtitle}
+                  </p>
+                </div>
+
+                {/* Minimal CTA Pill Button */}
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleOpenTicketModal(e, currentOffer);
+                  }}
+                  className={`mt-3.5 px-3.5 py-1.5 rounded-full text-xs font-bold shadow-sm transition-all duration-200 flex items-center gap-1 border border-white/20 backdrop-blur-xs w-fit ${currentOffer.pillBg}`}
+                >
+                  <span>{currentOffer.ctaText}</span>
+                  <ChevronRight className="w-3.5 h-3.5 opacity-80" />
+                </button>
+              </div>
+
+              {/* Floating Dish PNG Cutout (No Background) */}
+              <div className="absolute right-2 sm:right-4 bottom-[-10px] top-[-10px] w-[42%] sm:w-[38%] flex items-center justify-end pointer-events-none z-0">
+                <img
+                  src={currentOffer.image}
+                  alt={currentOffer.imageAlt}
+                  className="max-h-[125%] w-auto object-contain drop-shadow-[0_12px_22px_rgba(0,0,0,0.45)] transform rotate-[-2deg] scale-105 group-hover:scale-110 transition-transform duration-500 ease-out"
+                />
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* Minimal Centered Dots */}
+        <div className="flex items-center justify-center gap-1.5 mt-2 mb-0.5">
+          {OFFERS.map((offer, idx) => (
+            <button
+              key={offer.id}
+              onClick={(e) => {
+                e.stopPropagation();
+                setDirection(idx > currentIndex ? 1 : -1);
+                setCurrentIndex(idx);
+              }}
+              className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+                idx === currentIndex
+                  ? `w-5 sm:w-6 ${currentOffer.activeDotBg}`
+                  : 'w-1.5 bg-gray-300 dark:bg-zinc-700 hover:bg-gray-400'
+              }`}
+              aria-label={`Go to offer slide ${idx + 1}`}
+            />
+          ))}
         </div>
       </div>
 
-      {/* Ticket-shaped Detailed Coupon Modal */}
+      {/* Coupon Ticket Popup Modal */}
       <CouponTicketModal
         isOpen={Boolean(selectedOfferForModal)}
         onClose={() => setSelectedOfferForModal(null)}
@@ -277,3 +276,5 @@ const OfferBanner = ({ onApplyCoupon }) => {
 };
 
 export default OfferBanner;
+
+
