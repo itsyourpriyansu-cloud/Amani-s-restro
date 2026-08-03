@@ -187,57 +187,104 @@ const CartScreen = () => {
               const hasModifiers = (item.selectedCustomizations && item.selectedCustomizations.length > 0) || item.makeVegan || item.jainPreparation;
 
               return (
-                <div key={item.cartItemId || item.id} className="bg-surface-container-lowest rounded-2xl p-4 border border-border shadow-card flex flex-col gap-3">
-                  <div className="flex gap-4 items-start">
-                    <img src={item.image} alt={item.name} className="w-20 h-20 rounded-xl object-cover flex-shrink-0 border border-border" />
+                <div
+                  key={item.cartItemId || item.id}
+                  className="bg-surface-container-lowest rounded-2xl p-4 border border-outline-variant/60 shadow-card flex flex-col gap-3.5 transition-all hover:border-outline-variant"
+                >
+                  {/* Top Section: Image + Title + Customization Pill Badges */}
+                  <div className="flex gap-3.5 items-start">
+                    {/* Dish Thumbnail */}
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-20 h-20 sm:w-22 sm:h-22 rounded-2xl object-cover flex-shrink-0 border border-outline-variant/60 shadow-2xs"
+                    />
 
+                    {/* Title & Customization Details */}
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-start gap-2">
-                        <span
-                          className={`mt-1 w-3.5 h-3.5 shrink-0 rounded-sm border-2 flex items-center justify-center ${item.isVeg ? 'border-success' : 'border-danger'}`}
-                          aria-hidden="true"
-                        >
-                          <span className={`w-1.5 h-1.5 rounded-full ${item.isVeg ? 'bg-success' : 'bg-danger'}`} />
-                        </span>
-                        <h3 className="font-bold text-ink text-base leading-snug min-w-0">{item.name}</h3>
-                      </div>
-                      <span className="text-xs text-maroon-800 font-semibold pl-[22px]">{formatMenuPrice(singleUnitPrice)} each</span>
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="flex items-center gap-2 min-w-0">
+                          {/* Veg/Non-Veg Badge */}
+                          <span
+                            className={`w-3.5 h-3.5 shrink-0 rounded-sm border-2 flex items-center justify-center ${
+                              item.isVeg ? 'border-success' : 'border-error'
+                            }`}
+                            aria-hidden="true"
+                          >
+                            <span className={`w-1.5 h-1.5 rounded-full ${item.isVeg ? 'bg-success' : 'bg-error'}`} />
+                          </span>
+                          <h3 className="font-sans font-bold text-on-surface text-sm sm:text-base leading-tight truncate">
+                            {item.name}
+                          </h3>
+                        </div>
 
+                        {/* Total Item Price */}
+                        <span className="font-extrabold text-primary text-base shrink-0 [font-variant-numeric:tabular-nums]">
+                          {formatInvoiceAmount(itemTotalPrice)}
+                        </span>
+                      </div>
+
+                      {/* Unit price caption */}
+                      <div className="text-[11px] text-on-surface-variant font-medium mt-0.5">
+                        {formatMenuPrice(singleUnitPrice)} {item.quantity > 1 ? `× ${item.quantity}` : 'each'}
+                      </div>
+
+                      {/* Customization Options Badges — Sleek Tag Pills */}
                       {hasModifiers && (
-                        <div className="mt-2 text-xs space-y-1 bg-cream p-2.5 rounded-xl border border-border">
-                          {item.makeVegan && <div className="text-success font-semibold flex items-center gap-1"><span>🌱 Vegan Preparation</span></div>}
-                          {item.jainPreparation && <div className="text-success font-semibold flex items-center gap-1"><span>🌿 Jain Preparation</span></div>}
+                        <div className="mt-2.5 flex flex-wrap gap-1.5">
+                          {item.makeVegan && (
+                            <span className="px-2.5 py-1 rounded-lg bg-success/10 border border-success/20 text-success text-[11px] font-extrabold flex items-center gap-1">
+                              🌱 Vegan
+                            </span>
+                          )}
+                          {item.jainPreparation && (
+                            <span className="px-2.5 py-1 rounded-lg bg-success/10 border border-success/20 text-success text-[11px] font-extrabold flex items-center gap-1">
+                              🌿 Jain
+                            </span>
+                          )}
                           {item.selectedCustomizations?.map((mod, idx) => (
-                            <div key={idx} className="text-text font-medium flex justify-between">
-                              <span>• {mod.label || mod.name}</span>
-                              {mod.priceDelta && mod.priceDelta > 0 ? <span className="text-maroon-800">+{formatMenuPrice(mod.priceDelta)}</span> : null}
-                            </div>
+                            <span
+                              key={idx}
+                              className="px-2.5 py-1 rounded-lg bg-surface-container-low border border-outline-variant/60 text-on-surface-variant text-[11px] font-medium flex items-center gap-1"
+                            >
+                              <span>{mod.label || mod.name}</span>
+                              {mod.priceDelta && mod.priceDelta > 0 ? (
+                                <span className="text-primary font-bold">+{formatMenuPrice(mod.priceDelta)}</span>
+                              ) : null}
+                            </span>
                           ))}
                         </div>
                       )}
 
+                      {/* Allergy Alert */}
                       {item.allergyAlert && (
-                        <div className="mt-2 bg-danger/10 border-l-4 border-danger p-2.5 rounded-r-xl text-xs text-ink space-y-0.5">
-                          <div className="font-bold uppercase tracking-wider flex items-center gap-1 text-danger">
-                            <AlertTriangle className="w-4 h-4" />
+                        <div className="mt-2 bg-error/8 border-l-3 border-error p-2 rounded-r-xl text-[11px] text-on-surface space-y-0.5">
+                          <div className="font-bold uppercase tracking-wider flex items-center gap-1 text-error text-[10px]">
+                            <AlertTriangle className="w-3.5 h-3.5" />
                             <span>ALLERGY ALERT</span>
                           </div>
-                          <p className="font-semibold">{item.allergyAlert}</p>
+                          <p className="font-medium text-error">{item.allergyAlert}</p>
                         </div>
                       )}
 
-                      {item.itemNote && <div className="mt-1 text-xs text-muted italic"><span>Special instruction: "{item.itemNote}"</span></div>}
+                      {/* Special Instruction */}
+                      {item.itemNote && (
+                        <div className="mt-1.5 text-[11px] text-on-surface-variant italic">
+                          <span>Note: "{item.itemNote}"</span>
+                        </div>
+                      )}
                     </div>
                   </div>
 
-                  <div className="flex flex-wrap items-center justify-between pt-3 border-t border-border gap-x-2 gap-y-2.5">
-                    {/* Secondary actions — deliberately low emphasis, plain text links */}
-                    <div className="flex items-center gap-3 shrink-0">
+                  {/* Bottom Action Footer Row */}
+                  <div className="flex items-center justify-between pt-3 border-t border-outline-variant/40 gap-2">
+                    {/* Left: Quick Actions */}
+                    <div className="flex items-center gap-3">
                       {item.originalDish?.customizationAvailable !== false && (
                         <button
                           type="button"
                           onClick={() => handleOpenEdit(item)}
-                          className="min-h-[40px] flex items-center gap-1 text-maroon-800 hover:text-maroon-900 text-xs font-bold transition-colors"
+                          className="flex items-center gap-1 text-primary hover:text-primary/80 text-xs font-bold transition-colors cursor-pointer"
                         >
                           <Edit3 className="w-3.5 h-3.5" />
                           <span>Edit</span>
@@ -245,7 +292,7 @@ const CartScreen = () => {
                       )}
                       <button
                         onClick={() => removeFromCart(item.cartItemId || item.id)}
-                        className="min-h-[40px] flex items-center gap-1 text-muted hover:text-danger text-xs font-bold transition-colors"
+                        className="flex items-center gap-1 text-on-surface-variant hover:text-error text-xs font-bold transition-colors cursor-pointer"
                         aria-label={`Remove ${item.name} from cart`}
                       >
                         <Trash2 className="w-3.5 h-3.5" />
@@ -253,27 +300,25 @@ const CartScreen = () => {
                       </button>
                     </div>
 
-                    {/* Quantity + line total — the one place quantity and price appear together */}
-                    <div className="flex items-center gap-2 sm:gap-3 ml-auto shrink-0">
-                      <div className="flex items-center bg-surface-container rounded-xl p-1 shrink-0">
-                        <button
-                          onClick={() => updateQuantity(item.cartItemId || item.id, item.quantity - 1)}
-                          aria-label={`Decrease quantity of ${item.name}`}
-                          className="w-10 h-10 flex items-center justify-center rounded-lg bg-surface-container-lowest shadow-sm text-text hover:bg-surface-container-low active:scale-90 shrink-0"
-                        >
-                          <Minus className="w-4 h-4" />
-                        </button>
-                        <span className="font-bold w-7 text-center text-sm text-ink" aria-live="polite">{item.quantity}</span>
-                        <button
-                          onClick={() => updateQuantity(item.cartItemId || item.id, item.quantity + 1)}
-                          aria-label={`Increase quantity of ${item.name}`}
-                          className="w-10 h-10 flex items-center justify-center rounded-lg bg-surface-container-lowest shadow-sm text-text hover:bg-surface-container-low active:scale-90 shrink-0"
-                        >
-                          <Plus className="w-4 h-4" />
-                        </button>
-                      </div>
-
-                      <span className="font-bold text-maroon-800 text-base [font-variant-numeric:tabular-nums] shrink-0 whitespace-nowrap">{formatInvoiceAmount(itemTotalPrice)}</span>
+                    {/* Right: Sleek Quantity Stepper Pill */}
+                    <div className="flex items-center bg-surface-container rounded-xl p-1 border border-outline-variant/60 shrink-0">
+                      <button
+                        onClick={() => updateQuantity(item.cartItemId || item.id, item.quantity - 1)}
+                        aria-label={`Decrease quantity of ${item.name}`}
+                        className="w-8 h-8 flex items-center justify-center rounded-lg bg-surface-container-lowest shadow-2xs text-on-surface hover:bg-surface-container-high active:scale-90 shrink-0 transition-all"
+                      >
+                        <Minus className="w-3.5 h-3.5" />
+                      </button>
+                      <span className="font-extrabold w-8 text-center text-xs text-on-surface" aria-live="polite">
+                        {item.quantity}
+                      </span>
+                      <button
+                        onClick={() => updateQuantity(item.cartItemId || item.id, item.quantity + 1)}
+                        aria-label={`Increase quantity of ${item.name}`}
+                        className="w-8 h-8 flex items-center justify-center rounded-lg bg-surface-container-lowest shadow-2xs text-on-surface hover:bg-surface-container-high active:scale-95 shrink-0 transition-all"
+                      >
+                        <Plus className="w-3.5 h-3.5" />
+                      </button>
                     </div>
                   </div>
                 </div>
