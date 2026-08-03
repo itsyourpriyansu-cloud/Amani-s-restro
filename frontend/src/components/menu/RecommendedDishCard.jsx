@@ -4,18 +4,22 @@ import { useCart } from '../../context/CartContext';
 import { useToast } from '../../context/ToastContext';
 import ResponsiveImage from '../common/ResponsiveImage';
 import { FoodTypeBadge, SpiceLevelBadge, PriceTag } from './DishBadges';
-import { ChevronRight, Sparkles } from 'lucide-react';
+import { ChevronRight, Plus, Minus, Sparkles } from 'lucide-react';
 
 /**
  * Featured horizontal card for recommended dishes.
- * Width: 215–225px, Image height: 118px.
+ * Features interactive stepper [- qty +] when added to cart:
+ * - Tapping '-' reduces/removes item directly
+ * - Tapping '+' opens customization tab again if customizable, or increments quantity
  */
 const RecommendedDishCard = ({ dish, onCustomize, isDragging = false }) => {
   const navigate = useNavigate();
-  const { addToCart, getDishQuantityInCart } = useCart();
+  const { cartItems, addToCart, updateQuantity, removeFromCart } = useCart();
   const { showToast } = useToast();
 
-  const quantityInCart = getDishQuantityInCart(dish.id);
+  const matchingCartItems = cartItems.filter((item) => item.id === dish.id);
+  const quantityInCart = matchingCartItems.reduce((acc, item) => acc + item.quantity, 0);
+
   const isAvailable = dish.availabilityStatus === 'AVAILABLE' || dish.availabilityStatus === 'LIMITED_AVAILABILITY';
   const isOrderable = dish.orderableInApp !== false;
 
@@ -25,6 +29,33 @@ const RecommendedDishCard = ({ dish, onCustomize, isDragging = false }) => {
   };
 
   const handlePrimaryAction = (e) => {
+    e.stopPropagation();
+    if (isDragging || !isAvailable || !isOrderable) return;
+
+    if (dish.customizationAvailable && onCustomize) {
+      onCustomize(dish);
+    } else {
+      addToCart(dish);
+      showToast(`Added "${dish.name}" to cart`, 'success');
+    }
+  };
+
+  const handleDecrease = (e) => {
+    e.stopPropagation();
+    if (matchingCartItems.length === 0) return;
+
+    const lastMatching = matchingCartItems[matchingCartItems.length - 1];
+    const targetId = lastMatching.cartItemId || lastMatching.id;
+
+    if (lastMatching.quantity > 1) {
+      updateQuantity(targetId, lastMatching.quantity - 1);
+    } else {
+      removeFromCart(targetId);
+      showToast(`Removed "${dish.name}" from cart`, 'info');
+    }
+  };
+
+  const handleIncrease = (e) => {
     e.stopPropagation();
     if (isDragging || !isAvailable || !isOrderable) return;
 
@@ -91,21 +122,44 @@ const RecommendedDishCard = ({ dish, onCustomize, isDragging = false }) => {
         <div className="pt-2 border-t border-outline-variant mt-1 flex items-center justify-between">
           <PriceTag price={dish.price} priceDisplay={dish.priceDisplay} className="text-[15px] text-primary font-extrabold" />
 
-          <button
-            type="button"
-            onClick={handlePrimaryAction}
-            disabled={!isAvailable || !isOrderable}
-            className="h-8 px-3 rounded-xl bg-primary hover:brightness-90 text-on-primary text-[12px] font-bold transition-all active:scale-95 flex items-center gap-1 shadow-xs whitespace-nowrap cursor-pointer"
-            aria-label={`${actionLabel} ${dish.name}`}
-          >
-            <span>{actionLabel}</span>
-            {dish.customizationAvailable && <ChevronRight className="w-3.5 h-3.5 stroke-[2.5]" />}
-            {quantityInCart > 0 && !dish.customizationAvailable && (
-              <span className="bg-on-primary/20 text-on-primary px-1.5 py-0.2 rounded-full text-[10px] ml-0.5 font-extrabold">
+          {quantityInCart > 0 && isAvailable && isOrderable ? (
+            <div className="h-8 px-1.5 rounded-xl bg-primary text-on-primary font-bold transition-all flex items-center justify-between gap-1.5 shrink-0 shadow-xs border border-primary/20">
+              <button
+                type="button"
+                onClick={handleDecrease}
+                className="w-6 h-6 rounded-lg bg-on-primary/20 hover:bg-on-primary/30 active:scale-90 flex items-center justify-center text-on-primary transition-all cursor-pointer"
+                title="Reduce quantity"
+                aria-label={`Reduce ${dish.name} quantity`}
+              >
+                <Minus className="w-3.5 h-3.5 stroke-[2.5]" aria-hidden="true" />
+              </button>
+              
+              <span className="text-[12.5px] font-extrabold text-on-primary px-0.5 min-w-[14px] text-center select-none">
                 {quantityInCart}
               </span>
-            )}
-          </button>
+              
+              <button
+                type="button"
+                onClick={handleIncrease}
+                className="w-6 h-6 rounded-lg bg-on-primary/20 hover:bg-on-primary/30 active:scale-90 flex items-center justify-center text-on-primary transition-all cursor-pointer"
+                title={dish.customizationAvailable ? "Customize another portion" : "Add another"}
+                aria-label={dish.customizationAvailable ? `Customize another ${dish.name}` : `Add another ${dish.name}`}
+              >
+                <Plus className="w-3.5 h-3.5 stroke-[2.5]" aria-hidden="true" />
+              </button>
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={handlePrimaryAction}
+              disabled={!isAvailable || !isOrderable}
+              className="h-8 px-3 rounded-xl bg-primary hover:brightness-90 text-on-primary text-[12px] font-bold transition-all active:scale-95 flex items-center gap-1 shadow-xs whitespace-nowrap cursor-pointer"
+              aria-label={`${actionLabel} ${dish.name}`}
+            >
+              <span>{actionLabel}</span>
+              {dish.customizationAvailable && <ChevronRight className="w-3.5 h-3.5 stroke-[2.5]" />}
+            </button>
+          )}
         </div>
       </div>
     </div>
