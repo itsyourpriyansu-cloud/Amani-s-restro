@@ -146,14 +146,14 @@ const PortalGatewayScreen = () => {
           
           <div className="flex items-center gap-3">
             <img
-              src="/logo.png"
-              alt="Mangamma Ruchulu Logo"
-              className="w-11 h-11 rounded-full object-cover shadow-lg ring-2 ring-amber-400/30 shrink-0"
+              src="/Amanis Logo Final.svg"
+              alt="Amani's Kitchen Logo"
+              className="w-11 h-11 rounded-full object-contain p-0.5 bg-white/10 shadow-lg ring-2 ring-amber-400/30 shrink-0"
             />
 
             <div>
               <h1 className="text-lg font-serif font-bold tracking-wide text-white">
-                Mangamma Ruchulu
+                Amani's Kitchen
               </h1>
               <p className="text-xs text-stone-400 font-mono flex items-center gap-1.5">
                 <Compass className="w-3.5 h-3.5 text-amber-400" />
@@ -253,7 +253,7 @@ const PortalGatewayScreen = () => {
 
       {/* Footer */}
       <footer className="relative z-10 border-t border-stone-800/80 px-6 py-4 text-center text-xs font-mono text-stone-500">
-        Mangamma Ruchulu • Andhra Restaurant Management Suite v2.4 • All Systems Connected
+        Amani's Kitchen • South Indian Restaurant Management Suite v2.4 • All Systems Connected
       </footer>
 
       {/* Security Login Modal */}

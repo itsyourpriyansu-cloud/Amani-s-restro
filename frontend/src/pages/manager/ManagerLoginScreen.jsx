@@ -15,7 +15,7 @@ import {
 } from 'lucide-react';
 import { RESTAURANT_INFO } from '../../utils/mockData';
 
-const DEMO_EMAIL = 'manager@mangammaruchulu.in';
+const DEMO_EMAIL = 'manager@amaniskitchen.com';
 const DEMO_PASSWORD = 'manager123';
 
 const ManagerLoginScreen = () => {
@@ -77,11 +77,11 @@ const ManagerLoginScreen = () => {
           {/* Brand Header */}
           <div className="flex flex-col items-center mb-8">
             <img
-              src={RESTAURANT_INFO.logo || '/logo.png'}
+              src={RESTAURANT_INFO.logo || '/Amanis Logo Final.svg'}
               alt={RESTAURANT_INFO.name}
-              className="w-16 h-16 rounded-full object-cover mb-3 shadow-md border border-outline-variant/40"
+              className="w-16 h-16 rounded-full object-contain p-0.5 bg-surface mb-3 shadow-md border border-outline-variant/40"
             />
-            <span className="text-2xl font-bold text-primary tracking-tight mb-1.5">{RESTAURANT_INFO.name}</span>
+            <span className="font-serif text-2xl font-bold text-primary tracking-tight mb-1.5">{RESTAURANT_INFO.name}</span>
             <div className="h-1 w-12 bg-secondary-fixed-dim rounded-full" />
           </div>
 

@@ -15,8 +15,8 @@ const ReportSubmittedScreen = () => {
           <Icon name="arrow_back" />
         </button>
         <div className="flex items-center gap-2">
-          <img src={RESTAURANT_INFO.logo || '/logo.png'} alt="Mangamma Ruchulu" className="w-8 h-8 rounded-full object-cover shrink-0" />
-          <h1 className="text-xl font-bold text-primary">Mangamma Ruchulu</h1>
+          <img src={RESTAURANT_INFO.logo || '/Amanis Logo Final.svg'} alt="Amani's Kitchen" className="w-8 h-8 rounded-full object-contain p-0.5 shrink-0" />
+          <h1 className="text-xl font-bold font-serif text-primary">Amani's Kitchen</h1>
         </div>
         <span className="text-sm font-semibold text-primary">Table {tableNumber}</span>
       </header>

@@ -13,13 +13,13 @@ export default {
         '3xl': '24px',
       },
       fontFamily: {
-        serif: ['Inter', 'sans-serif'],
-        sans: ['Inter', 'sans-serif'],
+        serif: ['Playfair Display', 'Georgia', 'serif'],
+        sans: ['Plus Jakarta Sans', '-apple-system', 'sans-serif'],
       },
       boxShadow: {
-        'soft': '0 4px 20px -2px rgba(17, 17, 17, 0.05)',
-        'floating': '0 10px 30px -4px rgba(141, 18, 48, 0.2)',
-        'card': '0 2px 12px rgba(0, 0, 0, 0.04)',
+        'soft': '0 4px 20px -2px rgba(116, 47, 28, 0.06)',
+        'floating': '0 10px 30px -4px rgba(116, 47, 28, 0.28)',
+        'card': '0 2px 12px rgba(116, 47, 28, 0.05)',
       }
     },
   },

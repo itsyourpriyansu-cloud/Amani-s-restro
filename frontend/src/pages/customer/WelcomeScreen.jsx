@@ -64,7 +64,7 @@ const RestaurantHero = ({ heroImage }) => {
       {!heroImgFailed ? (
         <img
           src={heroImage || '/mangamma_hero_banner.png'}
-          alt="Mangamma Ruchulu authentic Telugu dining meal and ambience"
+          alt="Amani's Kitchen authentic South Indian dining meal and ambience"
           fetchpriority="high"
           loading="eager"
           onError={() => setHeroImgFailed(true)}

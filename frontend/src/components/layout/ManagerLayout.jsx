@@ -49,9 +49,9 @@ const ManagerLayout = ({ children, activeTab, setActiveTab }) => {
       <aside className={`shrink-0 border-r border-outline-variant bg-surface-container-lowest flex flex-col transition-[width] duration-200 ${collapsed ? 'w-[72px]' : 'w-[228px]'}`}>
         <div className={`flex items-center gap-3 h-16 shrink-0 ${collapsed ? 'justify-center px-2' : 'px-5'}`}>
           <img
-            src={RESTAURANT_INFO.logo || '/logo.png'}
+            src={RESTAURANT_INFO.logo || '/Amanis Logo Final.svg'}
             alt={RESTAURANT_INFO.name}
-            className="w-9 h-9 rounded-full object-cover shrink-0 border border-outline-variant/40"
+            className="w-9 h-9 rounded-full object-contain p-0.5 shrink-0 border border-outline-variant/40"
           />
           {!collapsed && (
             <div className="min-w-0">

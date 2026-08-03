@@ -116,12 +116,12 @@ const KitchenLoginScreen = ({ onLoginSuccess }) => {
         {/* Brand Header */}
         <header className="flex flex-col items-center text-center gap-2">
           <img
-            src={RESTAURANT_INFO.logo || '/logo.png'}
+            src={RESTAURANT_INFO.logo || '/Amanis Logo Final.svg'}
             alt={RESTAURANT_INFO.name}
-            className="w-16 h-16 rounded-full object-cover shadow-md mb-1 border border-outline-variant/30"
+            className="w-16 h-16 rounded-full object-contain p-0.5 shadow-md mb-1 border border-outline-variant/30 bg-surface"
           />
-          <h1 className="font-headline-lg text-headline-lg text-on-surface tracking-tight">
-            Mangamma Ruchulu
+          <h1 className="font-serif font-bold text-[24px] sm:text-[26px] text-on-surface tracking-tight">
+            Amani's Kitchen
           </h1>
           <p className="font-body-md text-body-md text-on-surface-variant font-medium">
             Welcome Back, Kitchen Team

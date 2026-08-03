@@ -33,9 +33,9 @@ const CounterLoginScreen = () => {
         {/* Brand Header */}
         <div className="flex flex-col items-center mb-6">
           <img
-            src={RESTAURANT_INFO.logo || '/logo.png'}
+            src={RESTAURANT_INFO.logo || '/Amanis Logo Final.svg'}
             alt={RESTAURANT_INFO.name}
-            className="w-20 h-20 rounded-full object-cover shadow-lg border-2 border-primary/20"
+            className="w-20 h-20 rounded-full object-contain p-0.5 bg-surface shadow-lg border-2 border-primary/20"
           />
         </div>
 

@@ -5,6 +5,7 @@ import { CartProvider } from './context/CartContext';
 import { OrderProvider } from './context/OrderContext';
 import { ToastProvider } from './context/ToastContext';
 import CustomerLayout from './components/layout/CustomerLayout';
+import IntroScreen from './components/intro-screen';
 
 import WelcomeScreen from './pages/customer/WelcomeScreen';
 import MenuScreen from './pages/customer/MenuScreen';
@@ -35,6 +36,7 @@ import PortalGatewayScreen from './pages/portal/PortalGatewayScreen';
 function App() {
   return (
     <Router>
+      <IntroScreen />
       <ToastProvider>
         <TableProvider>
           <CartProvider>

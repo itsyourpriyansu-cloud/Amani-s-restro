@@ -132,7 +132,7 @@ const AnimatedSplashScreen = ({ onComplete, autoDismiss = true }) => {
               'radial-gradient(circle at 50% 45%, #3D160E 0%, #1C0B08 60%, #100504 100%)',
           }}
           role="dialog"
-          aria-label="Mangamma Ruchulu brand introduction"
+          aria-label="Amani's Kitchen brand introduction"
         >
           {/* Layer 1: Ambient Background Particle Canvas */}
           <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none opacity-80 z-10" />
@@ -221,9 +221,9 @@ const AnimatedSplashScreen = ({ onComplete, autoDismiss = true }) => {
               className="relative w-20 h-20 rounded-full border-2 border-highlight overflow-hidden shadow-[0_0_35px_rgba(201,149,61,0.5)] mb-4"
             >
               <img
-                src="/logo.png"
-                alt="Mangamma Ruchulu Brand Logo"
-                className="w-full h-full object-cover"
+                src="/Amanis Logo Final.svg"
+                alt="Amani's Kitchen Brand Logo"
+                className="w-full h-full object-contain p-1.5 bg-white/10"
               />
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
@@ -233,23 +233,12 @@ const AnimatedSplashScreen = ({ onComplete, autoDismiss = true }) => {
               />
             </motion.div>
 
-            {/* Telugu Brand Name: "మంగమ్మ రుచులు" */}
-            <motion.p
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 2.2, ease: 'easeOut' }}
-              className="font-telugu text-[23px] font-bold text-highlight tracking-wide mb-1 drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)]"
-              lang="te"
-            >
-              {restaurantConfig.nativeName}
-            </motion.p>
-
-            {/* Main English Brand Name: "Mangamma Ruchulu" */}
+            {/* Main English Brand Name: "Amani's Kitchen" */}
             <motion.h1
               initial={{ opacity: 0, y: 16, letterSpacing: '0.06em' }}
               animate={{ opacity: 1, y: 0, letterSpacing: '0.02em' }}
-              transition={{ duration: 0.8, delay: 2.6, ease: 'easeOut' }}
-              className="relative font-bold text-[32px] leading-tight text-surface tracking-tight drop-shadow-[0_4px_20px_rgba(0,0,0,0.95)]"
+              transition={{ duration: 0.8, delay: 2.4, ease: 'easeOut' }}
+              className="relative font-serif font-bold text-[32px] sm:text-[36px] leading-tight text-surface tracking-tight drop-shadow-[0_4px_20px_rgba(0,0,0,0.95)]"
             >
               {restaurantConfig.name}
 

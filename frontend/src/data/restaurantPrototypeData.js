@@ -20,19 +20,19 @@ export const SHARED_PROTOTYPE_IDS = {
 
 export const RESTAURANT_TRUST_PROFILE = {
   restaurantId: 'REST-001',
-  restaurantName: 'Mangamma Ruchulu',
+  restaurantName: "Amani's Kitchen",
   shortKitchenIntroduction:
-    'Regional Andhra & Telangana food prepared fresh for each service period using authentic stone-ground spices.',
+    'Authentic South Indian food prepared fresh for each service period using heirloom recipes and stone-ground spices.',
 
   chefProfile: {
     name: 'Chef Arjun Rao',
     role: 'Head Chef',
     experienceLabel: '12 years of professional kitchen experience',
     story:
-      'Trained under traditional master cooks across Andhra Pradesh and Telangana, Chef Arjun emphasizes hand-ground masalas, wood-fired tandoor technique, and precise dum-cooking timing.',
+      'Trained under heirloom master cooks across South India, Chef Arjun emphasizes hand-ground masalas, traditional stone cooking, and precise heat control.',
     image: 'https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=400&q=80',
-    philosophy: 'Authentic flavors through fresh ingredients and traditional heat techniques.',
-    speciality: 'Andhra-Style Dum Biryanis & Tandoor Specialities'
+    philosophy: 'Authentic South Indian flavors through fresh ingredients and traditional techniques.',
+    speciality: 'South Indian Heirloom Curries & Signature Biryanis'
   },
 
   ingredientSourcing: [

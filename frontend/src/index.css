@@ -1,131 +1,127 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-serif: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-telugu: 'Noto Sans Telugu', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-telugu: 'Noto Sans Telugu', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 
-  /* Mangamma Ruchulu brand palette — raw scale, use directly (bg-maroon-800, text-saffron-600, ...) */
-  --color-maroon-950: #4A0718;
-  --color-maroon-900: #6E0D25;
-  --color-maroon-800: #8D1230;
-  --color-maroon-700: #A61B39;
+  /* Amani's Kitchen brand palette — raw scale (bg-maroon-800, text-saffron-600, ...) */
+  --color-maroon-950: #42180C;
+  --color-maroon-900: #5B2314;
+  --color-maroon-800: #742F1C;
+  --color-maroon-700: #8A4025;
 
-  --color-saffron-600: #E97818;
-  --color-saffron-500: #F28C28;
-  --color-saffron-100: #FFF0DE;
+  --color-saffron-600: #C89552;
+  --color-saffron-500: #D9AD72;
+  --color-saffron-100: #FBF0E1;
 
-  --color-ivory: #FFFDF9;
-  --color-warm-white: #FFF9F2;
-  --color-cream: #F8F0E5;
-  --color-sand: #EBDAC6;
+  --color-ivory: #FFFFFF;
+  --color-warm-white: #FDFBF7;
+  --color-cream: #FAF2EF;
+  --color-sand: #EAD3C8;
 
-  --color-ink: #201714;
-  --color-text: #342722;
-  --color-muted: #74655D;
-  --color-border: #E9DED3;
+  --color-ink: #1C1310;
+  --color-text: #4A3E39;
+  --color-muted: #7D6F6A;
+  --color-border: #E7DAD0;
 
-  --color-success: #247A4A;
+  --color-success: #2E7D32;
   --color-warning: #B76A0B;
-  --color-danger: #B3263D;
+  --color-danger: #B71C1C;
   --color-information: #315C9E;
   --color-whatsapp-action: #128C7E;
   --color-whatsapp-accent: #25D366;
 
-  /* Material semantic tokens, remapped onto the brand palette above.
-     Existing components already consume these names (bg-primary, text-on-surface-variant,
-     bg-surface-container, ...) across all five role modules — keep the names, swap the values. */
-  --color-primary: #8D1230;
-  --color-primary-container: #A61B39;
+  /* Material semantic tokens, remapped to Amani's Kitchen palette */
+  --color-primary: #742F1C;
+  --color-primary-container: #F3E1DB;
   --color-on-primary: #ffffff;
-  --color-on-primary-container: #FFF0DE;
+  --color-on-primary-container: #42180C;
 
-  --color-secondary: #E97818;
-  --color-secondary-container: #FFF0DE;
-  --color-on-secondary: #ffffff;
-  --color-on-secondary-container: #6E0D25;
+  --color-secondary: #C89552;
+  --color-secondary-container: #FBF0E1;
+  --color-on-secondary: #2E1C0A;
+  --color-on-secondary-container: #5C431F;
 
-  --color-tertiary: #74655D;
-  --color-tertiary-container: #EBDAC6;
+  --color-tertiary: #7D6F6A;
+  --color-tertiary-container: #EFE7E2;
   --color-on-tertiary: #ffffff;
-  --color-on-tertiary-container: #201714;
+  --color-on-tertiary-container: #1C1310;
 
-  --color-background: #FFFDF9;
-  --color-surface: #FFFDF9;
-  --color-surface-dim: #EBDAC6;
-  --color-surface-bright: #FFFDF9;
+  --color-background: #FDFBF7;
+  --color-surface: #ffffff;
+  --color-surface-dim: #F3E9DE;
+  --color-surface-bright: #ffffff;
   --color-surface-container-lowest: #ffffff;
-  --color-surface-container-low: #FFF9F2;
-  --color-surface-container: #F8F0E5;
-  --color-surface-container-high: #EBDAC6;
-  --color-surface-container-highest: #E4D5C0;
+  --color-surface-container-low: #FDFBF7;
+  --color-surface-container: #FAF2EF;
+  --color-surface-container-high: #F3E1DB;
+  --color-surface-container-highest: #EAD3C8;
 
-  --color-on-surface: #201714;
-  --color-on-surface-variant: #74655D;
-  --color-on-background: #201714;
+  --color-on-surface: #1C1310;
+  --color-on-surface-variant: #7D6F6A;
+  --color-on-background: #1C1310;
 
-  --color-outline: #A68E82;
-  --color-outline-variant: #E9DED3;
-  --color-surface-variant: #F8F0E5;
-  --color-surface-tint: #8D1230;
+  --color-outline: #A9887A;
+  --color-outline-variant: #E7DAD0;
+  --color-surface-variant: #FAF2EF;
+  --color-surface-tint: #742F1C;
 
-  --color-error: #B3263D;
+  --color-error: #B71C1C;
   --color-on-error: #ffffff;
-  --color-error-container: #FBE0E4;
-  --color-on-error-container: #B3263D;
+  --color-error-container: #F8D9D9;
+  --color-on-error-container: #5B1010;
 
-  /* New tokens introduced for the customer app re-theme (mangamma-ruchulu-color-system.md).
-     Unused elsewhere today, so their defaults here are inert outside the customer scope. */
   --color-on-success: #ffffff;
-  --color-on-warning: #201714;
+  --color-on-warning: #1C1310;
   --color-on-info: #ffffff;
-  --color-highlight: #C9953D;
+  --color-highlight: #C89552;
 
   /* Meal-composition UI semantic tokens */
-  --color-meal-section-bg: #FFFDF9;
-  --color-meal-section-border: #E9DED3;
-  --color-meal-row-divider: #E9DED3;
-  --color-meal-icon-bg: #FFF0DE;
-  --color-meal-icon-fg: #8D1230;
-  --color-meal-primary-bg: #FFF0DE;
-  --color-meal-primary-fg: #6E0D25;
-  --color-meal-primary-border: #EBDAC6;
-  --color-meal-vegetarian-bg: #E7EED8;
-  --color-meal-vegetarian-fg: #31551C;
-  --color-meal-vegetarian-border: #C8D8AA;
-  --color-meal-spice-bg: #FBE0E4;
-  --color-meal-spice-fg: #7A2434;
-  --color-meal-spice-border: #E8B8C1;
-  --color-meal-preparation-bg: #FFF3D9;
-  --color-meal-preparation-fg: #70440B;
-  --color-meal-preparation-border: #E8CB8F;
-  --color-meal-neutral-bg: #FFF9F2;
-  --color-meal-neutral-fg: #5D5147;
-  --color-meal-neutral-border: #E9DED3;
-  --color-meal-verified-bg: #E7EED8;
-  --color-meal-verified-fg: #31551C;
-  --color-meal-notice-bg: #FFF8E8;
-  --color-meal-notice-fg: #70440B;
-  --color-meal-notice-border: #E8CB8F;
+  --color-meal-section-bg: #FDFBF7;
+  --color-meal-section-border: #E7DAD0;
+  --color-meal-row-divider: #E7DAD0;
+  --color-meal-icon-bg: #FBF0E1;
+  --color-meal-icon-fg: #742F1C;
+  --color-meal-primary-bg: #FBF0E1;
+  --color-meal-primary-fg: #5B2314;
+  --color-meal-primary-border: #EAD3C8;
+  --color-meal-vegetarian-bg: #E8F5E9;
+  --color-meal-vegetarian-fg: #1B5E20;
+  --color-meal-vegetarian-border: #C8E6C9;
+  --color-meal-spice-bg: #FFEBEE;
+  --color-meal-spice-fg: #B71C1C;
+  --color-meal-spice-border: #FFCDD2;
+  --color-meal-preparation-bg: #FFF8E1;
+  --color-meal-preparation-fg: #B76A0B;
+  --color-meal-preparation-border: #FFE082;
+  --color-meal-neutral-bg: #FDFBF7;
+  --color-meal-neutral-fg: #4A3E39;
+  --color-meal-neutral-border: #E7DAD0;
+  --color-meal-verified-bg: #E8F5E9;
+  --color-meal-verified-fg: #1B5E20;
+  --color-meal-notice-bg: #FFF8E1;
+  --color-meal-notice-fg: #B76A0B;
+  --color-meal-notice-border: #FFE082;
 
-  --color-inverse-surface: #201714;
-  --color-inverse-on-surface: #FFFDF9;
-  --color-inverse-primary: #F28C28;
+  --color-inverse-surface: #1C1310;
+  --color-inverse-on-surface: #FDFBF7;
+  --color-inverse-primary: #D9AD72;
 
-  --color-primary-fixed: #FFF0DE;
-  --color-primary-fixed-dim: #F28C28;
-  --color-on-primary-fixed: #4A0718;
-  --color-on-primary-fixed-variant: #8D1230;
+  --color-primary-fixed: #FBF0E1;
+  --color-primary-fixed-dim: #D9AD72;
+  --color-on-primary-fixed: #42180C;
+  --color-on-primary-fixed-variant: #742F1C;
 
-  --color-secondary-fixed: #FFF0DE;
-  --color-secondary-fixed-dim: #F28C28;
-  --color-on-secondary-fixed: #4A0718;
-  --color-on-secondary-fixed-variant: #6E0D25;
+  --color-secondary-fixed: #FBF0E1;
+  --color-secondary-fixed-dim: #D9AD72;
+  --color-on-secondary-fixed: #42180C;
+  --color-on-secondary-fixed-variant: #5B2314;
 
-  --color-tertiary-fixed: #F8F0E5;
-  --color-tertiary-fixed-dim: #EBDAC6;
-  --color-on-tertiary-fixed: #201714;
-  --color-on-tertiary-fixed-variant: #342722;
+  --color-tertiary-fixed: #FAF2EF;
+  --color-tertiary-fixed-dim: #EAD3C8;
+  --color-on-tertiary-fixed: #1C1310;
+  --color-on-tertiary-fixed-variant: #4A3E39;
 
   /* Radius scale */
   --radius-small: 10px;
@@ -179,141 +175,149 @@
   --radius-card: 18px;
 }
 
+/* Motion variables */
+:root {
+  --transition-fast: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-normal: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-slow: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 /* ============================================================
-   Mangamma Ruchulu — customer app color overrides
-   Scoped to [data-app="customer"] (set on CustomerLayout's root
-   element) so counter/kitchen/manager/waiter keep today's palette
-   untouched. Overrides the *values* of the existing semantic/brand
-   tokens above — class names (bg-primary, text-on-surface-variant,
-   bg-saffron-600, ...) are unchanged, so existing components pick
-   these up automatically via normal CSS custom-property cascade.
-   Values sourced from mangamma-ruchulu-color-system.md (light theme).
+   Amani's Kitchen — customer app color overrides
+   Scoped to [data-app="customer"] (set on CustomerLayout's root)
    ============================================================ */
 [data-app="customer"] {
   /* M3 semantic tokens */
-  --color-primary: #7A1F24;
-  --color-primary-container: #F2D8D8;
+  --color-primary: #742F1C;
+  --color-primary-container: #F2DFD6;
   --color-on-primary: #FFFDF8;
-  --color-on-primary-container: #4A1118;
+  --color-on-primary-container: #42180C;
 
-  --color-secondary: #4B651F;
-  --color-secondary-container: #DDE6CB;
+  --color-secondary: #5C431F;
+  --color-secondary-container: #FBF0E1;
   --color-on-secondary: #FFFDF8;
-  --color-on-secondary-container: #253817;
+  --color-on-secondary-container: #2E1C0A;
 
-  --color-tertiary: #985D2E;
-  --color-tertiary-container: #F2D9C7;
+  --color-tertiary: #7D6F6A;
+  --color-tertiary-container: #FAF2EF;
   --color-on-tertiary: #FFFDF8;
-  --color-on-tertiary-container: #4A2514;
+  --color-on-tertiary-container: #1C1310;
 
-  --color-background: #F7F1E5;
-  --color-on-background: #1A120D;
+  --color-background: #FDFBF7;
+  --color-on-background: #1C1310;
 
-  --color-surface: #FFFDF8;
-  --color-surface-dim: #E6D0AC;
-  --color-surface-bright: #FFFDF8;
+  --color-surface: #FFFFFF;
+  --color-surface-dim: #EAD3C8;
+  --color-surface-bright: #FFFFFF;
   --color-surface-container-lowest: #FFFFFF;
-  --color-surface-container-low: #F0E6D5;
-  --color-surface-container: #EDE1CF;
-  --color-surface-container-high: #E6D0AC;
-  --color-surface-container-highest: #C8B9A2;
+  --color-surface-container-low: #FDFBF7;
+  --color-surface-container: #FAF2EF;
+  --color-surface-container-high: #F3E1DB;
+  --color-surface-container-highest: #EAD3C8;
 
-  --color-on-surface: #2A241F;
-  --color-on-surface-variant: #5D5147;
-  --color-surface-variant: #EDE1CF;
-  --color-surface-tint: #7A1F24;
+  --color-on-surface: #1C1310;
+  --color-on-surface-variant: #7D6F6A;
+  --color-surface-variant: #FAF2EF;
+  --color-surface-tint: #742F1C;
 
-  --color-outline: #8C7B6A;
-  --color-outline-variant: #D5C4AE;
+  --color-outline: #B49C8C;
+  --color-outline-variant: #E7DAD0;
 
-  --color-error: #A93F1D;
+  --color-error: #B71C1C;
   --color-on-error: #FFFDF8;
-  --color-error-container: #F6D7CF;
-  --color-on-error-container: #5B1A0C;
+  --color-error-container: #F8D9D9;
+  --color-on-error-container: #5B1010;
 
-  --color-inverse-surface: #2A241F;
-  --color-inverse-on-surface: #F7F1E5;
-  --color-inverse-primary: #E7A4A5;
+  --color-inverse-surface: #1C1310;
+  --color-inverse-on-surface: #FDFBF7;
+  --color-inverse-primary: #E8B491;
 
-  --color-primary-fixed: #F2D8D8;
-  --color-primary-fixed-dim: #E7A4A5;
-  --color-on-primary-fixed: #4A1118;
-  --color-on-primary-fixed-variant: #7A1F24;
+  --color-primary-fixed: #F2DFD6;
+  --color-primary-fixed-dim: #E8B491;
+  --color-on-primary-fixed: #42180C;
+  --color-on-primary-fixed-variant: #742F1C;
 
-  --color-secondary-fixed: #DDE6CB;
-  --color-secondary-fixed-dim: #B6CC88;
-  --color-on-secondary-fixed: #253817;
-  --color-on-secondary-fixed-variant: #4B651F;
+  --color-secondary-fixed: #FBF0E1;
+  --color-secondary-fixed-dim: #D9AD72;
+  --color-on-secondary-fixed: #2E1C0A;
+  --color-on-secondary-fixed-variant: #5C431F;
 
-  --color-tertiary-fixed: #F2D9C7;
-  --color-tertiary-fixed-dim: #E3A878;
-  --color-on-tertiary-fixed: #4A2514;
-  --color-on-tertiary-fixed-variant: #985D2E;
+  --color-tertiary-fixed: #FAF2EF;
+  --color-tertiary-fixed-dim: #EAD3C8;
+  --color-on-tertiary-fixed: #1C1310;
+  --color-on-tertiary-fixed-variant: #7D6F6A;
 
   /* status */
-  --color-success: #4B651F;
+  --color-success: #2E7D32;
   --color-on-success: #FFFDF8;
-  --color-warning: #A96C18;
-  --color-on-warning: #1A120D;
-  --color-danger: #A93F1D;
-  --color-information: #365F73;
+  --color-warning: #B76A0B;
+  --color-on-warning: #1C1310;
+  --color-danger: #B71C1C;
+  --color-information: #315C9E;
   --color-on-info: #FFFDF8;
-  --color-highlight: #C9953D;
+  --color-highlight: #C89552;
   --color-whatsapp-action: #128C7E;
   --color-whatsapp-accent: #25D366;
 
   /* meal composition */
-  --color-meal-section-bg: #FFFDF8;
-  --color-meal-section-border: #D5C4AE;
-  --color-meal-row-divider: #E6DACB;
-  --color-meal-icon-bg: #F2D8D8;
-  --color-meal-icon-fg: #7A1F24;
-  --color-meal-primary-bg: #F2D8D8;
-  --color-meal-primary-fg: #7A1F24;
-  --color-meal-primary-border: #E7A4A5;
-  --color-meal-vegetarian-bg: #DDE6CB;
-  --color-meal-vegetarian-fg: #253817;
-  --color-meal-vegetarian-border: #B6CC88;
-  --color-meal-spice-bg: #F6D7CF;
-  --color-meal-spice-fg: #5B1A0C;
-  --color-meal-spice-border: #E3A878;
-  --color-meal-preparation-bg: #FBF1DD;
-  --color-meal-preparation-fg: #65420F;
-  --color-meal-preparation-border: #E6C990;
-  --color-meal-neutral-bg: #F0E6D5;
-  --color-meal-neutral-fg: #5D5147;
-  --color-meal-neutral-border: #D5C4AE;
-  --color-meal-verified-bg: #DDE6CB;
-  --color-meal-verified-fg: #253817;
-  --color-meal-notice-bg: #FBF1DD;
-  --color-meal-notice-fg: #65420F;
-  --color-meal-notice-border: #D9B76B;
+  --color-meal-section-bg: #FFFFFF;
+  --color-meal-section-border: #E7DAD0;
+  --color-meal-row-divider: #E7DAD0;
+  --color-meal-icon-bg: #F2DFD6;
+  --color-meal-icon-fg: #742F1C;
+  --color-meal-primary-bg: #F2DFD6;
+  --color-meal-primary-fg: #742F1C;
+  --color-meal-primary-border: #E8B491;
+  --color-meal-vegetarian-bg: #E8F5E9;
+  --color-meal-vegetarian-fg: #1B5E20;
+  --color-meal-vegetarian-border: #C8E6C9;
+  --color-meal-spice-bg: #F8D9D9;
+  --color-meal-spice-fg: #5B1010;
+  --color-meal-spice-border: #E8B491;
+  --color-meal-preparation-bg: #FBF0E1;
+  --color-meal-preparation-fg: #5C431F;
+  --color-meal-preparation-border: #D9AD72;
+  --color-meal-neutral-bg: #FAF2EF;
+  --color-meal-neutral-fg: #7D6F6A;
+  --color-meal-neutral-border: #E7DAD0;
+  --color-meal-verified-bg: #E8F5E9;
+  --color-meal-verified-fg: #1B5E20;
+  --color-meal-notice-bg: #FBF0E1;
+  --color-meal-notice-fg: #5C431F;
+  --color-meal-notice-border: #D9AD72;
 
-  /* raw brand scale — consumed by common/PrimaryButton, SecondaryButton,
-     DishBadges (spice badge), and several customer screens directly */
-  --color-maroon-950: #4A1118;
-  --color-maroon-900: #6B1920;
-  --color-maroon-800: #7A1F24;
-  --color-maroon-700: #7A1F24;
+  /* raw brand scale */
+  --color-maroon-950: #42180C;
+  --color-maroon-900: #5B2314;
+  --color-maroon-800: #742F1C;
+  --color-maroon-700: #8A4025;
 
-  --color-saffron-600: #A93F1D;
-  --color-saffron-500: #8A3417;
-  --color-saffron-100: #F6D7CF;
+  --color-saffron-600: #C89552;
+  --color-saffron-500: #D9AD72;
+  --color-saffron-100: #FBF0E1;
 
-  --color-ivory: #FFFDF8;
-  --color-warm-white: #F0E6D5;
-  --color-cream: #FFFDF8;
-  --color-sand: #EDE1CF;
+  --color-ivory: #FFFFFF;
+  --color-warm-white: #FDFBF7;
+  --color-cream: #FAF2EF;
+  --color-sand: #EAD3C8;
 
-  --color-ink: #1A120D;
-  --color-text: #2A241F;
-  --color-muted: #5D5147;
-  --color-border: #D5C4AE;
+  --color-ink: #1C1310;
+  --color-text: #4A3E39;
+  --color-muted: #7D6F6A;
+  --color-border: #E7DAD0;
 }
 
-/* Force Inter font globally across all HTML elements, utility classes, and components */
-html, body, button, input, textarea, select, h1, h2, h3, h4, h5, h6, p, span, div, a, label, .font-serif, .font-sans {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+/* Base font family fallback. Utility classes (.font-serif, .font-sans) override explicitly. */
+html, body, button, input, textarea, select, h1, h2, h3, h4, h5, h6, p, span, div, a, label {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.font-serif {
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+.font-sans {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 .material-symbols-outlined {
@@ -371,17 +375,17 @@ html, body, button, input, textarea, select, h1, h2, h3, h4, h5, h6, p, span, di
   -webkit-backdrop-filter: blur(8px);
 }
 
-/* Soft Custom Shadows */
+/* Soft Custom Brand Shadows */
 .shadow-soft {
-  box-shadow: 0 4px 20px -2px rgba(26, 28, 28, 0.05);
+  box-shadow: 0 4px 20px -2px rgba(116, 47, 28, 0.06);
 }
 
 .shadow-card {
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 2px 12px rgba(116, 47, 28, 0.05);
 }
 
 .shadow-floating {
-  box-shadow: 0 10px 30px -4px rgba(141, 18, 48, 0.25);
+  box-shadow: 0 10px 30px -4px rgba(116, 47, 28, 0.28);
 }
 
 /* Lightweight kolam-inspired line-pattern divider, used as a subtle header/section accent */

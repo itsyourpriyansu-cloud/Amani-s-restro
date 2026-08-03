@@ -1,33 +1,33 @@
 export const restaurantConfig = {
   // Brand identity — the single source of truth for restaurant name/branding.
   // Every module should read from here instead of hardcoding restaurant strings.
-  id: 'MANGAMMA-RUCHULU',
-  name: 'Mangamma Ruchulu',
-  nativeName: 'మంగమ్మ రుచులు',
-  parentCompany: 'Lakshya Foodways',
-  parentCompanyLabel: 'A Unit of Lakshya Foodways',
-  establishedYear: 2014,
-  logo: '/logo.png',
+  id: 'AMANIS-KITCHEN',
+  name: "Amani's Kitchen",
+  nativeName: '',
+  parentCompany: "Amani's Group",
+  parentCompanyLabel: "Amani's Kitchen",
+  establishedYear: 2024,
+  logo: '/Amanis Logo Final.svg',
 
-  tagline: 'A Journey of Tradition. A Legacy of Flavour.',
+  tagline: 'A Taste of the South, Made With Heart.',
 
   shortDescription:
-    'Since 2014, Lakshya Foodways has served guests with a passion for quality, tradition and heartfelt hospitality. Mangamma Ruchulu brings timeless regional recipes and memorable dining experiences to every table.',
+    "Established in 2024, Amani's Kitchen brings authentic South Indian heirloom recipes and heartfelt hospitality to every table.",
 
   aboutStory:
-    'Since 2014, Lakshya Foodways has been serving guests with a passion for quality, tradition, and heartfelt hospitality. As part of this legacy, Mangamma Ruchulu was created to bring timeless recipes and memorable dining experiences to every table. From our first meal to thousands of happy guests today, our journey has been driven by one simple promise — to serve food that brings people together and creates lasting memories.',
+    "Established in 2024, Amani's Kitchen was created to bring timeless South Indian recipes and memorable dining experiences to every table. From traditional spices to heartfelt hospitality, our journey is driven by one simple promise — to serve food that brings people together.",
 
   contact: {
     phone: '8886911773',
-    email: 'contact@mangammaruchulu.com',
-    website: 'www.mangammaruchulu.com',
-    socialHandle: '/mangammaruchulu',
+    email: 'contact@amaniskitchen.com',
+    website: 'www.amaniskitchen.com',
+    socialHandle: '/amaniskitchen',
   },
 
   branding: {
-    primaryColor: '#8D1230',
-    actionColor: '#E97818',
-    backgroundColor: '#FFFDF9',
+    primaryColor: '#742F1C',
+    actionColor: '#C89552',
+    backgroundColor: '#FDFBF7',
   },
 
   countryCode: 'IN',

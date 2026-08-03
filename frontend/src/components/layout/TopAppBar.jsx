@@ -212,11 +212,11 @@ const TopAppBar = ({
 
               {logoSrc && !logoFailed ? (
                 <img
-                  src={logoSrc}
-                  alt="Mangamma Ruchulu Brand Logo"
+                  src={logoSrc || '/Amanis Logo Final.svg'}
+                  alt="Amani's Kitchen Brand Logo"
                   aria-hidden="true"
                   onError={() => setLogoFailed(true)}
-                  className={`shrink-0 w-10.5 h-10.5 rounded-full object-cover transition-all duration-300 ${
+                  className={`shrink-0 w-10.5 h-10.5 rounded-full object-contain p-0.5 transition-all duration-300 ${
                     isCircling
                       ? 'scale-110 ring-2 ring-highlight border border-highlight/70 shadow-[0_0_12px_rgba(201,149,61,0.5)]'
                       : 'hover:scale-105 ring-1 ring-outline-variant/40'
@@ -247,7 +247,7 @@ const TopAppBar = ({
               tabIndex={0}
               title="Go to Home Screen"
             >
-              <span className="text-[18px] sm:text-[20px] leading-tight font-bold text-primary tracking-tight truncate group-hover/title:opacity-90 transition-all">
+              <span className="font-serif text-[18px] sm:text-[20px] leading-tight font-bold text-primary tracking-tight truncate group-hover/title:opacity-90 transition-all">
                 {RESTAURANT_INFO.name}
               </span>
             </div>

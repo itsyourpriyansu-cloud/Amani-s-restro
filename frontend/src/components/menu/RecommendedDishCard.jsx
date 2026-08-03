@@ -82,7 +82,7 @@ const RecommendedDishCard = ({ dish, onCustomize, isDragging = false }) => {
           </div>
 
           {/* Dish Name */}
-          <h3 className="font-bold text-on-surface text-[14px] leading-snug line-clamp-2 min-h-[40px]">
+          <h3 className="font-serif font-bold text-on-surface text-[15px] sm:text-[16px] leading-snug line-clamp-2 min-h-[42px]">
             {dish.name}
           </h3>
         </div>

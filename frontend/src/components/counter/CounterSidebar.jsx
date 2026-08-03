@@ -40,9 +40,9 @@ const CounterSidebar = () => {
 
       <div className="mb-8 px-2 flex items-center gap-3">
         <img
-          src={RESTAURANT_INFO.logo || '/logo.png'}
+          src={RESTAURANT_INFO.logo || '/Amanis Logo Final.svg'}
           alt={RESTAURANT_INFO.name}
-          className="w-10 h-10 rounded-full object-cover shrink-0 shadow-xs border border-outline-variant/40"
+          className="w-10 h-10 rounded-full object-contain p-0.5 shrink-0 shadow-xs border border-outline-variant/40"
         />
         <div>
           <h1 className="text-xl font-bold text-primary tracking-tight">{RESTAURANT_INFO.name}</h1>

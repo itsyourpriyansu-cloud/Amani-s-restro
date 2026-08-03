@@ -1,15 +1,15 @@
 import { stockImages, categoryImageKey, DISH_IMAGE_MAP } from '../data/imageManifest';
 
 export const RESTAURANT_INFO = {
-  name: 'Mangamma Ruchulu',
-  nativeName: 'మంగమ్మ రుచులు',
-  tagline: 'A journey of tradition, served with flavour.',
-  established: '2014',
-  location: 'Address on file — update required',
-  address: 'Address on file — update required',
+  name: "Amani's Kitchen",
+  nativeName: '',
+  tagline: 'A Taste of the South, Made With Heart.',
+  established: '2024',
+  location: '142 Heritage Way, Charleston, SC · Gourmet Dining Quarter',
+  address: '142 Heritage Way, Charleston, SC · Gourmet Dining Quarter',
   gstin: '36ABCDE1234F1Z5',
   fssai: '12345678901234',
-  logo: '/logo.png',
+  logo: '/Amanis Logo Final.svg',
   heroImage: '/mangamma_hero_banner.png',
   taxRate: 0.05,
 };

@@ -83,12 +83,12 @@ const ReceiptPreviewScreen = () => {
             <div className="text-center mb-6 border-b border-dashed border-on-surface-variant/40 pb-4">
               <div className="flex justify-center mb-2">
                 <img
-                  src={RESTAURANT_INFO.logo || '/logo.png'}
+                  src={RESTAURANT_INFO.logo || '/Amanis Logo Final.svg'}
                   alt={RESTAURANT_INFO.name}
-                  className="w-12 h-12 rounded-full object-cover border border-stone-200"
+                  className="w-12 h-12 rounded-full object-contain p-0.5 border border-stone-200"
                 />
               </div>
-              <h2 className="text-xl font-bold uppercase tracking-wider">{RESTAURANT_INFO.name}</h2>
+              <h2 className="text-xl font-bold font-serif uppercase tracking-wider text-primary">{RESTAURANT_INFO.name}</h2>
               <p className="text-xs text-stone-600 mt-0.5">{RESTAURANT_INFO.address || RESTAURANT_INFO.location}</p>
               <div className="mt-2 text-xs font-semibold space-y-0.5 text-stone-700">
                 <p>GSTIN: {RESTAURANT_INFO.gstin || '29AAAAA0000A1Z5'}</p>
@@ -178,7 +178,7 @@ const ReceiptPreviewScreen = () => {
 
                 <div className="flex justify-between text-base font-bold pt-2 border-t-2 border-stone-900 mt-2 text-stone-950">
                   <span>Total Payable</span>
-                  <span>{formatInvoiceAmount(receipt.totalPayable || receipt.grandTotal || 0)}</span>
+                  <span className="font-serif text-lg">{formatInvoiceAmount(receipt.totalPayable || receipt.grandTotal || 0)}</span>
                 </div>
               </div>
             </div>

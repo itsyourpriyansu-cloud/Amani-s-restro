@@ -43,11 +43,11 @@ const WaiterLoginScreen = () => {
         </div>
 
         <img
-          src={RESTAURANT_INFO.logo || '/logo.png'}
+          src={RESTAURANT_INFO.logo || '/Amanis Logo Final.svg'}
           alt={RESTAURANT_INFO.name}
-          className="w-16 h-16 rounded-full object-cover shadow-lg mb-3 border border-outline-variant/30"
+          className="w-16 h-16 rounded-full object-contain p-0.5 bg-surface shadow-lg mb-3 border border-outline-variant/30"
         />
-        <h1 className="font-serif text-2xl font-bold text-primary tracking-tight">Mangamma Ruchulu</h1>
+        <h1 className="font-serif text-2xl font-bold text-primary tracking-tight">Amani's Kitchen</h1>
         <p className="text-[11px] text-on-surface-variant font-mono font-semibold uppercase tracking-widest mt-1">Staff Portal</p>
       </header>
 
