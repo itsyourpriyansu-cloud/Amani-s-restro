@@ -10,7 +10,7 @@ export const RESTAURANT_INFO = {
   gstin: '36ABCDE1234F1Z5',
   fssai: '12345678901234',
   logo: '/Amanis Logo Final.svg',
-  heroImage: '/mangamma_hero_banner.png',
+  heroImage: '/south_indian_hero_banner.png',
   taxRate: 0.05,
 };
 

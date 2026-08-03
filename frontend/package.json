@@ -19,6 +19,7 @@
     "autoprefixer": "^10.5.4",
     "axios": "^1.18.1",
     "framer-motion": "^12.42.2",
+    "iconsax": "^0.1.1",
     "lucide-react": "^1.25.0",
     "oxlint": "^1.71.0",
     "postcss": "^8.5.22",
