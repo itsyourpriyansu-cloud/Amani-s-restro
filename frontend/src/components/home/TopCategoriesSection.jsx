@@ -85,7 +85,7 @@ const TopCategoriesSection = () => {
       {/* Compact Section Heading */}
       <div className="w-full mb-3.5 flex flex-col items-start gap-0.5 px-0.5">
         <h2 className="text-[19px] sm:text-[20px] font-bold text-[#21100B] tracking-tight leading-tight">
-          Explore the menu
+          Explore Amani's Menu
         </h2>
         <p className="text-[12.5px] text-[#74645D] font-medium">
           Choose what you’re craving

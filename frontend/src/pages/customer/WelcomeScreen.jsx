@@ -447,7 +447,7 @@ const FloatingActionDock = ({
             background: 'linear-gradient(135deg, #87351F 0%, #642313 100%)',
           }}
         >
-          <span>View Menu</span>
+          <span className="truncate">Explore Amani's Flavors</span>
           <ArrowRight className="w-5 h-5 text-white/90 shrink-0 ml-2" aria-hidden="true" />
         </motion.button>
       </div>
