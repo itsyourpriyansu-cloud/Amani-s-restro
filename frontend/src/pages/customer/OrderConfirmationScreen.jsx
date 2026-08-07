@@ -5,7 +5,7 @@ import { useTable } from '../../context/TableContext';
 import { formatInvoiceAmount, formatMenuPrice, formatTime, deriveInvoiceNumber } from '../../utils/formatters';
 import Icon from '../../components/common/Icon';
 import TopAppBar from '../../components/layout/TopAppBar';
-import { CheckCircle2, ChefHat, Clock, Flame, Soup, PartyPopper, Plus } from 'lucide-react';
+import { CheckCircle2, ChefHat, Clock, Flame, Soup, Plus } from 'lucide-react';
 
 const NEXT_STEPS = [
   { key: 'received', label: 'Order received', icon: CheckCircle2, status: 'done' },

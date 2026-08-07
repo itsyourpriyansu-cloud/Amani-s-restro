@@ -1,6 +1,5 @@
 import React, { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
 import {
   Receipt,
   UtensilsCrossed,
@@ -71,7 +70,7 @@ const BillScreen = () => {
       await orderService.requestAssistance(tableNumber, 'Cash Settlement at Counter');
       showToast(`Staff notified for cash collection at Table ${tableNumber}.`, 'success');
       setIsCashModalOpen(false);
-    } catch (err) {
+    } catch {
       showToast('Error notifying staff', 'error');
     } finally {
       setIsNotifyingStaff(false);
