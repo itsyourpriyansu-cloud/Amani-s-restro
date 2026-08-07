@@ -22,6 +22,7 @@ import {
   ShieldAlert,
   ArrowLeft,
   Heart,
+  BellRing,
   Clock,
   Flame,
   CheckCircle2,
@@ -307,6 +308,18 @@ const FoodDetailsScreen = () => {
   const [isTrustOpen, setIsTrustOpen] = useState(false);
   const [isFavourite, setIsFavourite] = useState(false);
   const [isAllergyExpanded, setIsAllergyExpanded] = useState(false);
+  const [isCalled, setIsCalled] = useState(false);
+
+  const handleCallWaiterAction = (e) => {
+    if (e) e.stopPropagation();
+    if (isCalled) {
+      showToast(`Waiter has already been notified for Table ${tableNumber}`, 'info');
+    } else {
+      addAssistanceRequest(tableNumber, 'Call Waiter');
+      setIsCalled(true);
+      showToast(`Waiter called for Table ${tableNumber}. Staff notified!`, 'success');
+    }
+  };
 
   useEffect(() => {
     const loadDish = async () => {
@@ -417,14 +430,30 @@ const FoodDetailsScreen = () => {
             >
               <ArrowLeft className="w-5 h-5 text-on-surface" />
             </button>
-            <button
-              onClick={() => setIsFavourite((v) => !v)}
-              aria-label={isFavourite ? 'Remove from favourites' : 'Add to favourites'}
-              aria-pressed={isFavourite}
-              className="w-10 h-10 flex items-center justify-center rounded-full bg-surface/85 backdrop-blur-md hover:bg-surface active:scale-95 transition-all shadow-md border border-outline-variant/40 text-on-surface"
-            >
-              <Heart className={`w-5 h-5 transition-colors ${isFavourite ? 'fill-primary text-primary' : 'text-on-surface'}`} />
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={handleCallWaiterAction}
+                className={`h-9 px-3 rounded-full text-[12px] font-semibold border flex items-center gap-1.5 shrink-0 select-none cursor-pointer active:scale-95 transition-all shadow-md backdrop-blur-md ${
+                  isCalled
+                    ? 'bg-amber-500/85 border-amber-500/40 text-amber-950'
+                    : 'bg-surface/85 border-outline-variant/40 text-primary hover:bg-surface'
+                }`}
+                aria-label={isCalled ? "Waiter already called" : "Call waiter to table"}
+                title={isCalled ? "Waiter notified, staff is on the way!" : "Click to call waiter to your table"}
+              >
+                <BellRing className={`w-3.5 h-3.5 ${isCalled ? 'animate-bounce text-amber-950' : 'text-primary animate-pulse'}`} />
+                <span className="whitespace-nowrap">{isCalled ? 'Waiter Called' : 'Call Waiter'}</span>
+              </button>
+              <button
+                onClick={() => setIsFavourite((v) => !v)}
+                aria-label={isFavourite ? 'Remove from favourites' : 'Add to favourites'}
+                aria-pressed={isFavourite}
+                className="w-10 h-10 flex items-center justify-center rounded-full bg-surface/85 backdrop-blur-md hover:bg-surface active:scale-95 transition-all shadow-md border border-outline-variant/40 text-on-surface"
+              >
+                <Heart className={`w-5 h-5 transition-colors ${isFavourite ? 'fill-primary text-primary' : 'text-on-surface'}`} />
+              </button>
+            </div>
           </div>
         </section>
 
