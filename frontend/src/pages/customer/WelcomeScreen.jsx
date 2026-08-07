@@ -125,7 +125,7 @@ const RestaurantHero = ({ heroImage }) => {
         className="absolute bottom-0 left-0 right-0 px-5 pb-10 flex flex-col gap-2 z-10"
       >
         <h1
-          className="font-sans uppercase text-[#FFF9F4] font-normal tracking-tight leading-[1.02]"
+          className="font-clash normal-case text-[#FFF9F4] font-semibold tracking-tight leading-[1.02]"
           style={{
             fontSize: 'clamp(31px, 10vw, 27px)',
             textShadow: '0 2px 18px rgba(18, 7, 4, 0.30)',
