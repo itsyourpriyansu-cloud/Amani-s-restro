@@ -376,6 +376,11 @@ html, body, button, input, textarea, select, h1, h2, h3, h4, h5, h6, p, span, di
   font-family: 'Instrument Sans', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
+/* Clash Display — used exclusively for the WelcomeScreen hero headline */
+.font-clash {
+  font-family: 'Clash Display', 'Instrument Sans', system-ui, sans-serif;
+}
+
 .material-symbols-outlined {
   font-family: 'Material Symbols Outlined';
   font-weight: normal;
