@@ -127,7 +127,7 @@ const RestaurantHero = ({ heroImage }) => {
         <h1
           className="font-sans uppercase text-[#FFF9F4] font-normal tracking-tight leading-[1.02]"
           style={{
-            fontSize: 'clamp(38px, 10vw, 42px)',
+            fontSize: 'clamp(31px, 10vw, 27px)',
             textShadow: '0 2px 18px rgba(18, 7, 4, 0.30)',
           }}
         >
