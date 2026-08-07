@@ -76,7 +76,7 @@ export const restaurantConfig = {
   // number, kept in one place so no component hardcodes it directly.
   whatsapp: {
     countryCode: '91',
-    businessNumber: '918886911773',
-    displayNumber: '+91 88869 11773',
+    businessNumber: '919874563210',
+    displayNumber: '+91 9874561230',
   },
 };
