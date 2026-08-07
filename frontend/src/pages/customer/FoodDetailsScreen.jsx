@@ -342,6 +342,18 @@ const FoodDetailsScreen = () => {
     navigate('/menu');
   };
 
+  const handleGoBack = () => {
+    // window.history.state.idx is maintained by React Router. When it is 0 (or
+    // missing) this detail page is the first entry in the app's history — the
+    // user arrived via direct load, reload, or an external link — so navigate(-1)
+    // would leave the app entirely. Fall back to the menu in that case.
+    if (window.history.state?.idx > 0) {
+      navigate(-1);
+    } else {
+      navigate('/menu');
+    }
+  };
+
   const handleDirectAddToCart = () => {
     addToCart(dish);
     showToast(`Added "${dish.name}" to cart`, 'success');
@@ -399,7 +411,7 @@ const FoodDetailsScreen = () => {
           {/* Glassmorphic Action Header */}
           <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-20">
             <button
-              onClick={() => navigate(-1)}
+              onClick={handleGoBack}
               aria-label="Go back"
               className="w-10 h-10 flex items-center justify-center rounded-full bg-surface/85 backdrop-blur-md hover:bg-surface active:scale-95 transition-all shadow-md border border-outline-variant/40 text-on-surface"
             >
