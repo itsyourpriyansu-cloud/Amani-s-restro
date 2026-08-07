@@ -449,7 +449,7 @@ const FoodDetailsScreen = () => {
             </div>
 
             <div className="flex items-start justify-between gap-4">
-              <h1 className="font-serif text-2xl sm:text-3xl font-bold text-on-surface tracking-tight leading-tight flex-1">
+              <h1 className="font-sans text-2xl sm:text-3xl font-bold text-on-surface tracking-tight leading-tight flex-1">
                 {dish.name}
               </h1>
               <div className="text-2xl sm:text-3xl font-black text-primary whitespace-nowrap pt-0.5">
