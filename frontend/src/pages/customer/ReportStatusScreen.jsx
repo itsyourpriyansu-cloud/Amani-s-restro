@@ -19,6 +19,7 @@ import { useTable } from '../../context/TableContext';
 import { useToast } from '../../context/ToastContext';
 import { REPORT_STAGES, ISSUE_CATEGORIES } from '../../utils/issueCategories';
 import BottomNavBar from '../../components/layout/BottomNavBar';
+import TopAppBar from '../../components/layout/TopAppBar';
 import Icon from '../../components/common/Icon';
 
 const STAGE_ICONS = { ClipboardCheck, UserCheck, Sparkles, BellRing, PartyPopper };
@@ -101,20 +102,8 @@ const ReportStatusScreen = () => {
   if (!currentIssue) {
     return (
       <>
-        <header className="sticky top-0 z-40 bg-surface shadow-sm flex items-center justify-between gap-2 px-4 min-h-16 py-2.5 border-b border-outline-variant/20">
-          <button
-            onClick={() => navigate('/order-tracking')}
-            aria-label="Go back"
-            className="w-11 h-11 shrink-0 flex items-center justify-center rounded-full hover:bg-surface-variant/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-          >
-            <Icon name="arrow_back" className="text-on-surface" />
-          </button>
-          <h1 className="text-[15px] sm:text-lg font-bold text-primary leading-tight text-center truncate">Service Recovery</h1>
-          <div className="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-bold shrink-0 whitespace-nowrap">
-            Table {tableNumber}
-          </div>
-        </header>
-        <main className="flex-1 flex flex-col items-center justify-center px-4 text-center gap-3">
+        <TopAppBar variant="brand" />
+        <main className="flex-1 flex flex-col items-center justify-center px-4 pt-20 text-center gap-3">
           <Icon name="fact_check" className="text-4xl text-on-surface-variant" />
           <p className="text-on-surface font-semibold text-base">Nothing to report right now</p>
           <p className="text-xs text-on-surface-variant max-w-xs">If something isn't quite right with your food, bill, or service, let us know anytime — we're happy to help.</p>
@@ -157,21 +146,9 @@ const ReportStatusScreen = () => {
 
   return (
     <>
-      <header className="sticky top-0 z-40 bg-surface shadow-sm flex items-center justify-between gap-2 px-4 min-h-16 py-2.5 border-b border-outline-variant/20">
-        <button
-          onClick={() => navigate('/order-tracking')}
-          aria-label="Go back"
-          className="w-11 h-11 shrink-0 flex items-center justify-center rounded-full hover:bg-surface-variant/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-        >
-          <Icon name="arrow_back" className="text-on-surface" />
-        </button>
-        <h1 className="text-[15px] sm:text-lg font-bold text-primary leading-tight text-center truncate">Issue Status &amp; Recovery</h1>
-        <div className="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-bold shrink-0 whitespace-nowrap">
-          Table {tableNumber}
-        </div>
-      </header>
+      <TopAppBar variant="brand" />
 
-      <main className="flex-1 px-4 pt-6 pb-28 max-w-xl mx-auto w-full space-y-5">
+      <main className="flex-1 px-4 pt-20 pb-28 max-w-xl mx-auto w-full space-y-5">
         {/* Identity / hero */}
         <section aria-labelledby="issue-heading" className="space-y-3">
           {categoryMeta && (

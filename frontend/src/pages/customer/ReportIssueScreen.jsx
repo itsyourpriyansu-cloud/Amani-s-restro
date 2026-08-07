@@ -5,6 +5,7 @@ import { useTable } from '../../context/TableContext';
 import { useToast } from '../../context/ToastContext';
 import { ISSUE_CATEGORIES } from '../../utils/issueCategories';
 import Icon from '../../components/common/Icon';
+import TopAppBar from '../../components/layout/TopAppBar';
 
 const ReportIssueScreen = () => {
   const navigate = useNavigate();
@@ -48,17 +49,9 @@ const ReportIssueScreen = () => {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 bg-surface shadow-sm min-h-14 py-2.5 flex items-center gap-2 px-4 justify-between border-b border-outline-variant/20">
-        <button onClick={() => navigate(-1)} className="w-11 h-11 -m-2 shrink-0 flex items-center justify-center active:scale-95 transition-transform" aria-label="Go back">
-          <Icon name="arrow_back" className="text-primary" />
-        </button>
-        <h1 className="text-[15px] sm:text-lg font-bold text-primary leading-tight text-center truncate">Service Recovery</h1>
-        <div className="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-bold border border-primary/20 shrink-0 whitespace-nowrap">
-          Table {tableNumber}
-        </div>
-      </header>
+      <TopAppBar variant="brand" />
 
-      <main className="mt-14 pb-32 pt-6 px-4 flex-1 max-w-xl mx-auto w-full space-y-6">
+      <main className="pt-20 pb-32 px-4 flex-1 max-w-xl mx-auto w-full space-y-6">
         <div>
           <h2 className="text-2xl font-bold text-on-surface">Something isn’t right?</h2>
           <p className="text-xs text-on-surface-variant mt-1">

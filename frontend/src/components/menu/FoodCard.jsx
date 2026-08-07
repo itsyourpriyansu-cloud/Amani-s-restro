@@ -12,7 +12,7 @@ import RecommendedDishCard from './RecommendedDishCard';
  * Features:
  * - 16x16 standard Indian FSSAI Veg/Non-Veg icon
  * - Image-overlay Bestseller tag
- * - Line-clamp-2 titles in Plus Jakarta Sans typography
+ * - Line-clamp-2 titles in Instrument Sans typography
  * - Interactive stepper [- qty +] when added to cart:
  *   - Tapping '-' reduces/removes item directly
  *   - Tapping '+' opens customization tab again if customizable, or increments quantity

@@ -1,26 +1,17 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useTable } from '../../context/TableContext';
 import { RESTAURANT_INFO } from '../../utils/mockData';
 import Icon from '../../components/common/Icon';
+import TopAppBar from '../../components/layout/TopAppBar';
 
 const ReportSubmittedScreen = () => {
   const navigate = useNavigate();
-  const { tableNumber } = useTable();
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 bg-surface shadow-sm h-14 flex items-center px-4 justify-between relative">
-        <button onClick={() => navigate('/order-tracking')} className="text-primary active:scale-95 transition-transform" aria-label="Go back">
-          <Icon name="arrow_back" />
-        </button>
-        <div className="absolute left-1/2 -translate-x-1/2 flex items-center justify-center">
-          <img src={RESTAURANT_INFO.logo || '/Amanis Logo Final.svg'} alt="Amani's Kitchen" className="h-10 w-auto max-w-[180px] object-contain shrink-0" />
-        </div>
-        <span className="text-sm font-semibold text-primary">Table {tableNumber}</span>
-      </header>
+      <TopAppBar variant="brand" />
 
-      <main className="flex-1 flex flex-col items-center justify-center px-4 w-full max-w-md mx-auto text-center py-16 mt-14">
+      <main className="flex-1 flex flex-col items-center justify-center px-4 w-full max-w-md mx-auto text-center pt-20 pb-16">
         {/* Animated Success Illustration */}
         <div className="relative w-32 h-32 mb-8">
           <div className="absolute inset-0 bg-success/10 rounded-full scale-125 animate-pulse" />

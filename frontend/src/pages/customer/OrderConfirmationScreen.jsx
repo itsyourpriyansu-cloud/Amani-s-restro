@@ -4,6 +4,7 @@ import { useOrder } from '../../context/OrderContext';
 import { useTable } from '../../context/TableContext';
 import { formatInvoiceAmount, formatMenuPrice, formatTime, deriveInvoiceNumber } from '../../utils/formatters';
 import Icon from '../../components/common/Icon';
+import TopAppBar from '../../components/layout/TopAppBar';
 import { CheckCircle2, ChefHat, Clock, Flame, Soup, PartyPopper, Plus } from 'lucide-react';
 
 const NEXT_STEPS = [
@@ -51,22 +52,10 @@ const OrderConfirmationScreen = () => {
   const itemCount = orderItems.reduce((acc, item) => acc + item.quantity, 0);
 
   return (
-    <main className="flex-1 flex flex-col bg-surface-container min-h-screen">
-      <div className="w-full max-w-md mx-auto min-h-screen flex flex-col px-4 py-4">
-        {/* Header */}
-        <header className="flex justify-between items-center py-2 mb-2">
-          <button
-            aria-label="Back to menu"
-            onClick={() => navigate('/menu')}
-            className="min-h-11 min-w-11 flex items-center justify-center -ml-2 text-text rounded-full hover:bg-surface-container-high"
-          >
-            <Icon name="arrow_back" />
-          </button>
-          <span className="text-xs font-bold text-on-primary-container bg-primary-container px-3 py-2 rounded-full">
-            Table #{tableNumber}
-          </span>
-        </header>
-
+    <>
+      <TopAppBar variant="brand" />
+      <main className="flex-1 flex flex-col bg-surface-container min-h-screen">
+      <div className="w-full max-w-md mx-auto min-h-screen flex flex-col px-4 pt-20 pb-4">
         {/* Success card: confirmation state, ETA, and order meta in one clear unit */}
         <section
           aria-labelledby="order-confirmed-heading"
@@ -286,6 +275,7 @@ const OrderConfirmationScreen = () => {
         </footer>
       </div>
     </main>
+    </>
   );
 };
 
