@@ -33,6 +33,7 @@ const MenuScreen = () => {
   const [searchQuery, setSearchQuery] = useState(location.state?.initialSearchQuery || '');
   const [activeFilters, setActiveFilters] = useState(location.state?.activeFilters || []);
   const [dishes, setDishes] = useState([]);
+  const [allDishes, setAllDishes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -60,6 +61,20 @@ const MenuScreen = () => {
       }
     };
     loadCategories();
+  }, []);
+
+  // Load the full (unfiltered) menu once so the category sheet can show
+  // accurate per-category counts regardless of the selected category.
+  useEffect(() => {
+    const loadAllDishes = async () => {
+      try {
+        const res = await menuService.getMenu('all', '');
+        setAllDishes(res.data || []);
+      } catch (err) {
+        console.error('Error loading full menu for counts', err);
+      }
+    };
+    loadAllDishes();
   }, []);
 
   const fetchMenuData = async () => {
@@ -299,7 +314,7 @@ const MenuScreen = () => {
         categories={categories}
         selectedCategory={selectedCategory}
         onSelectCategory={handleSelectCategory}
-        dishes={dishes}
+        dishes={allDishes}
       />
 
       {/* Floating Zomato-Style Menu / Close FAB (matching reference image 1 & 2) */}
