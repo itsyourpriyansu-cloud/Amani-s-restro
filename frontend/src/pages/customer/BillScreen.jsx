@@ -1,8 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
 import {
-  ArrowLeft,
   Receipt,
   UtensilsCrossed,
   ShieldCheck,
@@ -19,6 +17,7 @@ import { useToast } from '../../context/ToastContext';
 import { orderService } from '../../services/orderService';
 import { formatInvoiceAmount } from '../../utils/formatters';
 import BottomNavBar from '../../components/layout/BottomNavBar';
+import TopAppBar from '../../components/layout/TopAppBar';
 import Modal from '../../components/common/Modal';
 import EmptyState from '../../components/common/EmptyState';
 import BillingSummary from '../../components/common/BillingSummary';
@@ -71,7 +70,7 @@ const BillScreen = () => {
       await orderService.requestAssistance(tableNumber, 'Cash Settlement at Counter');
       showToast(`Staff notified for cash collection at Table ${tableNumber}.`, 'success');
       setIsCashModalOpen(false);
-    } catch (err) {
+    } catch {
       showToast('Error notifying staff', 'error');
     } finally {
       setIsNotifyingStaff(false);
@@ -88,20 +87,9 @@ const BillScreen = () => {
   if (!activeOrder) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-[#FFF9F5] via-[#FFFDFC] to-[#F9F1EB] flex flex-col font-sans">
-        <header className="fixed top-0 left-0 right-0 z-40 bg-[#FFF9F5]/95 backdrop-blur-md border-b border-[#5B3021]/10 px-4 h-14 flex items-center justify-between max-w-[540px] mx-auto w-full">
-          <button
-            type="button"
-            onClick={() => navigate('/menu')}
-            aria-label="Go to menu"
-            className="w-9 h-9 rounded-full bg-white border border-[#5B3021]/15 flex items-center justify-center text-[#24130E] hover:bg-[#F5ECE6] active:scale-95 transition-all cursor-pointer"
-          >
-            <ArrowLeft className="w-4.5 h-4.5 text-[#24130E]" />
-          </button>
-          <span className="font-bold text-sm text-[#24130E]">Review order</span>
-          <span className="w-9" />
-        </header>
+        <TopAppBar variant="brand" />
 
-        <main className="flex-1 pt-24 px-4 max-w-[480px] mx-auto w-full flex flex-col justify-center">
+        <main className="flex-1 pt-20 px-4 max-w-[480px] mx-auto w-full flex flex-col justify-center">
           <EmptyState
             icon={() => <Receipt className="w-12 h-12 text-[#87351F]" />}
             title="No active bill found"
@@ -138,46 +126,10 @@ const BillScreen = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#FFF9F5] via-[#FFFDFC] to-[#F9F1EB] text-[#24130E] font-sans antialiased pb-44">
-      {/* Unified Fixed Top Navigation Header */}
-      <header className="fixed top-0 left-0 right-0 z-40 bg-[#FFF9F5]/96 backdrop-blur-md border-b border-[#5B3021]/10 px-4 h-14 flex items-center justify-between max-w-[540px] mx-auto w-full">
-        {/* Left: 44px Target Back Button */}
-        <button
-          type="button"
-          onClick={() => navigate(-1)}
-          aria-label="Go back"
-          className="w-10 h-10 rounded-full bg-white border border-[#5B3021]/15 shadow-2xs flex items-center justify-center text-[#24130E] hover:bg-[#F5ECE6] active:scale-95 transition-all cursor-pointer shrink-0"
-        >
-          <ArrowLeft className="w-4.5 h-4.5 text-[#24130E]" />
-        </button>
+      {/* Unified Fixed Top Navigation Header — standardized brand header */}
+      <TopAppBar variant="brand" onOpenTrustProfile={() => setShowTrustModal(true)} />
 
-        {/* Center: Order Progress Indicator */}
-        <div
-          className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F5ECE6] border border-[#5B3021]/12 text-[11.5px] font-semibold text-[#786B65]"
-          aria-label="Checkout Progress: Step 1 of 3 (Review order)"
-        >
-          <span className="flex items-center gap-1 text-[#87351F] font-bold">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#87351F]" />
-            Review
-          </span>
-          <span className="text-[#5B3021]/25">─</span>
-          <span className="text-[#786B65]">Payment</span>
-          <span className="text-[#5B3021]/25">─</span>
-          <span className="text-[#786B65]/50">Done</span>
-        </div>
-
-        {/* Right: Table Context Chip */}
-        <button
-          type="button"
-          onClick={() => setShowTrustModal(true)}
-          className="h-8 px-2.5 rounded-full bg-[#F5ECE6] border border-[#5B3021]/12 text-xs font-bold text-[#24130E] flex items-center gap-1.5 cursor-pointer active:scale-95 transition-all shrink-0"
-          aria-label={`Table ${formattedTableNo}`}
-        >
-          <span className="w-1.5 h-1.5 rounded-full bg-[#87351F]" />
-          <span>Table {formattedTableNo}</span>
-        </button>
-      </header>
-
-      <main className="max-w-[480px] mx-auto w-full px-4 sm:px-4.5 pt-18">
+      <main className="max-w-[480px] mx-auto w-full px-4 sm:px-4.5 pt-20">
         {/* Page Title & Subtitle */}
         <header className="pt-2 pb-2">
           <h1 className="text-[26px] sm:text-[28px] font-extrabold text-[#24130E] tracking-tight leading-tight">

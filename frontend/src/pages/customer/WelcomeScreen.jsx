@@ -122,19 +122,19 @@ const RestaurantHero = ({ heroImage }) => {
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: 'easeOut', delay: 0.1 }}
-        className="absolute bottom-0 left-0 right-0 px-5 pb-10 flex flex-col gap-2 z-10 max-w-[330px]"
+        className="absolute bottom-0 left-0 right-0 px-5 pb-10 flex flex-col gap-2 z-10"
       >
         <h1
-          className="font-serif italic text-[#FFF9F4] font-bold tracking-tight leading-[0.98]"
+          className="font-sans uppercase text-[#FFF9F4] font-normal tracking-tight leading-[1.02]"
           style={{
-            fontSize: 'clamp(35px, 8.5vw, 42px)',
+            fontSize: 'clamp(38px, 10vw, 42px)',
             textShadow: '0 2px 18px rgba(18, 7, 4, 0.30)',
           }}
         >
           A Taste of the South,<br />Made With Heart.
         </h1>
         <p
-          className="font-sans text-white/85 font-medium leading-snug tracking-wide text-[13px] sm:text-[14px] flex items-center gap-1.5 mt-0.5"
+          className="font-sans text-white/85 font-medium leading-snug tracking-wide text-[13px] sm:text-[14px] flex items-center gap-1.5 mt-3 mb-3"
           style={{ textShadow: '0 1px 8px rgba(18, 7, 4, 0.25)' }}
         >
           <span>Since {RESTAURANT_INFO.established}</span>
