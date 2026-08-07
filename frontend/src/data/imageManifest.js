@@ -957,16 +957,16 @@ export const DISH_IMAGE_MAP = {
   'biryani-veg-dum': 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Vegetable_Biryani_IMG_001.jpg/1280px-Vegetable_Biryani_IMG_001.jpg',
   // by-paneer — Paneer biryani (Commons: Biryani in Hyderabad.jpg)
   'biryani-paneer': 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Biryani_in_Hyderabad.jpg/1280px-Biryani_in_Hyderabad.jpg',
-  'biryani-kaju-paneer': 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Biryani_in_Hyderabad.jpg/1280px-Biryani_in_Hyderabad.jpg',
+  'biryani-kaju-paneer': 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Panner_Vegetable_Hyderabad_Biryani.jpg/1280px-Panner_Vegetable_Hyderabad_Biryani.jpg', // Commons: Panner Vegetable Hyderabad Biryani.jpg
   // by-mushroom — Mushroom biryani (Commons: Roasted mushroom biryani.jpg)
-  'biryani-kaju-mushroom': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Roasted_mushroom_biryani.jpg/1280px-Roasted_mushroom_biryani.jpg',
+  'biryani-kaju-mushroom': 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Dished_out_Mushroom_Biryani.jpg/1280px-Dished_out_Mushroom_Biryani.jpg', // Commons: Dished out Mushroom Biryani.jpg
   'biryani-mushroom': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Roasted_mushroom_biryani.jpg/1280px-Roasted_mushroom_biryani.jpg',
   // by-egg — Egg biryani (Commons: Hyderabadi egg biryani.jpg)
   'biryani-egg': 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Hyderabadi_egg_biryani.jpg/1280px-Hyderabadi_egg_biryani.jpg',
   // by-chicken — Hyderabadi chicken biryani (Commons: Hyderabadi Chicken Biryani.jpg)
   'biryani-chicken-dum': 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Hyderabadi_Chicken_Biryani.jpg/1280px-Hyderabadi_Chicken_Biryani.jpg',
-  'biryani-chicken-special': 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Hyderabadi_Chicken_Biryani.jpg/1280px-Hyderabadi_Chicken_Biryani.jpg',
-  'biryani-chicken-kaju': 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Hyderabadi_Chicken_Biryani.jpg/1280px-Hyderabadi_Chicken_Biryani.jpg',
+  'biryani-chicken-special': 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Chicken_Biryani_%21%21.jpg/1280px-Chicken_Biryani_%21%21.jpg', // Commons: Chicken Biryani !!.jpg
+  'biryani-chicken-kaju': 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Spicy_Chicken_Biriyani.JPG/1280px-Spicy_Chicken_Biriyani.JPG', // Commons: Spicy Chicken Biriyani.JPG
   'biryani-ulavacharu-chicken': 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Hyderabadi_Chicken_Biryani.jpg/1280px-Hyderabadi_Chicken_Biryani.jpg',
   'biryani-avakai-chicken': 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Hyderabadi_Chicken_Biryani.jpg/1280px-Hyderabadi_Chicken_Biryani.jpg',
   'biryani-red-chilli-chicken': 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Hyderabadi_Chicken_Biryani.jpg/1280px-Hyderabadi_Chicken_Biryani.jpg',
@@ -1023,12 +1023,16 @@ export const DISH_IMAGE_MAP = {
   'soup-veg-hot-sour': 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Hot-and-Sour-Soup-Bowl.jpg/1280px-Hot-and-Sour-Soup-Bowl.jpg',
   'soup-veg-dragon': 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Hot-and-Sour-Soup-Bowl.jpg/1280px-Hot-and-Sour-Soup-Bowl.jpg',
   // soup-veg — Vegetable soup (Commons: Vegetable soup 9.jpg)
-  'soup-veg-clear': 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Vegetable_soup_9.jpg/1280px-Vegetable_soup_9.jpg',
-  'soup-veg-noodles': 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Vegetable_soup_9.jpg/1280px-Vegetable_soup_9.jpg',
-  'soup-veg-canteen': 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Vegetable_soup_9.jpg/1280px-Vegetable_soup_9.jpg',
-  'soup-amanis-special': 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Vegetable_soup_9.jpg/1280px-Vegetable_soup_9.jpg',
-  // soup-lemon-coriander — Vegetable clear soup (Commons: Beef and Vegetables on Rice 牛肉盖饭 - Qionglai Clear Soup Restaurant (1648229041).jpg)
-  'soup-veg-lemon-coriander': 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Beef_and_Vegetables_on_Rice_%E7%89%9B%E8%82%89%E7%9B%96%E9%A5%AD_-_Qionglai_Clear_Soup_Restaurant_%281648229041%29.jpg/1280px-Beef_and_Vegetables_on_Rice_%E7%89%9B%E8%82%89%E7%9B%96%E9%A5%AD_-_Qionglai_Clear_Soup_Restaurant_%281648229041%29.jpg',
+  // soup-veg-clear — Spinach tofu soup (Commons: Spinach Tofu Soup - 菠菜豆腐湯.jpg)
+  'soup-veg-clear': 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Spinach_Tofu_Soup_-_%E8%8F%A0%E8%8F%9C%E8%B1%86%E8%85%90%E6%B9%AF_%28Emerald_%26_White_Jade_Soup_-_%E7%BF%A1%E7%BF%A0%E7%99%BD%E7%8E%89%E6%B9%AF%29.jpg/1280px-Spinach_Tofu_Soup_-_%E8%8F%A0%E8%8F%9C%E8%B1%86%E8%85%90%E6%B9%AF_%28Emerald_%26_White_Jade_Soup_-_%E7%BF%A1%E7%BF%A0%E7%99%BD%E7%8E%89%E6%B9%AF%29.jpg',
+  // soup-veg-noodles — Vegetable noodle soup (Commons: Meals in Bulacan Mixed vegetable noodle soup 02.jpg)
+  'soup-veg-noodles': 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Meals_in_Bulacan_Mixed_vegetable_noodle_soup_02.jpg/1280px-Meals_in_Bulacan_Mixed_vegetable_noodle_soup_02.jpg',
+  // soup-veg-canteen — Pumpkin soup (Commons: Soup made of pumpkin.jpg)
+  'soup-veg-canteen': 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Soup_made_of_pumpkin.jpg/1280px-Soup_made_of_pumpkin.jpg',
+  // soup-amanis-special — Cream soup (Commons: Kremostsuppe (cream cheese soup).jpg)
+  'soup-amanis-special': 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Kremostsuppe_%28cream_cheese_soup%29.jpg/1280px-Kremostsuppe_%28cream_cheese_soup%29.jpg',
+  // soup-veg-lemon-coriander — Lemon coriander soup (Commons: Lemon Chilli Coriander Soup - The Asian Curry House, Bangalore.jpg)
+  'soup-veg-lemon-coriander': 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Lemon_Chilli_Coriander_Soup_-_The_Asian_Curry_House%2C_Bangalore_-_Karnataka_-_PXL2005.jpg/1280px-Lemon_Chilli_Coriander_Soup_-_The_Asian_Curry_House%2C_Bangalore_-_Karnataka_-_PXL2005.jpg',
   // soup-tomato — Tomato soup (Commons: Tomato soup and grilled cheese.JPG)
   'soup-cream-tomato': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Tomato_soup_and_grilled_cheese.JPG/1280px-Tomato_soup_and_grilled_cheese.JPG',
   // soup-mushroom — Mushroom soup (Commons: Saizeriya cream of mushroom soup.jpg)
@@ -1279,15 +1283,20 @@ export const DISH_IMAGE_MAP = {
   'mcveg-dal-fry': 'https://upload.wikimedia.org/wikipedia/commons/b/b1/Dal_Fry_Recipe_In_Dhaba_Style_From_Indian_Cuisine_By_Sonia_Goyal.jpg',
 
   // ===== MAIN COURSE NON-VEG =====
-  // mn-chicken-curry — Chicken curry (Commons: Chicken Curry 4.jpg)
-  'mcnv-andhra-chicken-curry': 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Chicken_Curry_4.jpg/1280px-Chicken_Curry_4.jpg',
-  'mcnv-perugu-chicken': 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Chicken_Curry_4.jpg/1280px-Chicken_Curry_4.jpg',
-  'mcnv-rayalaseema-chicken-fry': 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Chicken_Curry_4.jpg/1280px-Chicken_Curry_4.jpg',
-  'mcnv-konaseema-chicken-fry': 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Chicken_Curry_4.jpg/1280px-Chicken_Curry_4.jpg',
-  'mcnv-chicken-ghee-rost': 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Chicken_Curry_4.jpg/1280px-Chicken_Curry_4.jpg',
+  // mn-andhra-chicken-curry — Andhra chicken curry (Commons: Andhra Chicken Curry - WCI-Day0-Dinner.jpg)
+  'mcnv-andhra-chicken-curry': 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Andhra_Chicken_Curry_-_WCI-Day0-Dinner.jpg/1280px-Andhra_Chicken_Curry_-_WCI-Day0-Dinner.jpg',
+  // mn-perugu-chicken — Chicken gravy curry (Commons: Chicken Tikka Masala KellySue.JPG)
+  'mcnv-perugu-chicken': 'https://upload.wikimedia.org/wikipedia/commons/4/44/Chicken_Tikka_Masala_KellySue.JPG',
+  // mn-rayalaseema-fry — Andhra fried chicken (Commons: Andhra Fried Chicken.JPG)
+  'mcnv-rayalaseema-chicken-fry': 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Andhra_Fried_Chicken.JPG/1280px-Andhra_Fried_Chicken.JPG',
+  // mn-konaseema-fry — Fried chicken pieces (Commons: Fried-Chicken-Set.jpg)
+  'mcnv-konaseema-chicken-fry': 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Fried-Chicken-Set.jpg/1280px-Fried-Chicken-Set.jpg',
+  // mn-chicken-ghee-roast — Chicken ghee roast (Commons: Chicken ghee roast.jpg)
+  'mcnv-chicken-ghee-rost': 'https://upload.wikimedia.org/wikipedia/commons/1/15/Chicken_ghee_roast.jpg',
   // mn-mutton-curry — Mutton curry (Commons: Mutton curry photographed in West Bengal, India, January 28, 2024.jpg)
   'mcnv-mutton-curry': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Mutton_curry_photographed_in_West_Bengal%2C_India%2C_January_28%2C_2024.jpg/1280px-Mutton_curry_photographed_in_West_Bengal%2C_India%2C_January_28%2C_2024.jpg',
-  'mcnv-mutton-ghee-rost': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Mutton_curry_photographed_in_West_Bengal%2C_India%2C_January_28%2C_2024.jpg/1280px-Mutton_curry_photographed_in_West_Bengal%2C_India%2C_January_28%2C_2024.jpg',
+  // mn-mutton-ghee-roast — Mutton dry fry (Commons: Mutton Dry-Fry.jpg)
+  'mcnv-mutton-ghee-rost': 'https://upload.wikimedia.org/wikipedia/commons/b/be/Mutton_Dry-Fry.jpg',
   // mn-prawns-masala — Prawn masala (Commons: Prawn coconut masala.jpg)
   'mcnv-prawns-iguru': 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Prawn_coconut_masala.jpg/1280px-Prawn_coconut_masala.jpg',
   'mcnv-prawns-masala': 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Prawn_coconut_masala.jpg/1280px-Prawn_coconut_masala.jpg',
@@ -1328,8 +1337,8 @@ export const DISH_IMAGE_MAP = {
   'mcnv-fish-fry-masala': 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Fish_curry_rice_plate_%2826214874513%29.jpg/1280px-Fish_curry_rice_plate_%2826214874513%29.jpg',
   // mn-natukodi-pulusu — Chicken curry gravy (Commons: Naan with Chicken Gravy 01.jpg)
   'mcnv-natukodi-pulusu': 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Naan_with_Chicken_Gravy_01.jpg/1280px-Naan_with_Chicken_Gravy_01.jpg',
-  // mn-fish-pulusu — Fish curry gravy (Commons: Fish fry with fish gravy.JPG)
-  'mcnv-nellore-chepala-pulusu': 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Fish_fry_with_fish_gravy.JPG/1280px-Fish_fry_with_fish_gravy.JPG',
+  // mn-nellore-fish-pulusu — Nellore fish pulusu (Commons: Nellori Chapala Pulusu 2.jpg)
+  'mcnv-nellore-chepala-pulusu': 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Nellori_Chapala_Pulusu_2.jpg/1280px-Nellori_Chapala_Pulusu_2.jpg',
   'mcnv-korameenu-iguru': 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Fish_fry_with_fish_gravy.JPG/1280px-Fish_fry_with_fish_gravy.JPG',
   'mcnv-bommidala-pulusu': 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Fish_fry_with_fish_gravy.JPG/1280px-Fish_fry_with_fish_gravy.JPG',
 
@@ -1430,17 +1439,20 @@ export const DISH_IMAGE_MAP = {
   // ===== DESSERTS & ICE CREAMS =====
   // ds-gulab-jamun — Gulab jamun (Commons: Two Gulab Jamun in a plate 01.jpg)
   'dessert-gulab-jamun': 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Two_Gulab_Jamun_in_a_plate_01.jpg/1280px-Two_Gulab_Jamun_in_a_plate_01.jpg',
-  'dessert-gulab-jamun-icecream': 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Two_Gulab_Jamun_in_a_plate_01.jpg/1280px-Two_Gulab_Jamun_in_a_plate_01.jpg',
+  // ds-gulab-jamun-icecream — Gulab jamun with ice cream (Commons: Gulab Jamun with Ice Cream - Worthing Indian Cafe & Bar 2026-04-27.jpg)
+  'dessert-gulab-jamun-icecream': 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Gulab_Jamun_with_Ice_Cream_-_Worthing_Indian_Cafe_%26_Bar_2026-04-27.jpg/1280px-Gulab_Jamun_with_Ice_Cream_-_Worthing_Indian_Cafe_%26_Bar_2026-04-27.jpg',
   // ds-lychee — Ice cream sundae (Commons: Strawberry Ice Cream Sundae (26853326174).jpg)
   'dessert-leechi-icecream': 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Strawberry_Ice_Cream_Sundae_%2826853326174%29.jpg/1280px-Strawberry_Ice_Cream_Sundae_%2826853326174%29.jpg',
   // ds-fruit-salad — Fruit salad (Commons: Fruit salad at Cinco de Mayo - May 2024 - Sarah Stierch.jpg)
   'dessert-fruit-salad': 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Fruit_salad_at_Cinco_de_Mayo_-_May_2024_-_Sarah_Stierch.jpg/1280px-Fruit_salad_at_Cinco_de_Mayo_-_May_2024_-_Sarah_Stierch.jpg',
-  'dessert-fruit-salad-icecream': 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Fruit_salad_at_Cinco_de_Mayo_-_May_2024_-_Sarah_Stierch.jpg/1280px-Fruit_salad_at_Cinco_de_Mayo_-_May_2024_-_Sarah_Stierch.jpg',
+  // ds-fruit-salad-icecream — Fruit salad with ice cream (Commons: Fruit Salad with ice cream.jpg)
+  'dessert-fruit-salad-icecream': 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Fruit_Salad_with_ice_cream.jpg/1280px-Fruit_Salad_with_ice_cream.jpg',
   // ds-apricot — Apricot dessert (Commons: Apricot dessert and its garnish.jpg)
   'dessert-apricot-delight': 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Apricot_dessert_and_its_garnish.jpg/1280px-Apricot_dessert_and_its_garnish.jpg',
-  // ds-qurhanika — Indian milk sweet (Commons: Gulab Jamun as a Diwali Sweet.jpg)
-  'dessert-qurhanika-icecream': 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Gulab_Jamun_as_a_Diwali_Sweet.jpg/1280px-Gulab_Jamun_as_a_Diwali_Sweet.jpg',
-  'dessert-qurhanika-meta': 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Gulab_Jamun_as_a_Diwali_Sweet.jpg/1280px-Gulab_Jamun_as_a_Diwali_Sweet.jpg',
+  // ds-qurhanika-icecream — Kheer / milk pudding (Commons: Kheer Indian Sweet Dessert Mithai 2010.jpg)
+  'dessert-qurhanika-icecream': 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Kheer_Indian_Sweet_Dessert_Mithai_2010.jpg/1280px-Kheer_Indian_Sweet_Dessert_Mithai_2010.jpg',
+  // ds-qurhanika-meta — Kalakand milk sweet (Commons: Kalakand Sweet.jpg)
+  'dessert-qurhanika-meta': 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Kalakand_Sweet.jpg/1280px-Kalakand_Sweet.jpg',
   // ds-brownie — Chocolate brownie ice cream (Commons: Vegan Double Chocolate Brownie Chunk Ice Cream (4869832969).jpg)
   'dessert-brownie-icecream': 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Vegan_Double_Chocolate_Brownie_Chunk_Ice_Cream_%284869832969%29.jpg/1280px-Vegan_Double_Chocolate_Brownie_Chunk_Ice_Cream_%284869832969%29.jpg',
   // ds-fried-icecream — Fried ice cream (Commons: FriedIceCream.jpg)

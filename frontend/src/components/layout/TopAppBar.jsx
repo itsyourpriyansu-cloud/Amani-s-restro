@@ -1,15 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useTable } from '../../context/TableContext';
+import { useOrder } from '../../context/OrderContext';
+import { useToast } from '../../context/ToastContext';
 import { RESTAURANT_INFO } from '../../utils/mockData';
 import Icon from '../common/Icon';
-import { UtensilsCrossed, ArrowLeft, Info } from 'lucide-react';
+import { UtensilsCrossed, ArrowLeft, Info, BellRing } from 'lucide-react';
 import RestaurantTrustProfileModal from '../trust/RestaurantTrustProfileModal';
 import CompactKitchenStatus from '../menu/CompactKitchenStatus';
 
 /**
  * Top app bar component.
- * - On `/menu` page: Full header (64px height, brand icon + wordmark + Table chip) + Marquee Ticker.
+ * - On `/menu` page: Full header (64px height, brand icon + wordmark + Call Waiter button + Table chip) + Marquee Ticker.
  * - On all other pages: Narrowed navbar (50px height) with only Back Button + Table chip. Logo, wordmark & marquee hidden.
  * - Scroll-driven auto-hide/reveal animation preserved across all screens.
  */
@@ -26,10 +28,14 @@ const TopAppBar = ({
   logoSrc = RESTAURANT_INFO.logo || '/logo.png',
   kitchenLoad,
   showKitchenStatus = true,
+  onCallWaiter,
+  showCallWaiter = true,
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { tableNumber } = useTable();
+  const { assistanceRequests, addAssistanceRequest } = useOrder();
+  const { showToast } = useToast();
   const [logoFailed, setLogoFailed] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [isCircling, setIsCircling] = useState(false);
@@ -39,6 +45,23 @@ const TopAppBar = ({
 
   const isMenuPage = location && location.pathname === '/menu';
   const canGoBack = showBackButton || onBack || (location && location.pathname !== '/');
+
+  const [isCalled, setIsCalled] = useState(false);
+
+  const handleCallWaiterAction = (e) => {
+    e.stopPropagation();
+    if (onCallWaiter) {
+      onCallWaiter();
+      return;
+    }
+    if (isCalled) {
+      showToast(`Waiter has already been notified for Table ${tableNumber}`, 'info');
+    } else {
+      addAssistanceRequest(tableNumber, 'Call Waiter');
+      setIsCalled(true);
+      showToast(`Waiter called for Table ${tableNumber}. Staff notified!`, 'success');
+    }
+  };
 
   // Auto-hide navbar on scroll down, reveal on scroll up
   useEffect(() => {
@@ -136,8 +159,24 @@ const TopAppBar = ({
               <span className="flex-1" />
             )}
 
-            {/* Right action — Table indicator chip */}
+            {/* Right action — Table indicator chip & Call Waiter button */}
             <div className="flex items-center shrink-0 gap-2">
+              {(showCallWaiter || onCallWaiter) && (
+                <button
+                  type="button"
+                  onClick={handleCallWaiterAction}
+                  className={`h-8 px-2.5 sm:px-3 rounded-full text-[12px] font-semibold border flex items-center gap-1.5 shrink-0 select-none cursor-pointer active:scale-95 transition-all shadow-sm ${
+                    isCalled
+                      ? 'bg-amber-500/15 border-amber-500/40 text-amber-600 dark:text-amber-400'
+                      : 'bg-primary/10 hover:bg-primary/20 border-primary/30 text-primary'
+                  }`}
+                  aria-label={isCalled ? "Waiter already called" : "Call waiter to table"}
+                  title={isCalled ? "Waiter notified, staff is on the way!" : "Click to call waiter to your table"}
+                >
+                  <BellRing className={`w-3.5 h-3.5 ${isCalled ? 'animate-bounce text-amber-600 dark:text-amber-400' : 'text-primary animate-pulse'}`} />
+                  <span className="whitespace-nowrap">{isCalled ? 'Waiter Called' : 'Call Waiter'}</span>
+                </button>
+              )}
               {rightIcon && (
                 <button
                   type="button"
@@ -210,8 +249,23 @@ const TopAppBar = ({
             </button>
           </div>
 
-          {/* Right action control — Table chip */}
-          <div className="flex items-center shrink-0">
+          {/* Right action control — Call Waiter button & Table chip */}
+          <div className="flex items-center shrink-0 gap-2">
+            <button
+              type="button"
+              onClick={handleCallWaiterAction}
+              className={`h-8 px-2.5 sm:px-3 rounded-full text-[12px] font-semibold border flex items-center gap-1.5 shrink-0 select-none cursor-pointer active:scale-95 transition-all shadow-sm ${
+                isCalled
+                  ? 'bg-amber-500/15 border-amber-500/40 text-amber-600 dark:text-amber-400'
+                  : 'bg-primary/10 hover:bg-primary/20 border-primary/30 text-primary'
+              }`}
+              aria-label={isCalled ? "Waiter already called" : "Call waiter to table"}
+              title={isCalled ? "Waiter notified, staff is on the way!" : "Click to call waiter to your table"}
+            >
+              <BellRing className={`w-3.5 h-3.5 ${isCalled ? 'animate-bounce text-amber-600 dark:text-amber-400' : 'text-primary animate-pulse'}`} />
+              <span className="whitespace-nowrap">{isCalled ? 'Waiter Called' : 'Call Waiter'}</span>
+            </button>
+
             <button
               type="button"
               onClick={handleTableClick}
