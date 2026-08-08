@@ -5,6 +5,7 @@ import { useTable } from '../../context/TableContext';
 import { formatInvoiceAmount, formatMenuPrice, formatTime, deriveInvoiceNumber } from '../../utils/formatters';
 import Icon from '../../components/common/Icon';
 import TopAppBar from '../../components/layout/TopAppBar';
+import BottomNavBar from '../../components/layout/BottomNavBar';
 import { CheckCircle2, ChefHat, Clock, Flame, Soup, Plus } from 'lucide-react';
 
 const NEXT_STEPS = [
@@ -55,7 +56,7 @@ const OrderConfirmationScreen = () => {
     <>
       <TopAppBar variant="brand" />
       <main className="flex-1 flex flex-col bg-surface-container min-h-screen">
-      <div className="w-full max-w-md mx-auto min-h-screen flex flex-col px-4 pt-20 pb-4">
+      <div className="w-full max-w-md mx-auto min-h-screen flex flex-col px-4 pt-20 pb-28">
         {/* Success card: confirmation state, ETA, and order meta in one clear unit */}
         <section
           aria-labelledby="order-confirmed-heading"
@@ -257,7 +258,7 @@ const OrderConfirmationScreen = () => {
         </section>
 
         {/* Primary actions */}
-        <footer className="mt-auto space-y-3 pb-6">
+        <footer className="mt-auto space-y-3">
           <button
             onClick={() => navigate('/order-tracking')}
             className="w-full min-h-[48px] bg-primary hover:brightness-90 active:brightness-90 text-on-primary font-bold py-3.5 rounded-xl flex items-center justify-center gap-2 shadow-md transition-colors text-sm"
@@ -275,6 +276,7 @@ const OrderConfirmationScreen = () => {
         </footer>
       </div>
     </main>
+    <BottomNavBar />
     </>
   );
 };
