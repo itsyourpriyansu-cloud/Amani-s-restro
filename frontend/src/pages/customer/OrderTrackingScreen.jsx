@@ -250,23 +250,20 @@ const OrderTrackingScreen = () => {
           </div>
 
           {activeIssue && (
-            <div className="rounded-xl border border-warning/30 bg-warning/5 p-3.5 space-y-2.5">
-              <div className="flex items-center justify-between gap-2">
+            <div className="rounded-xl border border-warning/30 bg-warning/5 p-3.5 space-y-3">
+              <div className="flex flex-col items-start gap-1.5">
                 <span className="text-[11px] font-bold uppercase tracking-wide text-warning/80">
                   Support ticket #{activeIssue.issueId}
                 </span>
-                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-warning/20 text-warning shrink-0">
-                  {activeIssue.statusLabel || activeIssue.status}
-                </span>
               </div>
-              <dl className="grid grid-cols-2 gap-x-3 gap-y-1.5 text-xs">
+              <dl className="grid grid-cols-2 gap-x-3 gap-y-1 text-xs">
                 <div>
                   <dt className="text-on-surface-variant text-[10px] uppercase tracking-wide">Assigned to</dt>
-                  <dd className="font-semibold text-on-surface">{activeIssue.assignedOwner || 'Our team'}</dd>
+                  <dd className="font-semibold text-on-surface leading-snug">{activeIssue.assignedOwner || 'Our team'}</dd>
                 </div>
                 <div>
                   <dt className="text-on-surface-variant text-[10px] uppercase tracking-wide">Contact</dt>
-                  <dd className="font-semibold text-on-surface">Rahul (waiter)</dd>
+                  <dd className="font-semibold text-on-surface leading-snug">Rahul (waiter)</dd>
                 </div>
               </dl>
               {activeIssue.recoveryAction && (

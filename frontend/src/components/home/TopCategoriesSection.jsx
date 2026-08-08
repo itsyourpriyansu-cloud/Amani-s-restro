@@ -28,7 +28,7 @@ const BASE_CATEGORIES = [
   },
   {
     id: 'starters',
-    title: 'Curries',
+    title: 'Starters',
     subtitle: 'Rich Andhra-style gravies',
     badge: 'Chef Special',
     icon: curriesIcon,
